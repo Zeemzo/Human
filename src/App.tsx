@@ -1,22 +1,14 @@
 import * as React from 'react';
 import './App.css';
 
-import logo from './logo.svg';
+import NavBar from './NavBar';
 
-class App extends React.Component {
+export default class App extends React.Component {
   public render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Human</h1>
-        </header>
-        <p className="App-intro">
-        Being Who You Are.
-        </p>
-      </div>
+    return (  
+      <NavBar/>
     );
   }
 }
 
-export default App;
+

@@ -4,9 +4,13 @@
   "private": true,
   "dependencies": {
     "@types/react-bootstrap": "^0.32.13",
+    "@types/react-router": "^4.0.30",
+    "@types/react-router-dom": "^4.3.0",
     "react": "^16.4.2",
     "react-bootstrap": "^0.32.3",
     "react-dom": "^16.4.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts-ts": "2.16.0"
   },
   "scripts": {
