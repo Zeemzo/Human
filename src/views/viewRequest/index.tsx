@@ -13,7 +13,7 @@ export class Request extends React.Component <any,any>{
 
   public componentDidMount() {
     axios
-      .get("http://localhost:7000/api/request/get/5b9040638106130459")
+      .get("http://192.168.43.198:7000/api/request/get/5b9040638106130459")
       .then(({ data }) => {
         // const lol=JSON.parse(data);
         // console.log(lol.email);
