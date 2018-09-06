@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button,Checkbox,Col,ControlLabel,Form,FormControl,FormGroup } from 'react-bootstrap';
+
 import './App.css';
 
 // import logo from './logo.svg';
@@ -35,7 +36,7 @@ class App2 extends React.Component {
     
       <FormGroup>
         <Col smOffset={2} sm={10}>
-          <Button type="submit">Sign in</Button>
+          <Button type="submit" >Sign in</Button>
         </Col>
       </FormGroup>
     </Form>
@@ -43,6 +44,8 @@ class App2 extends React.Component {
     );
   }
 }
+
+
 
 
 export default App2;
