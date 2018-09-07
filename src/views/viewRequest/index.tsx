@@ -2,23 +2,26 @@ import * as React from 'react';
 
 import axios from 'axios';
 // import * as ReactDOM from '../../../node_modules/@types/react-dom';
-export class Request extends React.Component <any,any>{
+export class Request extends React.Component<any, any>{
   constructor(props) {
     super(props);
 
-    this.state ={
-      }
+    this.state = {
+      needs: []
+    }
 
   }
 
   public componentDidMount() {
     axios
-      .get("http://192.168.43.198:7000/api/request/get/5b9040638106130459")
-      .then(({ data }) => {
-        // const lol=JSON.parse(data);
-        // console.log(lol.email);
-        // console.log(data);
-        this.setState(data);
+      .get("http://localhost:7000/api/request/getall")
+      .then(data => {
+
+        // const lol=JSON.parse(data.data);
+        // console.log(data.data.needs);
+
+        this.setState(data.data);
+        // console.log(this.state.needs);
       })
       .catch((err) => { })
   }
@@ -26,17 +29,15 @@ export class Request extends React.Component <any,any>{
   public render() {
     return (
       <div className="App">
-        
-          <h1 className="App-title">{this.state.email}</h1>
-          <h1 className="App-title">{this.state.latitude}</h1>
-          <h1 className="App-title">{this.state.longitude}</h1>
-          <h1 className="App-title">{this.state.description}</h1>
-          <h1 className="App-title">{this.props.type}</h1>
-          {/* <h1 className="App-title">{()=>{return (this.state.status)?true:false}}</h1> */}
+        {/* {this.state.needs[10].description} */}
+        {this.state.needs.map((item, i) => (
+          <li className="travelcompany-input" key={i}>
+            <span className="input-label">
+               email: {item.email} | Type: {item.type}
 
-
-
-       
+            </span>
+          </li>
+        ))}
       </div>
     );
   }
