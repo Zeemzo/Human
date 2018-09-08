@@ -14,7 +14,7 @@ export class Request extends React.Component<any, any>{
 
   public componentDidMount() {
     axios
-      .get("http://localhost:7000/api/request/getall")
+      .get("https://humanbackend.herokuapp.com/api/request/getall")
       .then(data => {
 
         // const lol=JSON.parse(data.data);
