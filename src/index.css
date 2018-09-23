@@ -3,31 +3,28 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
-.column {
-  width: 8.33%;
-  float: left;
+.container.paddingBottom {
+  padding-bottom: 30px;
 }
-[class*="col-"] {
-  /*Mobile first: set the width to 100% by default*/
-  float: left;
-  width: 100%;
-}
-@media only screen and (min-width: 768px) {
-  /* For everything bigger than 768px */
-  .col-1{
-    width: 100%;
-  }
-  .col-3{
-    width: 25%;
-  }
+.container.paddingTop {
+  padding-top: 30px;
 }
 
-@media only screen and (min-width: 480px) {
-  /* For everything bigger than 768px */
-  .col-1{
-    width: 100%;
-  }
-  .col-3{
-    width: 50%;
-  }
+.mainContainer .wrapper p {
+  max-width: none;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
 }
