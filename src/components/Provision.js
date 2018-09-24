@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Grid, Thumbnail, Tab, Tabs, Button, ButtonToolbar, } from 'react-bootstrap';
+import { Col, Grid, Thumbnail } from 'react-bootstrap';
 import tumb from './thumbnail.png';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
@@ -19,7 +19,7 @@ class Provision extends React.Component {
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
     axios
-      .get(HUMANBACKEND + "/api/request/getall/" + new Date().toDateString() + "/" + this.props.type + "/", {
+      .get(HUMANBACKEND + "/api/request/getall/" + new Date().toDateString() + "/provision/", {
         headers: { 'Authorization': "bearer " + token }
       })
       .then(data => {

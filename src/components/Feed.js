@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Grid, Thumbnail, Tab, Tabs, Button, ButtonToolbar, } from 'react-bootstrap';
+import { Tab, Tabs} from 'react-bootstrap';
 // import tumb from './thumbnail.png';
 import axios from 'axios';
 // import { ClipLoader } from 'react-spinners';
@@ -24,7 +24,7 @@ class Feed extends React.Component {
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
     axios
-      .get(HUMANBACKEND + "/api/request/getall/" + new Date().toDateString() + "/need/", {
+      .get(HUMANBACKEND + "/api/request/getall/" + new Date().getUTCDate+new Date().getUTCMonth+new Date().getUTCFullYear+ "/need/", {
         headers: { 'Authorization': "bearer " + token }
       })
       .then(data => {
@@ -55,7 +55,7 @@ class Feed extends React.Component {
           <Provision type={'provision'}/>
         </Tab>
         <Tab eventKey={2} title="Need">
-          <Need />
+          <Need type={'need'} />
         </Tab>
         <Tab eventKey={3} title="Matched Request" disabled>
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Grid, Thumbnail, Tab, Tabs,Button,ButtonToolbar, } from 'react-bootstrap';
+import { Col, Grid, Thumbnail } from 'react-bootstrap';
 import tumb from './thumbnail.png';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';

@@ -1,8 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+// const functions = require('firebase-functions');
 
+// console.log((functions.config()).fire);
 const prodConfig = {
-    apiKey: "AIzaSyDd1bmOXMc1gs1RrsygS4B-qIf22o0zaI4",
+    apiKey:"AIzaSyDd1bmOXMc1gs1RrsygS4B-qIf22o0zaI4" ,
     authDomain: "human-24b1b.firebaseapp.com",
     databaseURL: "https://human-24b1b.firebaseio.com",
     projectId: "human-24b1b",
