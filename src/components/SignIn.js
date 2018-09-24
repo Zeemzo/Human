@@ -51,7 +51,7 @@ class SignInForm extends Component {
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
         console.log(email);
-        axios.post(routes.HUMANBACKEND + '/api/token', JSON.stringify({ "email": email }),
+        axios.post(routes.HUMANBACKEND + '/api/token', { email: email },
           {
             // 'Access-Control-Allow-Origin':'*',
             "Content-Type": "application/json"

@@ -33,7 +33,7 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     const {
-        username,
+        // username,
         email,
         passwordOne,
       } = this.state;
@@ -53,6 +53,7 @@ class SignUpForm extends Component {
           this.setState(byPropKey('error', error));
         });
   
+        
       event.preventDefault();
   }
 

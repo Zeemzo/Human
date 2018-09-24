@@ -35,16 +35,14 @@ class Mappy extends React.Component {
     mapRef = createRef()
 
 
-    componentDidMount() {
-        this.mapRef.current.leafletElement.locate()
+    // componentDidMount() {
+    //     this.mapRef.current.leafletElement.locate()
 
 
-    }
-    handleClick = () => {
-        this.props.loc(this.state.latlng.lat,this.state.latlng.lng);
-        // this.props.longitude = ;
-        // withRouter(AddRequest);
-    }
+    // }
+    handleClick = (event) => {
+         this.mapRef.current.leafletElement.locate()
+         event.preventDefault();    }
 
 
 
@@ -53,14 +51,11 @@ class Mappy extends React.Component {
             hasLocation: true,
             latlng: e.latlng,
         })
-
+        this.props.loc(this.state.latlng.lat,this.state.latlng.lng);
+        
     }
     render() {
-        // <Marker position={this.state.latlng} icon={greenIcon}>
-        //     <Popup>
-        //         <span>You are here</span>
-        //     </Popup>
-        // </Marker>
+  
 
         return (
             <div>

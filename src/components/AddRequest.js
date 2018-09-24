@@ -6,22 +6,21 @@ import axios from 'axios';
 import { HUMANBACKEND } from '../constants/routes';
 import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import Mappy from './map'
-
+import Cam from './camera'
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
 
-
-
 const INITIAL_STATE = {
     resourceType: '',
     description: '',
     email: '',
-    latitude: 76857696,
-    longitude: 3877823,
+    latitude: null,
+    longitude: null,
     status: false,
     requestType: '',
+    image: '',
     error: null,
 };
 
@@ -29,10 +28,8 @@ const INITIAL_STATE = {
 class AddRequest extends Component {
     constructor(props) {
         super(props);
-
         this.state = { ...INITIAL_STATE };
     }
-
     componentDidMount() {
         var user = firebase.auth.currentUser;
         if (user) {
@@ -41,7 +38,7 @@ class AddRequest extends Component {
     }
     onSubmit = (event) => {
         // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
-       console.log(this.state);
+        //    console.log(this.state);
         const token = localStorage.getItem('token')
         // console.log(this.state);
         axios
@@ -49,19 +46,24 @@ class AddRequest extends Component {
                 headers: { 'Authorization': "bearer " + token }
             })
             .then((res) => {
-                this.setState(byPropKey('error', res))
+                console.log(res.data);
+                // this.setState(byPropKey('error', res))
             }).catch((error) => {
-                this.setState(byPropKey('error', error.message))
+                console.log(error);
+                // this.setState(byPropKey('error', error.message))
 
             });
 
 
         event.preventDefault();
     }
-    handleLanguage = (lat,lon) => {
-        this.setState({latitude: lat,longitude:lon});
+    handleLoc = (lat, lon) => {
+        this.setState({ latitude: lat, longitude: lon });
     }
 
+    handleImage = (DataUrl) => {
+        this.setState({ image: DataUrl });
+    }
 
     render() {
         const {
@@ -89,10 +91,10 @@ class AddRequest extends Component {
                 <h1>ADD REQUEST</h1>
                 <FormGroup controlId="formControlsSelect">
                     <ControlLabel>Resource Type</ControlLabel>
-                    <FormControl 
-                    componentClass="select" 
-                    placeholder="Resource Type" 
-                    onChange={event => this.setState(byPropKey('resourceType', event.target.value))}>
+                    <FormControl
+                        componentClass="select"
+                        placeholder="Resource Type"
+                        onChange={event => this.setState(byPropKey('resourceType', event.target.value))}>
                         <option value="" >Select Resource Type</option>
                         <option value="food">food</option>
                         <option value="clothing">clothing</option>
@@ -107,23 +109,26 @@ class AddRequest extends Component {
                 /> */}
                 <FormGroup controlId="formControlsSelect">
                     <ControlLabel>Request Type</ControlLabel>
-                    <FormControl 
-                    componentClass="select" 
-                    placeholder="Request Type" 
-                    value={requestType}    
-                    onChange={event => this.setState(byPropKey('requestType', event.target.value))}>
+                    <FormControl
+                        componentClass="select"
+                        placeholder="Request Type"
+                        value={requestType}
+                        onChange={event => this.setState(byPropKey('requestType', event.target.value))}>
+                        <option value="" >Select Request Type</option>
                         <option value="need">need</option>
                         <option value="provision">provision</option>
                     </FormControl>
                 </FormGroup>
                 <br />
-                <input
+                <textarea 
                     value={description}
                     onChange={event => this.setState(byPropKey('description', event.target.value))}
                     type="text"
                     placeholder="Description"
                 /><br />
-                <Mappy loc={this.handleLanguage}/>
+
+                <Mappy loc={this.handleLoc} />
+                <Cam DataUrl={this.handleImage} />
                 <button disabled={isInvalid} type="submit">
                     Submit
             </button>

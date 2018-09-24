@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Col, Grid, Thumbnail } from 'react-bootstrap';
-import tumb from './thumbnail.png';
+import { Col, Grid, Thumbnail ,Panel} from 'react-bootstrap';
+// import tumb from './thumbnail.png';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 import withAuthorization from './withAuthorization';
@@ -14,20 +14,24 @@ class Provision extends React.Component {
       needs: [],
       loading: true
     }
-    console.log(this.props.type);
+    // console.log(this.props.type);
 
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
+    const now = new Date;
+
+    const utc_timestamp = Date.UTC(now.getFullYear(),now.getMonth(), now.getDate());
     axios
-      .get(HUMANBACKEND + "/api/request/getall/" + new Date().toDateString() + "/provision/", {
+      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
         headers: { 'Authorization': "bearer " + token }
       })
       .then(data => {
         this.setState({ loading: false });
         var obj = data.data;
-        console.log(obj);
+        // console.log(obj);
         var arr = [];
         for (var key in obj) {
+          obj[key].id=key;
           arr.push(obj[key]);
         }
         console.log(arr);
@@ -47,25 +51,30 @@ class Provision extends React.Component {
     return (
 
       <Grid>
-        <ClipLoader
-          // className={override}
-          sizeUnit={"px"}
-          size={150}
-          color={'#123abc'}
-          loading={this.state.loading}
-        />
-        {this.state.needs.map((item, i) => (
-          <Col xs={15} md={0} key={i}>
-            <Thumbnail href="#" alt="171x180" src={tumb} />
-            <span className="input-label">
-              email: {item.email} | Type: {item.type} | Latitude: {item.latitude} | Longitude: {item.longitude}
-            </span>
-            <p>Description : {item.description}</p>
-            
-            <DisplayLoc latitude={item.latitude} longitude={item.longitude} />
-          </Col>
-        ))}
-      </Grid>
+      <ClipLoader
+        // className={override}
+        sizeUnit={"px"}
+        size={150}
+        color={'#123abc'}
+        loading={this.state.loading}
+      />
+      {this.state.needs.map((item, i) => (
+        <Panel key={i}>
+          <Panel.Heading>Request ID: {item.id}</Panel.Heading>
+          <Panel.Body>
+            <Col xs={15} md={0}>
+          <Thumbnail href="#" alt="171x180" src={item.image} />
+         
+          <DisplayLoc latitude={item.latitude} longitude={item.longitude} />
+          <span className="input-label">
+            email: {item.email} | Type: {item.type} | Latitude: {item.latitude} | Longitude: {item.longitude}
+          </span>
+          <p>Description : {item.description}</p>
+        </Col>
+        </Panel.Body>
+        </Panel>
+      ))}
+    </Grid>
 
 
     );

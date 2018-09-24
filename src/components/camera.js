@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Camera, { FACING_MODES, IMAGE_TYPES }from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import withAuthorization from './withAuthorization';
-import {withRouter} from 'react'
-import AddRequest from '../components/AddRequest'
+// import {withRouter} from 'react'
+// import AddRequest from '../components/AddRequest'
 
 class Cam extends Component {
 
@@ -18,8 +18,10 @@ class Cam extends Component {
     // Do stuff with the dataUri photo...
     console.log(dataUri);
     this.setState({src:dataUri})
-    withRouter(AddRequest)
+    this.props.DataUrl(dataUri)
+    // withRouter(AddRequest)
     // this.setState({taken:false})
+
 
   }
  
@@ -29,9 +31,9 @@ class Cam extends Component {
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
           idealFacingMode = {FACING_MODES.ENVIRONMENT}
-          // idealResolution = {{width: 640, height: 480}}
+          idealResolution = {{width: 1280, height: 720}}
           imageType = {IMAGE_TYPES.JPG}
-          imageCompression = {0.97}
+          imageCompression = {0.50}
           // isMaxResolution = {false}
           // isImageMirror = {false}
           // isDisplayStartCameraError = {true}       
