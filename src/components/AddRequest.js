@@ -34,6 +34,8 @@ class AddRequest extends Component {
         var user = firebase.auth.currentUser;
         if (user) {
             this.setState(byPropKey('email', user.email))
+            this.setState(byPropKey('userId', user.uid))
+
         }
     }
     onSubmit = (event) => {

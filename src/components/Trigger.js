@@ -5,6 +5,7 @@ import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
+import { auth } from '../firebase/firebase'
 
 
 class Trigger extends React.Component {
@@ -12,7 +13,7 @@ class Trigger extends React.Component {
         super(props, context);
 
         this.handleHide = this.handleHide.bind(this);
-
+    
         this.state = {
             show: false,
             item: this.props.item
@@ -27,11 +28,16 @@ class Trigger extends React.Component {
         // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
         //    console.log(this.state);
         const token = localStorage.getItem('token')
-        // console.log(this.state);
-
-        //need to implement
+        // console.log(this.state.item);
+        // this.set/
+        
+        // auth.currentUser.email
+        const lol=this.state.item;
+        lol.sender=auth.currentUser.email                 //updating value
+        // this.setState({jasper});
+        console.log(lol);
         axios
-            .post(HUMANBACKEND + '/api/request/accept', this.state.item, {
+            .post(HUMANBACKEND + '/api/request/accept', lol, {
                 headers: { 'Authorization': "bearer " + token }
             })
             .then((res) => {
@@ -79,7 +85,7 @@ class Trigger extends React.Component {
                                     <p>Description : {this.state.item.description}</p>
                                     <form onSubmit={this.onSubmit}>
                                         <input
-                                            value={this.props.item}
+                                            value={this.state.item}
                                             type="hidden"
                                         />
                                         <button type="submit">

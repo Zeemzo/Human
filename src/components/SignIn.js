@@ -7,7 +7,9 @@ import axios from 'axios';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 
-import { auth } from '../firebase';
+import {auth}  from '../firebase/index';
+import {auth as Auth}  from '../firebase/firebase';
+
 import * as routes from '../constants/routes';
 
 const SignInPage = ({ history }) =>
@@ -63,6 +65,22 @@ class SignInForm extends Component {
             localStorage.setItem('token', res.data.token);
           }).catch((err) => {
             console.log(err);
+          });
+
+        const token = localStorage.getItem('token')
+        const userId=Auth.currentUser.uid
+        const pushToken = localStorage.getItem('pushToken')
+        axios
+          .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
+            headers: { "Content-Type": "application/json"}
+          })
+          .then((res) => {
+            console.log(res.data);
+            // this.setState(byPropKey('error', res))
+          }).catch((error) => {
+            console.log(error);
+            // this.setState(byPropKey('error', error.message))
+
           });
 
         this.setState({ ...INITIAL_STATE });
@@ -124,7 +142,7 @@ class SignInForm extends Component {
 // }
 //  connect(mapDispachToProps,mapStateToProps)
 
-export default(withRouter(SignInPage));
+export default (withRouter(SignInPage));
 
 export {
   SignInForm,
