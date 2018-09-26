@@ -75,7 +75,7 @@ class DisplayLoc extends React.Component {
           />
           <Marker position={this.state.latlng} icon={greenIcon}>
             <Popup>
-              <span>You are here</span>
+              <span>Request is Here</span>
             </Popup>
           </Marker>      
           </Map>

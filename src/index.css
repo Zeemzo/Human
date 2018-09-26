@@ -28,3 +28,9 @@ body {
 
 @media only screen and (min-width: 1500px) {
 }
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}

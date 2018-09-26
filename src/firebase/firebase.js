@@ -1,5 +1,9 @@
 import firebase from 'firebase/app';
+// import fire from 'firebase';
+
 import 'firebase/auth';
+import 'firebase/messaging';
+
 // const functions = require('firebase-functions');
 
 // console.log((functions.config()).fire);
@@ -28,9 +32,12 @@ const config = process.env.NODE_ENV === 'production'
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
-
+// 
+// fire.initializeApp(config)
 const auth = firebase.auth();
+const messaging = firebase.messaging();
 
+// const messaging=fire.messaging();
 export {
-  auth,
+  auth,messaging,firebase
 };

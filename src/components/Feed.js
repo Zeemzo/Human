@@ -29,7 +29,7 @@ class Feed extends React.Component {
         <Tab eventKey={2} title="Need">
           <Need type={'need'} />
         </Tab>
-        <Tab eventKey={3} title="Matched Request" disabled>
+        <Tab eventKey={3} title="Matched Request" >
 
         </Tab>
       </Tabs>
