@@ -14,18 +14,41 @@ import withAuthorization from './withAuthorization';
 // }
 
 class SendMessageForm extends React.Component {
-  
+    constructor() {
+      super()
+      this.state = {
+        message: ''
+      }
+      this.handleChange = this.handleChange.bind(this)
+      this.handleSubmit = this.handleSubmit.bind(this)
+    }
+    handleChange(e) {
+      this.setState({
+        message: e.target.value
+      })
+    }
+    handleSubmit(e) {
+      
+      this.props.sendMessage(this.state.message)
+      this.setState({
+        message: ''
+      })
+      e.preventDefault()
+    }
     render() {
       return (
-        <div className="app">
-          <Title />
-          <MessageList />
-          <SendMessageForm />
-       </div>
+        <form
+          onSubmit={this.handleSubmit}
+          className="send-message-form">
+          <input
+            onChange={this.handleChange}
+            value={this.state.message}
+            placeholder="Type your message and hit ENTER"
+            type="text" />
+        </form>
       )
     }
   }
-
 const authCondition = (authUser) => !!authUser;
 export default withAuthorization(authCondition)(SendMessageForm);
     // export default Feed;

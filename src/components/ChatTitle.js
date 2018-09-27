@@ -14,17 +14,20 @@ import withAuthorization from './withAuthorization';
 // }
 
 class Title extends React.Component {
-  
-    render() {
-      return (
-        <div className="app">
-          <Title />
-          <MessageList />
-          <SendMessageForm />
-       </div>
-      )
+    constructor(props) {
+        super(props)
+this.state={user:this.props.user
+
+}
     }
-  }
+    render() {
+        return (
+            <div className="app">
+                
+            </div>
+        )
+    }
+}
 
 const authCondition = (authUser) => !!authUser;
 export default withAuthorization(authCondition)(Title);
