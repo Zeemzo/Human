@@ -38,8 +38,8 @@ class Trigger extends React.Component {
         console.log(lol);
         axios
             .post(HUMANBACKEND + '/api/request/accept', lol, {
-                headers: { 'Authorization': "bearer " + token }
-            })
+                headers: { "Content-Type": "application/json",'Authorization': "bearer " + token }
+              })
             .then((res) => {
                 console.log(res.data);
                 // this.setState(byPropKey('error', res))

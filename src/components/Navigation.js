@@ -20,8 +20,10 @@ const NavigationAuth = () =>
     <li><Link to={routes.ACCOUNT}>Account</Link></li>
     <li><Link to={routes.FEED}>Feed</Link></li>
     <li><Link to={routes.ADDREQUEST}>Add Request</Link></li>
-    <li><Link to={routes.LOCATION}>Locate</Link></li>
-    <li><Link to={routes.CAMERA}>Camera</Link></li>
+    {/* <li><Link to={routes.LOCATION}>Locate</Link></li>
+    <li><Link to={routes.CAMERA}>Camera</Link></li> */}
+    <li><Link to={'/chat'}>Chat</Link></li>
+
 
 
 

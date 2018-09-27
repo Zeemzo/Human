@@ -25,7 +25,8 @@ class Provision extends React.Component {
     const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     axios
       .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
-        headers: { 'Authorization': "bearer " + token }
+        headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
+      }
       })
       .then(data => {
         this.setState({ loading: false });

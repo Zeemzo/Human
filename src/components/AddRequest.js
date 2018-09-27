@@ -45,7 +45,8 @@ class AddRequest extends Component {
         // console.log(this.state);
         axios
             .post(HUMANBACKEND + '/api/request/add', this.state, {
-                headers: { 'Authorization': "bearer " + token }
+                headers: { 'Authorization': "bearer " + token ,'Access-Control-Allow-Origin':'*',"Content-Type": "application/json",
+            }
             })
             .then((res) => {
                 console.log(res.data);

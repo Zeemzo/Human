@@ -45,7 +45,10 @@ messaging.requestPermission().then(function () {
             if (Auth.currentUser !== null) {
                 console.log("already logged in during push token save");
                 axios
-                    .post(HUMANBACKEND + '/api/push/token', { pushToken: currentToken, userId: Auth.currentUser.uid })
+                    .post(HUMANBACKEND + '/api/push/token', { pushToken: currentToken, userId: Auth.currentUser.uid }, {
+                        headers: { "Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
+                    }
+                      })
                     .then((res) => {
                         console.log(res.data);
                         // this.setState(byPropKey('error', res))

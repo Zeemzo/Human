@@ -16,6 +16,7 @@ import withAuthentication from './withAuthentication';
 import Feed from './Feed';
 import Mappy from './map';
 import Cam from './camera';
+import Chat from './Chat';
 
 
 
@@ -38,8 +39,10 @@ const App = () =>
       <Route exact path={routes.ACCOUNT} component={AccountPage} />
       <Route exact path={routes.FEED} component={Feed} />
       <Route exact path={routes.ADDREQUEST} component={AddRequest} />
-      <Route exact path={routes.LOCATION} component={Mappy} />
-      <Route exact path={routes.CAMERA} component={Cam} />
+      {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}
+      {/* <Route exact path={routes.CAMERA} component={Cam} /> */}
+      <Route exact path={'/chat'} component={Chat} />
+
 
 
 

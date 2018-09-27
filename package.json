@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@pusher/chatkit-server": "^0.12.2",
     "axios": "^0.18.0",
     "firebase": "^5.5.1",
     "firebase-admin": "^6.0.0",

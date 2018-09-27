@@ -57,7 +57,7 @@ class SignInForm extends Component {
 
         axios.post(routes.HUMANBACKEND + '/api/token', { email: email },
           {
-            // 'Access-Control-Allow-Origin':'*',
+            'Access-Control-Allow-Origin':'*',
             "Content-Type": "application/json"
           })
           .then((res) => {
@@ -72,7 +72,9 @@ class SignInForm extends Component {
         const pushToken = localStorage.getItem('pushToken')
         axios
           .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
-            headers: { "Content-Type": "application/json"}
+            headers: { "Content-Type": "application/json",
+            'Access-Control-Allow-Origin':'*',
+          }
           })
           .then((res) => {
             console.log(res.data);
