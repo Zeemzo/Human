@@ -108,6 +108,8 @@ messaging.onTokenRefresh(function () {
 
 messaging.onMessage(function (payload) {
     console.log('Message received. ', payload);
+    localStorage.setItem('roomId',payload.notification.body)
+    console.log(payload.notification.body);
     // [START_EXCLUDE]
     // Update the UI to include the received message.
     // appendMessage(payload);

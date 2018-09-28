@@ -23,6 +23,8 @@ const NavigationAuth = () =>
     {/* <li><Link to={routes.LOCATION}>Locate</Link></li>
     <li><Link to={routes.CAMERA}>Camera</Link></li> */}
     <li><Link to={'/chat'}>Chat</Link></li>
+    <li><Link to={'/chatty'}>Chatty</Link></li>
+
 
 
 

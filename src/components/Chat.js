@@ -6,26 +6,10 @@ import MessageList from './ChatMessageList';
 import SendMessageForm from './ChatSendMessageForm';
 import Title from './ChatTitle';
 
-
-
 const instanceLocator = "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43"
 const testToken = "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/530428ef-4a08-417e-99d7-054b81d20f43/token"
 const username = "Farhan"
 const roomId = 17207616
-
-
-
-// const DUMMY_DATA = [
-//     {
-//         senderId: "perborgen",
-//         text: "who'll win?"
-//     },
-//     {
-//         senderId: "janedoe",
-//         text: "who'll win?"
-//     }
-// ]
-
 
 class Chat extends React.Component {
     constructor() {
@@ -47,8 +31,6 @@ class Chat extends React.Component {
         })
 
         chatManager.connect().then(currentUser => {
-            // const lol=this.currentUser.
-
             currentUser.subscribeToRoom({
                 roomId: roomId,
                 hooks: {

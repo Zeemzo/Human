@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link,withRouter} from 'react-router-dom';
 import { auth } from '../firebase';
+import {auth as Auth} from '../firebase/firebase'
 // import * as routes from '../constants/routes';
 import axios from 'axios'
 import * as routes from '../constants/routes';
@@ -46,7 +47,21 @@ class SignUpForm extends Component {
   
       auth.doCreateUserWithEmailAndPassword(email, passwordOne)
         .then(authUser => {
-         
+         axios.post(routes.HUMANBACKEND+'/api/users',{email: Auth.currentUser.email } ,{
+
+            headers: {
+              'Access-Control-Allow-Origin':'*',
+
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+              console.log(response)
+                // this.setState({
+                //     currentUsername: auth.currentUser.email
+                // })
+            })
+
           this.setState({ ...INITIAL_STATE });
           history.push(routes.HOME);
 

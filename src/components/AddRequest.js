@@ -50,7 +50,7 @@ class AddRequest extends Component {
             })
             .then((res) => {
                 console.log(res.data);
-                // this.setState(byPropKey('error', res))
+                this.setState(byPropKey('error', res))
             }).catch((error) => {
                 console.log(error);
                 // this.setState(byPropKey('error', error.message))

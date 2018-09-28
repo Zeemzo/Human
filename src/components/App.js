@@ -17,6 +17,8 @@ import Feed from './Feed';
 import Mappy from './map';
 import Cam from './camera';
 import Chat from './Chat';
+import ChatScreen from './Chatty';
+
 
 
 
@@ -42,6 +44,8 @@ const App = () =>
       {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}
       {/* <Route exact path={routes.CAMERA} component={Cam} /> */}
       <Route exact path={'/chat'} component={Chat} />
+      <Route exact path={'/chatty'} component={ChatScreen} />
+
 
 
 
