@@ -90,9 +90,9 @@ class ChatScreen extends Component {
         return (
             <div style={styles.container}>
                 <div style={styles.chatContainer}>
-                    <aside style={styles.whosOnlineListContainer}>
+                    {/* <aside style={styles.whosOnlineListContainer}>
                         <h2>Whos online PLACEHOLDER</h2>
-                    </aside>
+                    </aside> */}
                     <section style={styles.chatListContainer}>
                         <MessageList
                             messages={this.state.messages}

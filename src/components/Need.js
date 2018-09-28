@@ -18,7 +18,12 @@ class Need extends React.Component {
     }
     // console.log(this.props.type);
 
-    console.log(localStorage.getItem('token'));
+    
+
+
+  }
+componentDidMount(){
+  console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
     const now = new Date;
 
@@ -44,10 +49,7 @@ class Need extends React.Component {
       })
       .catch((err) => { })
 
-
-
-  }
-
+}
  
   render() {
     return (

@@ -18,6 +18,13 @@ class Provision extends React.Component {
     }
     // console.log(this.props.type);
 
+  
+
+
+
+  }
+
+  componentDidMount(){
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
     const now = new Date;
@@ -43,11 +50,7 @@ class Provision extends React.Component {
 
       })
       .catch((err) => { })
-
-
-
   }
-
  
   render() {
     return (

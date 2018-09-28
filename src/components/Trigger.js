@@ -55,6 +55,7 @@ class Trigger extends React.Component {
                 .connect()
                 .then(currentUser => {
                     this.setState({ currentUser })
+                    this.state.item.email
                     currentUser.createRoom({
                         name: 'general',
                         private: true,
