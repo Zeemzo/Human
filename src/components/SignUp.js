@@ -1,124 +1,190 @@
-import React, { Component } from 'react';
-import { Link,withRouter} from 'react-router-dom';
-import { auth } from '../firebase';
-import * as routes from '../constants/routes';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { auth } from "../firebase";
+import * as routes from "../constants/routes";
 // import * as routes from '../constants/routes';
+import {
+  Button,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Col,
+  Form
+} from "react-bootstrap";
 
-const SignUpPage = ({ history }) =>
+const SignUpPage = ({ history }) => (
   <div>
     <h1>SignUp</h1>
     <SignUpForm history={history} />
   </div>
-
-
+);
 
 const INITIAL_STATE = {
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
-  };
+  username: "",
+  email: "",
+  passwordOne: "",
+  passwordTwo: "",
+  error: null
+};
 
-  const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
-  });
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value
+});
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-
   }
 
-  onSubmit = (event) => {
+  onSubmit = event => {
     const {
-        // username,
-        email,
-        passwordOne,
-      } = this.state;
+      // username,
+      email,
+      passwordOne
+    } = this.state;
 
-      const {
-        history,
-      } = this.props;
-  
-  
-      auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-        .then(authUser => {
-          this.setState({ ...INITIAL_STATE });
-          history.push(routes.HOME);
+    const { history } = this.props;
 
-        })
-        .catch(error => {
-          this.setState(byPropKey('error', error));
-        });
-  
-        
-      event.preventDefault();
-  }
+    auth
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+        history.push(routes.HOME);
+      })
+      .catch(error => {
+        this.setState(byPropKey("error", error));
+      });
+
+    event.preventDefault();
+  };
 
   render() {
+    const { username, email, passwordOne, passwordTwo, error } = this.state;
 
-    const {
-        username,
-        email,
-        passwordOne,
-        passwordTwo,
-        error,
-      } = this.state;
-
-      const isInvalid = 
+    const isInvalid =
       passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      username === '';
+      passwordOne === "" ||
+      email === "" ||
+      username === "";
 
     return (
-      <form onSubmit={this.onSubmit}>
- <input
-          value={username}
-          onChange={event => this.setState(byPropKey('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+      <Form horizontal>
+        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+          <Col componentClass={ControlLabel} sm={2}>
+            Full Name
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl
+              value={username}
+              onChange={event =>
+                this.setState(byPropKey("username", event.target.value))
+              }
+              type="text"
+              placeholder="Full Name"
+            />
+          </Col>
+        </FormGroup>
 
-        { error && <p>{error.message}</p> }
-      </form>
+        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+          <Col componentClass={ControlLabel} sm={2}>
+            Email
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl
+              value={email}
+              onChange={event =>
+                this.setState(byPropKey("email", event.target.value))
+              }
+              type="text"
+              placeholder="Email Address"
+            />
+          </Col>
+        </FormGroup>
+
+        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+          <Col componentClass={ControlLabel} sm={2}>
+            Password
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl
+              value={passwordOne}
+              onChange={event =>
+                this.setState(byPropKey("passwordOne", event.target.value))
+              }
+              type="password"
+              placeholder="Password"
+            />
+          </Col>
+        </FormGroup>
+
+        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+          <Col componentClass={ControlLabel} sm={2}>
+            Confirm Password
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl
+              value={passwordTwo}
+              onChange={event =>
+                this.setState(byPropKey("passwordTwo", event.target.value))
+              }
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </Col>
+        </FormGroup>
+
+        <FormGroup>
+          <Col smOffset={2} sm={10}>
+            <Button disabled={isInvalid} type="submit">
+              Sign Up
+            </Button>
+          </Col>
+          {error && <p>{error.message}</p>}
+        </FormGroup>
+      </Form>
+
+      // <FormGroup onSubmit={this.onSubmit}>
+      //   <FormControl
+      //     value={username}
+      //     onChange={event => this.setState(byPropKey('username', event.target.value))}
+      //     type="text"
+      //     placeholder="Full Name"
+      //   /><br/>
+      //   <FormControl
+      //     value={email}
+      //     onChange={event => this.setState(byPropKey('email', event.target.value))}
+      //     type="text"
+      //     placeholder="Email Address"
+      //   /><br/>
+      //   <FormControl
+      //     value={passwordOne}
+      //     onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+      //     type="password"
+      //     placeholder="Password"
+      //   /><br/>
+      //   <FormControl
+      //     value={passwordTwo}
+      //     onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+      //     type="password"
+      //     placeholder="Confirm Password"
+      //   /><br/>
+      //   <Button disabled={isInvalid} type="submit">
+      //     Sign Up
+      //   </Button>
+
+      //   { error && <p>{error.message}</p> }
+      // </FormGroup>
     );
   }
 }
 
-const SignUpLink = () =>
+const SignUpLink = () => (
   <p>
-    Don't have an account?
-    {' '}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
+    Don't have an account? <Link to={routes.SIGN_UP}>Sign Up</Link>
   </p>
+);
 
 export default withRouter(SignUpPage);
 
-export {
-  SignUpForm,
-  SignUpLink,
-};
+export { SignUpForm, SignUpLink };

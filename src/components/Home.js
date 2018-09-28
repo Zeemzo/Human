@@ -1,13 +1,20 @@
-import React from 'react';
+import React from "react";
+import { Carousel, Grid, Row, Col, Jumbotron } from "react-bootstrap";
 
-import withAuthorization from './withAuthorization';
+import withAuthorization from "./withAuthorization";
+import carousel from "./carousel.png";
 
-const HomePage = () =>
+
+const HomePage = () => (
   <div>
-    <h1>Home Page</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
+    <Grid>
+      <Jumbotron>
+        <h1>Home Page</h1>
+        <p>The Home Page is accessible by every signed in user.</p>
+      </Jumbotron>
+    </Grid>
   </div>
+);
 
-const authCondition = (authUser) => !!authUser;
-
+const authCondition = authUser => !!authUser;
 export default withAuthorization(authCondition)(HomePage);

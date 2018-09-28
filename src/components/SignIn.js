@@ -1,32 +1,41 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
 // import store from '../store/index';
 // import {connect} from 'react-redux'
+import {
+  Button,
+  FormGroup,
+  FormControl,
+  Form,
+  Col,
+  ControlLabel,
+  Checkbox
+} from "react-bootstrap";
+import { SignUpLink } from "./SignUp";
+import { PasswordForgetLink } from "./PasswordForget";
 
-import { SignUpLink } from './SignUp';
-import { PasswordForgetLink } from './PasswordForget';
+import { auth } from "../firebase";
+import * as routes from "../constants/routes";
 
-import { auth } from '../firebase';
-import * as routes from '../constants/routes';
-
-const SignInPage = ({ history }) =>
+const SignInPage = ({ history }) => (
   <div>
-    <h1>SignIn</h1>
+    <h1>Human</h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
 
     <SignUpLink />
   </div>
+);
 
 const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
+  [propertyName]: value
 });
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
+  email: "",
+  password: "",
+  error: null
 };
 
 class SignInForm extends Component {
@@ -34,34 +43,34 @@ class SignInForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
-    this.token = { token: '' }
+    this.token = { token: "" };
   }
 
-  onSubmit = (event) => {
-    const {
-      email,
-      password,
-    } = this.state;
+  onSubmit = event => {
+    const { email, password } = this.state;
 
-    const {
-      history,
-    } = this.props;
+    const { history } = this.props;
 
-
-    auth.doSignInWithEmailAndPassword(email, password)
+    auth
+      .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         console.log(email);
-        localStorage.setItem('email', email);
+        localStorage.setItem("email", email);
 
-        axios.post(routes.HUMANBACKEND + '/api/token', { email: email },
-          {
-            // 'Access-Control-Allow-Origin':'*',
-            "Content-Type": "application/json"
-          })
-          .then((res) => {
+        axios
+          .post(
+            routes.HUMANBACKEND + "/api/token",
+            { email: email },
+            {
+              // 'Access-Control-Allow-Origin':'*',
+              "Content-Type": "application/json"
+            }
+          )
+          .then(res => {
             console.log(res.data.token);
-            localStorage.setItem('token', res.data.token);
-          }).catch((err) => {
+            localStorage.setItem("token", res.data.token);
+          })
+          .catch(err => {
             console.log(err);
           });
 
@@ -69,43 +78,88 @@ class SignInForm extends Component {
         history.push(routes.HOME);
       })
       .catch(error => {
-        this.setState(byPropKey('error', error));
+        this.setState(byPropKey("error", error));
       });
 
     event.preventDefault();
-  }
+  };
 
   render() {
-    const {
-      email,
-      password,
-      error,
-    } = this.state;
+    const { email, password, error } = this.state;
 
-    const isInvalid =
-      password === '' ||
-      email === '';
+    const isInvalid = password === "" || email === "";
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <Form horizontal onSubmit={this.onSubmit}>
+        <FormGroup
           value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
+          onChange={event =>
+            this.setState(byPropKey("email", event.target.value))
+          }
           type="text"
           placeholder="Email Address"
-        />
-        <input
+        >
+          <Col componentClass={ControlLabel} sm={2}>
+            Email
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl type="email" placeholder="Email" />
+          </Col>
+        </FormGroup>
+
+        <FormGroup
           value={password}
-          onChange={event => this.setState(byPropKey('password', event.target.value))}
+          onChange={event =>
+            this.setState(byPropKey("password", event.target.value))
+          }
           type="password"
           placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+        >
+          <Col componentClass={ControlLabel} sm={2}>
+            Password
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl type="password" placeholder="Password" />
+          </Col>
+        </FormGroup>
 
-        {error && <p>{error.message}</p>}
-      </form>
+        <FormGroup>
+          <Col smOffset={2} sm={10}>
+            <Checkbox>Remember me</Checkbox>
+          </Col>
+        </FormGroup>
+
+        <FormGroup>
+          <Col smOffset={2} sm={10}>
+            <Button disabled={isInvalid} type="submit">
+              Sign In
+            </Button>
+          </Col>
+          {error && <p>{error.message}</p>}
+        </FormGroup>
+      </Form>
+
+      // <FormGroup>
+
+      // <form onSubmit={this.onSubmit}>
+      // <FormControl
+      //     value={email}
+      //     onChange={event => this.setState(byPropKey('email', event.target.value))}
+      //     type="text"
+      //     placeholder="Email Address"
+      //   /><br/>
+      // <FormControl
+      //     value={password}
+      //     onChange={event => this.setState(byPropKey('password', event.target.value))}
+      //     type="password"
+      //     placeholder="Password"
+      //   /><br/>
+      //   <Button disabled={isInvalid} type="submit">
+      //     Sign In
+      //   </Button>
+      //   {error && <p>{error.message}</p>}
+      // </form>
+      // </FormGroup>
     );
   }
 }
@@ -124,8 +178,6 @@ class SignInForm extends Component {
 // }
 //  connect(mapDispachToProps,mapStateToProps)
 
-export default(withRouter(SignInPage));
+export default withRouter(SignInPage);
 
-export {
-  SignInForm,
-};
+export { SignInForm };

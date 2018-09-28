@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 
+
 import Navigation from './Navigation';
 import LandingPage from './Landing';
 import SignUpPage from './SignUp';
@@ -17,11 +18,10 @@ import Feed from './Feed';
 import Mappy from './map';
 import Cam from './camera';
 
-
-
-
 import * as routes from '../constants/routes';
 import AddRequest from './AddRequest';
+
+
 
 const App = () =>
   <Router>
@@ -40,9 +40,7 @@ const App = () =>
       <Route exact path={routes.ADDREQUEST} component={AddRequest} />
       <Route exact path={routes.LOCATION} component={Mappy} />
       <Route exact path={routes.CAMERA} component={Cam} />
-
-
-
+     
     </div>
   </Router>
 

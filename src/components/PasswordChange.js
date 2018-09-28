@@ -1,15 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import {
+  Button,
+  Form,
+  FormGroup,
+  Col,
+  FormControl,
+  ControlLabel
+} from "react-bootstrap";
 
-import { auth } from '../firebase';
+import { auth } from "../firebase";
 
 const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
+  [propertyName]: value
 });
 
 const INITIAL_STATE = {
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
+  passwordOne: "",
+  passwordTwo: "",
+  error: null
 };
 
 class PasswordChangeForm extends Component {
@@ -19,51 +27,87 @@ class PasswordChangeForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit = (event) => {
+  onSubmit = event => {
     const { passwordOne } = this.state;
 
-    auth.doPasswordUpdate(passwordOne)
+    auth
+      .doPasswordUpdate(passwordOne)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
       })
       .catch(error => {
-        this.setState(byPropKey('error', error));
+        this.setState(byPropKey("error", error));
       });
 
     event.preventDefault();
-  }
+  };
 
   render() {
-    const {
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
+    const { passwordOne, passwordTwo, error } = this.state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '';
+    const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="New Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm New Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+      <Form horizontal onSubmit={this.onSubmit}>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>
+            New Password
+          </Col>{" "}
+          <Col xs={6} md={4}>
+            <FormControl
+              value={passwordOne}
+              onChange={event =>
+                this.setState(byPropKey("passwordOne", event.target.value))
+              }
+              type="password"
+              placeholder="New Password"
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>
+            Confirm Password
+          </Col>{" "}
+          <Col xs={6} md={4}>
+            <FormControl
+              value={passwordTwo}
+              onChange={event =>
+                this.setState(byPropKey("passwordTwo", event.target.value))
+              }
+              type="password"
+              placeholder="Confirm New Password"
+            />
+          </Col>
+        </FormGroup>
 
-        { error && <p>{error.message}</p> }
-      </form>
+        <FormGroup>
+          <Col smOffset={2} sm={10}>
+            <Button disabled={isInvalid} type="submit">
+              Reset My Password
+            </Button>
+          </Col>
+        </FormGroup>
+        {error && <p>{error.message}</p>}
+      </Form>
+      // <form onSubmit={this.onSubmit}>
+      //   <input
+      //     value={passwordOne}
+      //     onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+      //     type="password"
+      //     placeholder="New Password"
+      //   />
+      //   <input
+      //     value={passwordTwo}
+      //     onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+      //     type="password"
+      //     placeholder="Confirm New Password"
+      //   />
+      //   <button disabled={isInvalid} type="submit">
+      //     Reset My Password
+      //   </button>
+
+      //   { error && <p>{error.message}</p> }
+      // </form>
     );
   }
 }

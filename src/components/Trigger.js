@@ -48,7 +48,8 @@ class Trigger extends React.Component {
     }
     render() {
         return (
-            <div style={{ height: 200 }}>
+           // style={{ height: 200 }}
+            <div > 
                 <Button
                     bsStyle="primary"
                     bsSize="large"
