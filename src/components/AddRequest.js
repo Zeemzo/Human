@@ -32,36 +32,61 @@ const INITIAL_STATE = {
 };
 
 class AddRequest extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-  componentDidMount() {
-    var user = firebase.auth.currentUser;
-    if (user) {
-      this.setState(byPropKey("email", user.email));
+    constructor(props) {
+        super(props);
+        this.state = { ...INITIAL_STATE };
     }
-  }
-  onSubmit = event => {
-    // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
-    //    console.log(this.state);
-    const token = localStorage.getItem("token");
-    // console.log(this.state);
-    axios
-      .post(HUMANBACKEND + "/api/request/add", this.state, {
-        headers: { Authorization: "bearer " + token }
-      })
-      .then(res => {
-        console.log(res.data);
-        // this.setState(byPropKey('error', res))
-      })
-      .catch(error => {
-        console.log(error);
-        // this.setState(byPropKey('error', error.message))
-      });
+    componentDidMount() {
+        var user = firebase.auth.currentUser;
+        if (user) {
+            this.setState(byPropKey('email', user.email))
+            this.setState(byPropKey('userId', user.uid))
 
-    event.preventDefault();
-  };
+        }
+    }
+    onSubmit = (event) => {
+        // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
+        //    console.log(this.state);
+        const token = localStorage.getItem('token')
+        // console.log(this.state);
+        axios
+            .post(HUMANBACKEND + '/api/request/add', this.state, {
+                headers: { 'Authorization': "bearer " + token ,'Access-Control-Allow-Origin':'*',"Content-Type": "application/json",
+            }
+            })
+            .then((res) => {
+                console.log(res.data);
+                this.setState(byPropKey('error', res))
+            }).catch((error) => {
+                console.log(error);
+                // this.setState(byPropKey('error', error.message))
+
+            });
+
+
+        event.preventDefault();
+    }
+  // }
+  // onSubmit = event => {
+  //   // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
+  //   //    console.log(this.state);
+  //   const token = localStorage.getItem("token");
+  //   // console.log(this.state);
+  //   axios
+  //     .post(HUMANBACKEND + "/api/request/add", this.state, {
+  //       headers: { Authorization: "bearer " + token }
+  //     })
+  //     .then(res => {
+  //       console.log(res.data);
+  //       // this.setState(byPropKey('error', res))
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //       // this.setState(byPropKey('error', error.message))
+  //     });
+
+  //   event.preventDefault();
+  // };
   handleLoc = (lat, lon) => {
     this.setState({ latitude: lat, longitude: lon });
   };

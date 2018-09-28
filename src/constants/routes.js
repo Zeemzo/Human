@@ -11,4 +11,4 @@ export const LOCATION = "/locate";
 export const CAMERA = "/camera";
 
 // export const HUMANBACKEND='https://humanbackend.herokuapp.com';
-export const HUMANBACKEND = "http://localhost:7000";
+export const HUMANBACKEND='http://localhost:7000';

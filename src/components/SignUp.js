@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { auth } from "../firebase";
 import * as routes from "../constants/routes";
+
+import {auth as Auth} from '../firebase/firebase'
+// import * as routes from '../constants/routes';
+import axios from 'axios'
 // import * as routes from '../constants/routes';
 import {
   Button,
@@ -39,25 +43,44 @@ class SignUpForm extends Component {
 
   onSubmit = event => {
     const {
-      // username,
-      email,
-      passwordOne
-    } = this.state;
+        username,
+        email,
+        passwordOne,
+      } = this.state;
 
-    const { history } = this.props;
+      const {
+        history,
+      } = this.props;
+  
+  
+      auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+        .then(authUser => {
+         axios.post(routes.HUMANBACKEND+'/api/users',{email: Auth.currentUser.email } ,{
 
-    auth
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-        history.push(routes.HOME);
-      })
-      .catch(error => {
-        this.setState(byPropKey("error", error));
-      });
+            headers: {
+              'Access-Control-Allow-Origin':'*',
 
-    event.preventDefault();
-  };
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+              console.log(response)
+                // this.setState({
+                //     currentUsername: auth.currentUser.email
+                // })
+            })
+
+          this.setState({ ...INITIAL_STATE });
+          history.push(routes.HOME);
+
+        })
+        .catch(error => {
+          this.setState(byPropKey('error', error));
+        });
+  
+        
+      event.preventDefault();
+  }
 
   render() {
     const { username, email, passwordOne, passwordTwo, error } = this.state;
@@ -70,7 +93,7 @@ class SignUpForm extends Component {
 
     return (
       <Form horizontal>
-        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+        <FormGroup onSubmit={this.onSubmit}>
           <Col componentClass={ControlLabel} sm={2}>
             Full Name
           </Col>
@@ -86,7 +109,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+        <FormGroup onSubmit={this.onSubmit}>
           <Col componentClass={ControlLabel} sm={2}>
             Email
           </Col>
@@ -102,7 +125,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+        <FormGroup  onSubmit={this.onSubmit}>
           <Col componentClass={ControlLabel} sm={2}>
             Password
           </Col>
@@ -118,7 +141,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId="formSignUp" onSubmit={this.onSubmit}>
+        <FormGroup onSubmit={this.onSubmit}>
           <Col componentClass={ControlLabel} sm={2}>
             Confirm Password
           </Col>

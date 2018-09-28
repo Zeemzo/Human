@@ -38,6 +38,10 @@ const NavigationAuth = () => (
       <LinkContainer to="/camera">
         <NavItem>Camera</NavItem>
       </LinkContainer>
+      <LinkContainer to="/chatty">
+        <NavItem>Chatty</NavItem>
+      </LinkContainer>
+     
     </Nav>
     <Nav pullRight>
       <NavItem>

@@ -16,6 +16,8 @@ import { SignUpLink } from "./SignUp";
 import { PasswordForgetLink } from "./PasswordForget";
 
 import { auth } from "../firebase";
+import { auth as Auth } from "../firebase/firebase";
+
 import * as routes from "../constants/routes";
 
 const SignInPage = ({ history }) => (
@@ -55,23 +57,37 @@ class SignInForm extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         console.log(email);
-        localStorage.setItem("email", email);
+        localStorage.setItem('email', email);
 
-        axios
-          .post(
-            routes.HUMANBACKEND + "/api/token",
-            { email: email },
-            {
-              // 'Access-Control-Allow-Origin':'*',
-              "Content-Type": "application/json"
-            }
-          )
-          .then(res => {
+        axios.post(routes.HUMANBACKEND + '/api/token', { email: email },
+          {
+            'Access-Control-Allow-Origin':'*',
+            "Content-Type": "application/json"
+          })
+          .then((res) => {
             console.log(res.data.token);
             localStorage.setItem("token", res.data.token);
           })
           .catch(err => {
             console.log(err);
+          });
+
+        const token = localStorage.getItem('token')
+        const userId=Auth.currentUser.uid
+        const pushToken = localStorage.getItem('pushToken')
+        axios
+          .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
+            headers: { "Content-Type": "application/json",
+            'Access-Control-Allow-Origin':'*',
+          }
+          })
+          .then((res) => {
+            console.log(res.data);
+            // this.setState(byPropKey('error', res))
+          }).catch((error) => {
+            console.log(error);
+            // this.setState(byPropKey('error', error.message))
+
           });
 
         this.setState({ ...INITIAL_STATE });
@@ -178,6 +194,6 @@ class SignInForm extends Component {
 // }
 //  connect(mapDispachToProps,mapStateToProps)
 
-export default withRouter(SignInPage);
+export default (withRouter(SignInPage));
 
 export { SignInForm };

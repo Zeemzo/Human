@@ -3,8 +3,14 @@ import withAuthorization from './withAuthorization';
 import { Col, Grid, Thumbnail, Panel } from 'react-bootstrap';
 import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
+import Chatkit from '@pusher/chatkit'
+
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
+import { auth } from '../firebase/firebase'
+import SendMessageForm from './ChatSendMessageForm';
+
+// import {HUMANBACKEND} from '../constants/routes'
 
 
 class Trigger extends React.Component {
@@ -15,37 +21,85 @@ class Trigger extends React.Component {
 
         this.state = {
             show: false,
-            item: this.props.item
+            item: this.props.item,
+            currentUsername: '',
+            roomId: null,
+            messages: ''
         };
-    }
+        this.sendMessage = this.sendMessage.bind(this)
 
-    handleHide() {
-        this.setState({ show: false });
-    }
+        }
 
-    onSubmit = (event) => {
-        // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
-        //    console.log(this.state);
-        const token = localStorage.getItem('token')
-        // console.log(this.state);
-
-        //need to implement
-        axios
-            .post(HUMANBACKEND + '/api/request/accept', this.state.item, {
-                headers: { 'Authorization': "bearer " + token }
+        handleHide() {
+            this.setState({ show: false });
+        }
+        sendMessage(text) {
+            this.currentUser.sendMessage({
+                text,
+                roomId: this.state.roomId
             })
-            .then((res) => {
-                console.log(res.data);
-                // this.setState(byPropKey('error', res))
-            }).catch((error) => {
-                console.log(error);
-                // this.setState(byPropKey('error', error.message))
+        }
 
-            });
+        onSubmit = (event) => {
+            event.preventDefault();
+
+            const chatManager = new Chatkit.ChatManager({
+                instanceLocator: "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43",
+                userId: auth.currentUser.email,
+                tokenProvider: new Chatkit.TokenProvider({
+                    url: HUMANBACKEND + '/api/authenticate',
+                }),
+            })
+
+            chatManager
+                .connect()
+                .then(currentUser => {
+                    this.setState({ currentUser })
+                    this.state.item.email
+                    currentUser.createRoom({
+                        name: 'general',
+                        private: true,
+                        addUserIds: [this.state.item.email]
+                    }).then(room => {
+                        console.log(`Created room called ${room.name}`)
+                        console.log(room.id)
+                        localStorage.setItem('roomId',room.id);
+                        this.setState({roomId:room.id})
+
+                        const token = localStorage.getItem('token')
+
+                        const lol = this.state.item;
+                        lol.roomId=room.id
+                        lol.sender = auth.currentUser.email
+                        console.log(lol);
+                
+                
+                        axios
+                        .post(HUMANBACKEND + '/api/request/accept', lol, {
+                            headers: { "Content-Type": "application/json",'Authorization': "bearer " + token }
+                          })
+                        .then((res) => {
+                            console.log(res.data);
+                            // this.setState(byPropKey('error', res))
+                        }).catch((error) => {
+                            console.log(error);
+                            // this.setState(byPropKey('error', error.message))
+                
+                        });
 
 
-        event.preventDefault();
+                    }).catch(err => {
+                        console.log(`Error creating room ${err}`)
+                    })
+                })
+                .catch(error => console.error('error', error))
+        
+
+
+        
+        // event.preventDefault();
     }
+
     render() {
         return (
            // style={{ height: 200 }}
@@ -80,9 +134,11 @@ class Trigger extends React.Component {
                                     <p>Description : {this.state.item.description}</p>
                                     <form onSubmit={this.onSubmit}>
                                         <input
-                                            value={this.props.item}
+                                            value={this.state.item}
                                             type="hidden"
                                         />
+
+                                        <SendMessageForm sendMessage={this.sendMessage} />
                                         <button type="submit">
                                             Accept Provision</button>
                                     </form>

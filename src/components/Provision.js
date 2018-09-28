@@ -26,9 +26,16 @@ class Provision extends React.Component {
     };
     // console.log(this.props.type);
 
-    console.log(localStorage.getItem("token"));
-    const token = localStorage.getItem("token");
-    const now = new Date();
+  
+
+
+
+  }
+
+  componentDidMount(){
+    console.log(localStorage.getItem('token'));
+    const token = localStorage.getItem('token')
+    const now = new Date;
 
     const utc_timestamp = Date.UTC(
       now.getFullYear(),
@@ -36,12 +43,10 @@ class Provision extends React.Component {
       now.getDate()
     );
     axios
-      .get(
-        HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/",
-        {
-          headers: { Authorization: "bearer " + token }
-        }
-      )
+      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
+        headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
+      }
+      })
       .then(data => {
         this.setState({ loading: false });
         var obj = data.data;
@@ -54,9 +59,9 @@ class Provision extends React.Component {
         console.log(arr);
         this.setState({ needs: arr });
       })
-      .catch(err => {});
+      .catch((err) => { })
   }
-
+ 
   render() {
     return (
       <Grid>
