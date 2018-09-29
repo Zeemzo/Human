@@ -61,10 +61,10 @@ componentDidMount(){
           <Thumbnail key={i}>
             <Grid>
               <Row>
-                <Col xs={6} md={3}>
+                <Col xs={7} md={3}>
                   <Image width="250" height="300" src={item.image} rounded />
                 </Col>
-                <Col xs={6} md={3}>
+                <Col xs={7} md={3}>
                   <h3>Request ID: {item.id}</h3>
                   <p>
                     {/* <DisplayLoc
@@ -74,7 +74,7 @@ componentDidMount(){
                     <span className="input-label">
                       email: {item.email}
                       <br />
-                      Type: {item.type}
+                      Type: {item.requestType}
                       <br />
                       Latitude: {item.latitude}
                       <br />

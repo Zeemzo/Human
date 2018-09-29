@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Tab, Tabs, Row, Col, NavItem, Nav } from "react-bootstrap";
+import { Tab, Row, Col, NavItem, Nav } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 // import axios from 'axios';
 // import { ClipLoader } from 'react-spinners';
@@ -24,7 +24,7 @@ class Feed extends React.Component {
       <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={1}>
         <Row className="clearfix">
           <Col>
-            <Nav bsStyle="pills">
+            <Nav bsStyle="tabs">
               <NavItem eventKey={1}>Provision</NavItem>{" "}
               <NavItem eventKey={2}>Need</NavItem>{" "}
               <NavItem eventKey={3}>Match Request</NavItem>{" "}

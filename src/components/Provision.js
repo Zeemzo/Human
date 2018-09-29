@@ -76,16 +76,16 @@ class Provision extends React.Component {
           <Thumbnail key={i}>
             <Grid>
               <Row>
-                <Col xs={6} md={3}>
-                  <Image width="250" height="300" src={item.image} rounded />
+                <Col xs={7} md={4} lg={5} >
+                  <Image width="280" height="300" src={item.image} rounded />
                 </Col>
-                <Col xs={6} md={3}>
+                <Col xs={7} md={4} lg={5}>
                   <h3>Request ID: {item.id}</h3>
                   <p>
                     <span className="input-label">
                       email: {item.email}
                       <br />
-                      Type: {item.type}
+                      Type: {item.requestType}
                       <br />
                       Latitude: {item.latitude}
                       <br />

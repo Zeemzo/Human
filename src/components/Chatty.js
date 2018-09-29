@@ -5,7 +5,9 @@ import MessageList from './MessageList'
 import { auth } from '../firebase/firebase'
 import withAuthorization from './withAuthorization';
 import SendMessageForm from './ChatSendMessageForm'
-                    const roomId=17275761
+import axios from 'axios';
+
+                    // const roomId=17275761
 
 
 class ChatScreen extends Component {
@@ -58,6 +60,26 @@ class ChatScreen extends Component {
           text,
           roomId: parseInt(localStorage.getItem('roomId')),
         })
+
+        // const token = localStorage.getItem('token')
+        // const request = {
+        //     notification: {
+        //         title: "You have a message from a fellow Human",
+        //         body: "" + localStorage.getItem('roomId'),
+        //         click_action: "https://human-24b1b.firebaseapp.com/chat"
+        //     },
+        //     priority : "high",
+
+        //     to: pushToken
+
+        // };
+
+
+        // axios.post('https://fcm.googleapis.com/fcm/send', request, {
+        //     headers: { 'Authorization': "key=AIzaSyCflWmYSu16ICHrJrZTXoQkVpl9Yc3174k" }
+        // })
+
+        
       }
 
     render() {
@@ -73,7 +95,7 @@ class ChatScreen extends Component {
                 flex: 1,
             },
             whosOnlineListContainer: {
-                width: '300px',
+                width: '100%',
                 flex: 'none',
                 padding: 20,
                 backgroundColor: '#2c303b',
@@ -89,17 +111,18 @@ class ChatScreen extends Component {
 
         return (
             <div style={styles.container}>
+            <h1 style={{float:'center',}}>CHAT</h1>
                 <div style={styles.chatContainer}>
-                    {/* <aside style={styles.whosOnlineListContainer}>
+                    {/* <below style={styles.whosOnlineListContainer}>
                         <h2>Whos online PLACEHOLDER</h2>
-                    </aside> */}
-                    <section style={styles.chatListContainer}>
+                    </below> */}
+                    <section style={styles.whosOnlineListContainer}>
                         <MessageList
                             messages={this.state.messages}
                             style={styles.chatList} />   </section>
-                          <SendMessageForm sendMessage={this.sendMessage} />
+                     </div>  
 
-                </div>
+                   <SendMessageForm sendMessage={this.sendMessage} />
             </div>
         )
     }

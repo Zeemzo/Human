@@ -4,42 +4,48 @@ import AuthUserContext from "./AuthUserContext";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";
+import SlideMenu from 'react-slide-menu'
+
 import { LinkContainer } from "react-router-bootstrap";
 const Navigation = () => (
+
   <AuthUserContext.Consumer>
+ 
+
     {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+ 
   </AuthUserContext.Consumer>
 );
 
 const NavigationAuth = () => (
-  <Navbar>
+  <Navbar >
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="#">Human</a>
+        <a href="/">Human</a>
       </Navbar.Brand>
     </Navbar.Header>
     <Nav>
-      <LinkContainer to="/home">
+      <LinkContainer to={routes.HOME}>
         <NavItem>Home</NavItem>
       </LinkContainer>
 
-      <LinkContainer to="/Account">
+      <LinkContainer to={routes.ACCOUNT}>
         <NavItem>Account</NavItem>
       </LinkContainer>
-      <LinkContainer to="/Feed">
+      <LinkContainer to={routes.FEED}>
         <NavItem>Feed</NavItem>
       </LinkContainer>
-      <LinkContainer to="/AddRequest">
+      <LinkContainer to={routes.ADDREQUEST}>
         <NavItem>Add Request</NavItem>
       </LinkContainer>
-      <LinkContainer to="/locate">
+      {/* <LinkContainer to={routes.LOCATION}>
         <NavItem>Locate</NavItem>
       </LinkContainer>
-      <LinkContainer to="/camera">
+      <LinkContainer to={routes.CAMERA}>
         <NavItem>Camera</NavItem>
-      </LinkContainer>
-      <LinkContainer to="/chatty">
-        <NavItem>Chatty</NavItem>
+      </LinkContainer> */}
+      <LinkContainer to='/chat'>
+        <NavItem>Chat</NavItem>
       </LinkContainer>
      
     </Nav>
@@ -50,52 +56,7 @@ const NavigationAuth = () => (
     </Nav>
   </Navbar>
 
-  // <Navbar default collapseOnSelect>
-  //   <Navbar.Collapse>
-  //     <Nav>
-  //       <NavItem>
-  //         {" "}
-  //         <Link to={routes.HOME}>Home</Link>
-  //       </NavItem>
-  //       <NavItem>
-  //         {" "}
-  //         <Link to={routes.ACCOUNT}>Account</Link>
-  //       </NavItem>
-  //       <NavItem>
-  //         {" "}
-  //         <Link to={routes.FEED}>Feed</Link>
-  //       </NavItem>
-  //       <NavItem>
-  //         {" "}
-  //         <Link to={routes.ADDREQUEST}>Add Request</Link>
-  //       </NavItem>
-  //       <NavItem>
-  //         {" "}
-  //         <Link to={routes.LOCATION}>Locate</Link>
-  //       </NavItem>
-  //       <NavItem>
-  //         {" "}
-  //         <Link to={routes.CAMERA}>Camera</Link>
-  //       </NavItem>
-  //     </Nav>
-  //     <Nav pullRight>
-  //       <NavItem>
-  //         <SignOutButton />
-  //       </NavItem>
-  //     </Nav>
-  //   </Navbar.Collapse>
 
-  //      <ul>
-  //     <li><Link to={routes.LANDING}>Landing</Link></li>
-  //     <li><Link to={routes.HOME}>Home</Link></li>
-  //     <li><Link to={routes.ACCOUNT}>Account</Link></li>
-  //     <li><Link to={routes.FEED}>Feed</Link></li>
-  //     <li><Link to={routes.ADDREQUEST}>Add Request</Link></li>
-  //     <li><Link to={routes.LOCATION}>Locate</Link></li>
-  //     <li><Link to={routes.CAMERA}>Camera</Link></li>
-  //     <li><SignOutButton /></li>
-  //  </ul>
-  //   </Navbar>
 );
 
 const NavigationNonAuth = () => (

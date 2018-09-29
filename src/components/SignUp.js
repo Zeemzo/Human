@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { auth } from "../firebase";
 import * as routes from "../constants/routes";
 
-import {auth as Auth} from '../firebase/firebase'
+import { auth as Auth } from '../firebase/firebase'
 // import * as routes from '../constants/routes';
 import axios from 'axios'
 // import * as routes from '../constants/routes';
@@ -43,43 +43,59 @@ class SignUpForm extends Component {
 
   onSubmit = event => {
     const {
-        username,
-        email,
-        passwordOne,
-      } = this.state;
+      username,
+      email,
+      passwordOne,
+    } = this.state;
 
-      const {
-        history,
-      } = this.props;
-  
-  
-      auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-        .then(authUser => {
-         axios.post(routes.HUMANBACKEND+'/api/users',{email: Auth.currentUser.email } ,{
+    const {
+      history,
+    } = this.props;
 
-            headers: {
-              'Access-Control-Allow-Origin':'*',
 
-                'Content-Type': 'application/json',
-            }
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        axios.post(routes.HUMANBACKEND + '/api/users', { email: Auth.currentUser.email }, {
+
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+          }
         })
-            .then(response => {
-              console.log(response)
-                // this.setState({
-                //     currentUsername: auth.currentUser.email
-                // })
-            })
+          .then(response => {
+            console.log(response)
+            const userId = Auth.currentUser.uid
+            const pushToken = localStorage.getItem('pushToken')
+            axios
+              .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
+                headers: {
+                  "Content-Type": "application/json",
+                  'Access-Control-Allow-Origin': '*',
+                }
+              })
+              .then((res) => {
+                console.log(res.data);
+                // this.setState(byPropKey('error', res))
+              }).catch((error) => {
+                console.log(error);
+                // this.setState(byPropKey('error', error.message))
 
-          this.setState({ ...INITIAL_STATE });
-          history.push(routes.HOME);
+              });
+            // this.setState({
+            //     currentUsername: auth.currentUser.email
+            // })
+          })
 
-        })
-        .catch(error => {
-          this.setState(byPropKey('error', error));
-        });
-  
-        
-      event.preventDefault();
+        this.setState({ ...INITIAL_STATE });
+        history.push(routes.HOME);
+
+      })
+      .catch(error => {
+        this.setState(byPropKey('error', error));
+      });
+
+
+    event.preventDefault();
   }
 
   render() {
@@ -92,8 +108,8 @@ class SignUpForm extends Component {
       username === "";
 
     return (
-      <Form horizontal>
-        <FormGroup onSubmit={this.onSubmit}>
+      <Form horizontal onSubmit={this.onSubmit}>
+        <FormGroup >
           <Col componentClass={ControlLabel} sm={2}>
             Full Name
           </Col>
@@ -125,7 +141,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup  onSubmit={this.onSubmit}>
+        <FormGroup onSubmit={this.onSubmit}>
           <Col componentClass={ControlLabel} sm={2}>
             Password
           </Col>
@@ -167,37 +183,6 @@ class SignUpForm extends Component {
         </FormGroup>
       </Form>
 
-      // <FormGroup onSubmit={this.onSubmit}>
-      //   <FormControl
-      //     value={username}
-      //     onChange={event => this.setState(byPropKey('username', event.target.value))}
-      //     type="text"
-      //     placeholder="Full Name"
-      //   /><br/>
-      //   <FormControl
-      //     value={email}
-      //     onChange={event => this.setState(byPropKey('email', event.target.value))}
-      //     type="text"
-      //     placeholder="Email Address"
-      //   /><br/>
-      //   <FormControl
-      //     value={passwordOne}
-      //     onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-      //     type="password"
-      //     placeholder="Password"
-      //   /><br/>
-      //   <FormControl
-      //     value={passwordTwo}
-      //     onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-      //     type="password"
-      //     placeholder="Confirm Password"
-      //   /><br/>
-      //   <Button disabled={isInvalid} type="submit">
-      //     Sign Up
-      //   </Button>
-
-      //   { error && <p>{error.message}</p> }
-      // </FormGroup>
     );
   }
 }

@@ -6,26 +6,17 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { HUMANBACKEND } from './constants/routes'
 // import './firebase/messaging'
+import SlideMenu from 'react-slide-menu'
 
 import { messaging } from './firebase/firebase';
 // import { auth } from './firebase/index';
 import { auth as Auth } from './firebase/firebase'
 
 
-// const config= {
-//     apiKey:"AIzaSyDd1bmOXMc1gs1RrsygS4B-qIf22o0zaI4" ,
-//     authDomain: "human-24b1b.firebaseapp.com",
-//     databaseURL: "https://human-24b1b.firebaseio.com",
-//     projectId: "human-24b1b",
-//     storageBucket: "human-24b1b.appspot.com",
-//     messagingSenderId: "534180446796"
-//   };
 
-
-//   export default messaging;
 
 ReactDOM.render(
-    <App />,
+    <App/>,
     document.getElementById('root')
 );
 registerServiceWorker();
@@ -93,6 +84,24 @@ messaging.requestPermission().then(function () {
 messaging.onTokenRefresh(function () {
     messaging.getToken().then(function (refreshedToken) {
         console.log('Token refreshed.' + refreshedToken);
+        localStorage.setItem('pushToken', refreshedToken)
+
+            if (Auth.currentUser !== null) {
+                console.log("already logged in during push token save");
+                axios
+                    .post(HUMANBACKEND + '/api/push/token', { pushToken: refreshedToken, userId: Auth.currentUser.uid }, {
+                        headers: { "Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
+                    }
+                      })
+                    .then((res) => {
+                        console.log(res.data);
+                        // this.setState(byPropKey('error', res))
+                    }).catch((error) => {
+                        console.log(error);
+                        // this.setState(byPropKey('error', error.message))
+
+                    });
+            };
         // Indicate that the new Instance ID token has not yet been sent to the
         // app server.
         // setTokenSentToServer(false);
@@ -110,6 +119,8 @@ messaging.onMessage(function (payload) {
     console.log('Message received. ', payload);
     localStorage.setItem('roomId',payload.notification.body)
     console.log(payload.notification.body);
+
+
     // [START_EXCLUDE]
     // Update the UI to include the received message.
     // appendMessage(payload);

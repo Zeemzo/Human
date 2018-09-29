@@ -51,17 +51,22 @@ class AddRequest extends Component {
         // console.log(this.state);
         axios
             .post(HUMANBACKEND + '/api/request/add', this.state, {
-                headers: { 'Authorization': "bearer " + token ,'Access-Control-Allow-Origin':'*',"Content-Type": "application/json",
+                headers: { 'Authorization': "bearer " + token ,
+                'Access-Control-Allow-Origin':'*',
+                "Content-Type": "application/json",
             }
             })
             .then((res) => {
                 console.log(res.data);
-                this.setState(byPropKey('error', res))
-            }).catch((error) => {
+                this.setState(byPropKey('error', "Request Added!!"))
+              }).catch((error) => {
                 console.log(error);
-                // this.setState(byPropKey('error', error.message))
+                this.setState(byPropKey('error', "Request Not Added!!"))
 
             });
+
+            this.setState(byPropKey('error', "Request Added!!"))
+
 
 
         event.preventDefault();
@@ -96,10 +101,17 @@ class AddRequest extends Component {
   };
 
   render() {
-    const { resourceType, requestType, description, error } = this.state;
+   
+    const { 
+      resourceType, 
+      requestType, 
+      description, 
+      error } = this.state;
 
     const isInvalid =
-      resourceType === "" || requestType === "" || description === "";
+      resourceType === "" || 
+      requestType === "" || 
+      description === "";
 
     return (
       <Form horizontal onSubmit={this.onSubmit}>
@@ -123,9 +135,9 @@ class AddRequest extends Component {
               }
             >
               <option value="">Select Resource Type</option>
-              <option value="Food">food</option>
-              <option value="Clothing">clothing</option>
-              <option value="Other">other</option>
+              <option value="food">food</option>
+              <option value="clothing">clothing</option>
+              <option value="other">other</option>
             </FormControl>
           </Col>
         </FormGroup>
@@ -149,8 +161,8 @@ class AddRequest extends Component {
               }
             >
               <option value="">Select Request Type</option>
-              <option value="Need">need</option>
-              <option value="Provision">provision</option>
+              <option value="need">need</option>
+              <option value="provision">provision</option>
             </FormControl>
           </Col>
         </FormGroup>
@@ -188,11 +200,12 @@ class AddRequest extends Component {
         </FormGroup>
         <Cam DataUrl={this.handleImage} />
         <br />
-        <Button disabled={isInvalid} type="submit">
+        <Button bsStyle="success" 
+                    bsSize="large" disabled={isInvalid} type="submit">
           Submit
         </Button>
 
-        <h1> {error && <p>{error.message}</p>}</h1>
+  <h1>{this.state.error}</h1>
       </Form>
     );
   }

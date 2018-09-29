@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, Grid, Row, Col, Jumbotron } from "react-bootstrap";
+import { Grid,Jumbotron } from "react-bootstrap";
 
 import withAuthorization from "./withAuthorization";
 import carousel from "./carousel.png";

@@ -31,9 +31,9 @@ class Cam extends Component {
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
           idealFacingMode = {FACING_MODES.ENVIRONMENT}
-          idealResolution = {{width: 1280, height: 720}}
+          idealResolution = {{width: 640, height: 480}}
           imageType = {IMAGE_TYPES.JPG}
-          imageCompression = {0.50}
+          imageCompression = {0.95}
           // isMaxResolution = {false}
           // isImageMirror = {false}
           // isDisplayStartCameraError = {true}       

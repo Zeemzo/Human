@@ -4,7 +4,7 @@ import * as L from "leaflet";
 // import { render } from 'react-dom'
 import withAuthorization from "./withAuthorization";
 // import { withRouter } from 'react-router-dom';
-import { Row, Col, Grid, Thumbnail, Panel, Button } from "react-bootstrap";
+import {  Grid,  Button } from "react-bootstrap";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 // import AddRequest from './AddRequest';
 // import { LatLngLiteral } from '../../../node_modules/@types/leaflet';
@@ -32,14 +32,15 @@ class Mappy extends React.Component {
 
   mapRef = createRef();
 
-  // componentDidMount() {
-  //     this.mapRef.current.leafletElement.locate()
-
-  // }
-  handleClick = event => {
+  componentDidMount() {
     this.mapRef.current.leafletElement.locate();
-    event.preventDefault();
-  };
+    // event.preventDefault();
+
+  }
+  // handleClick = event => {
+  //   this.mapRef.current.leafletElement.locate();
+  //   event.preventDefault();
+  // };
 
   handleLocationFound = e => {
     this.setState({
@@ -70,7 +71,7 @@ class Mappy extends React.Component {
               </Popup>
             </Marker>{" "}
           </Map>
-          <Button onClick={this.handleClick}>locate me</Button>
+          {/* <Button onClick={this.handleClick}>locate me</Button> */}
         </Grid>
       </div>
     );

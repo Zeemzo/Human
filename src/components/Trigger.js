@@ -55,7 +55,7 @@ class Trigger extends React.Component {
                 .connect()
                 .then(currentUser => {
                     this.setState({ currentUser })
-                    this.state.item.email
+                    // this.state.item.email
                     currentUser.createRoom({
                         name: 'general',
                         private: true,
@@ -71,9 +71,14 @@ class Trigger extends React.Component {
                         const lol = this.state.item;
                         lol.roomId=room.id
                         lol.sender = auth.currentUser.email
+                        // lol.reqType=0
                         console.log(lol);
                 
-                
+                        this.state.currentUser.sendMessage({
+                            text:this.sendMessage,
+                            roomId: parseInt(localStorage.getItem('roomId')),
+                          })
+                        
                         axios
                         .post(HUMANBACKEND + '/api/request/accept', lol, {
                             headers: { "Content-Type": "application/json",'Authorization': "bearer " + token }
@@ -105,8 +110,8 @@ class Trigger extends React.Component {
            // style={{ height: 200 }}
             <div > 
                 <Button
-                    bsStyle="primary"
-                    bsSize="large"
+                    bsStyle="success"
+                    bsSize="medium"
                     onClick={() => this.setState({ show: true })}
                 >Expand Request</Button>
 
@@ -138,7 +143,7 @@ class Trigger extends React.Component {
                                             type="hidden"
                                         />
 
-                                        <SendMessageForm sendMessage={this.sendMessage} />
+                                        <input onChange={e=>{this.sendMessage=e.target.value}} type="text" />
                                         <button type="submit">
                                             Accept Provision</button>
                                     </form>

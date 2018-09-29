@@ -1,44 +1,72 @@
- import React, { Component } from 'react'
+import React, { Component } from 'react'
+import { auth as Auth } from "../firebase/firebase";
 
- class MessagesList extends Component {
-   render() {
-     const styles = {
-       container: {
-         overflowY: 'scroll',
-         flex: 1,
-       },
-       ul: {
-         listStyle: 'none',
-       },
-       li: {
-         marginTop: 13,
-         marginBottom: 13,
-       },
-       senderUsername: {
-         fontWeight: 'bold',
-       },
-       message: { fontSize: 15 },
-     }
-     return (
-       <div
-         style={{
-           ...this.props.style,
-           ...styles.container,
-         }}
-       >
-         <ul style={styles.ul}>
-           {this.props.messages.map((message, index) => (
-             <li key={index} style={styles.li}>
-               <div>
-                 <span style={styles.senderUsername}>{message.senderId}</span>{' '}
-               </div>
-               <p style={styles.message}>{message.text}</p>
-             </li>
-           ))}
-         </ul>
-       </div>
-     )
-   }
- }
+class MessagesList extends Component {
+  render() {
+    const styles = {
+      container: {
+        overflowY: 'scroll',
+        flex: 1,
+      },
+      ul: {
+        listStyle: 'none',
+      },
+      li: {
+        marginTop: 13,
+        marginBottom: 13,
+      },
+      receiverUsername: {
+        fontWeight: 'bold',
+        float: 'right',
+        // fontSize: 20,
+      },
+      senderUsername: {
+        fontWeight: 'bold',
+        float: 'left',
 
- export default MessagesList
+        // fontSize: 20,
+      },
+      messageA: { fontSize: 15,float: 'right', },
+      messageB: { fontSize: 15,float: 'left', },
+
+    }
+    return (
+      <div
+        style={{
+          ...this.props.style,
+          ...styles.container,
+        }}
+      >
+        <ul style={styles.ul}>
+          {this.props.messages.map((message, index) => (
+            <li key={index} style={styles.li}>
+
+              {Auth.currentUser.email == message.senderId ?
+                <div>
+                  <span style={styles.receiverUsername}>{message.senderId}</span>
+                  {/* <br /> */}
+                  <br />
+
+                  <p style={styles.messageA}>{message.text}</p>
+                </div>
+                : <div>
+                  <span style={styles.senderUsername}>{message.senderId}</span>
+                  {/* <br /> */}
+                  <br />
+
+                  <p style={styles.messageB}>{message.text}</p>
+                </div>}
+                <br />
+                  <br />
+             
+
+
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+}
+
+export default MessagesList
