@@ -34,6 +34,8 @@ class PasswordChangeForm extends Component {
       .doPasswordUpdate(passwordOne)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
+        this.setState(byPropKey("error", "Password has successfully been changed!"));
+
       })
       .catch(error => {
         this.setState(byPropKey("error", error));

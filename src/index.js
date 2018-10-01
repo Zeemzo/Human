@@ -121,6 +121,20 @@ messaging.onMessage(function (payload) {
     console.log(payload.notification.body);
 
 
+    // Notification.requestPermission(function (result) {
+    //         if (result === 'granted') {
+    //           console.log("im here to vibrate")
+        
+    //           navigator.serviceWorker.ready.then(function (registration) {
+    //             registration.showNotification('Vibration Sample', {
+    //               body: 'Buzz! Buzz!',
+    //               icon: '../images/touch/chrome-touch-icon-192x192.png',
+    //               vibrate: [200, 100, 200, 100, 200, 100, 200],
+    //               tag: 'vibration-sample'
+    //             });
+    //           });
+    //         }
+    //       });
     // [START_EXCLUDE]
     // Update the UI to include the received message.
     // appendMessage(payload);

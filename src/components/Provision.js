@@ -56,6 +56,7 @@ class Provision extends React.Component {
           obj[key].id = key;
           arr.push(obj[key]);
         }
+        arr=arr.reverse();
         console.log(arr);
         this.setState({ needs: arr });
       })
@@ -82,18 +83,19 @@ class Provision extends React.Component {
                 <Col xs={7} md={4} lg={5}>
                   <h3>Request ID: {item.id}</h3>
                   <p>
-                    <span className="input-label">
-                      email: {item.email}
+                  <span className="input-label">
+                     
+                     Type: {item.requestType}
+                     <br /> 
+                     email: {item.email}
+                     <br />
+                     Resource: {item.resourceType}
+                     <br />
+                     Servings: {item.quantity}
                       <br />
-                      Type: {item.requestType}
-                      <br />
-                      Latitude: {item.latitude}
-                      <br />
-                      Longitude: {item.longitude}
-                      <br />
-                    </span>
-                    <p>Description : {item.description}</p>
-                    <Trigger item={item} />
+                   </span>
+                   <p>Description : {item.description}</p>
+                   <Trigger item={item} />
                   </p>
                 </Col>
               </Row>

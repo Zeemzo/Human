@@ -45,6 +45,7 @@ class ChatScreen extends Component {
                             this.setState({
                                 messages: [...this.state.messages, message],
                             })
+                            // window.scrollTo({left:0,top:10})
                         },
                     },
                 })
@@ -93,6 +94,8 @@ class ChatScreen extends Component {
             chatContainer: {
                 display: 'flex',
                 flex: 1,
+                backgroundColor: '#2c303b',
+                color: 'white',
             },
             whosOnlineListContainer: {
                 width: '100%',
@@ -106,6 +109,7 @@ class ChatScreen extends Component {
                 width: '85%',
                 display: 'flex',
                 flexDirection: 'column',
+               
             },
         }
 
@@ -116,13 +120,14 @@ class ChatScreen extends Component {
                     {/* <below style={styles.whosOnlineListContainer}>
                         <h2>Whos online PLACEHOLDER</h2>
                     </below> */}
-                    <section style={styles.whosOnlineListContainer}>
+                    <section style={styles.chatContainer}>
                         <MessageList
                             messages={this.state.messages}
                             style={styles.chatList} />   </section>
                      </div>  
 
                    <SendMessageForm sendMessage={this.sendMessage} />
+                   
             </div>
         )
     }

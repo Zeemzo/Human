@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import AuthUserContext from "./AuthUserContext";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
+import { Nav, Navbar, NavItem, Image } from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";
 import SlideMenu from 'react-slide-menu'
@@ -10,21 +10,25 @@ import { LinkContainer } from "react-router-bootstrap";
 const Navigation = () => (
 
   <AuthUserContext.Consumer>
- 
+
 
     {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
- 
+
   </AuthUserContext.Consumer>
 );
 
 const NavigationAuth = () => (
-  <Navbar >
-    <Navbar.Header>
+  <Navbar  >
+    {/* <Navbar.Header>
       <Navbar.Brand>
-        <a href="/">Human</a>
+        <a href="/"><Image height={20} src={'./logo.png'} />
+        </a>
       </Navbar.Brand>
-    </Navbar.Header>
+    </Navbar.Header> */}
     <Nav>
+    {/* <LinkContainer to={'/'}>
+        <NavItem><Image  src={'./human.png'} /></NavItem>
+      </LinkContainer> */}
       <LinkContainer to={routes.HOME}>
         <NavItem>Home</NavItem>
       </LinkContainer>
@@ -38,16 +42,23 @@ const NavigationAuth = () => (
       <LinkContainer to={routes.ADDREQUEST}>
         <NavItem>Add Request</NavItem>
       </LinkContainer>
-      {/* <LinkContainer to={routes.LOCATION}>
+      {/* {/* <LinkContainer to={routes.LOCATION}>
         <NavItem>Locate</NavItem>
-      </LinkContainer>
-      <LinkContainer to={routes.CAMERA}>
-        <NavItem>Camera</NavItem>
       </LinkContainer> */}
+      <AuthUserContext.Consumer>
+
+
+        {authUser => (authUser.displayName == 'ADMIN' ?
+          <LinkContainer to={'/admin'}>
+            <NavItem>Admin</NavItem>
+          </LinkContainer> : null)}
+
+      </AuthUserContext.Consumer>
+
       <LinkContainer to='/chat'>
         <NavItem>Chat</NavItem>
       </LinkContainer>
-     
+
     </Nav>
     <Nav pullRight>
       <NavItem>
@@ -69,20 +80,20 @@ const NavigationNonAuth = () => (
   //    </Nav>
   //   </Navbar.Collapse>
   //   </Navbar>
-  <Navbar>
-    <Navbar.Header>
+  <Navbar >
+    {/* <Navbar.Header>
       <Navbar.Brand>
-        <a href="#">Human</a>
+        <a href="/">Human</a>
       </Navbar.Brand>
-    </Navbar.Header>
+    </Navbar.Header> */}
     <Nav>
-      <LinkContainer to="">
-        <NavItem>Landing</NavItem>
+      <LinkContainer to="/">
+        <NavItem>Human</NavItem>
       </LinkContainer>
       {/* <Link to={routes.SIGN_IN}>Sign In</Link> */}
     </Nav>
     <Nav pullRight>
-      <LinkContainer to="/SignIn">
+      <LinkContainer to="/signin">
         <NavItem>Sigin</NavItem>
       </LinkContainer>
     </Nav>

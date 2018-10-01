@@ -60,6 +60,7 @@ class Chat extends React.Component {
                 <Title user={'HUMAN CHAT'} />
                 <MessageList messages={this.state.messages} />
                 <SendMessageForm sendMessage={this.sendMessage} />
+                
             </div>
         )
     }

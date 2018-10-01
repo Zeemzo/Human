@@ -28,6 +28,7 @@ const INITIAL_STATE = {
   email: "",
   passwordOne: "",
   passwordTwo: "",
+  role: "",
   error: null
 };
 
@@ -42,7 +43,7 @@ class SignUpForm extends Component {
   }
 
   onSubmit = event => {
-    const {
+    const { role,
       username,
       email,
       passwordOne,
@@ -55,17 +56,35 @@ class SignUpForm extends Component {
 
     auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        axios.post(routes.HUMANBACKEND + '/api/users', { email: Auth.currentUser.email }, {
+        authUser.user.updateProfile({ displayName: role }).then( ()=> {
+          console.log(authUser.user);
+        })
 
+
+        //send user name to get a chatkit token
+        axios.post(routes.HUMANBACKEND + '/api/users', { email: Auth.currentUser.email }, {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
           }
         })
           .then(response => {
+            //////send user data to the backend to store in the db, includeing user roles.
+            axios
+              .post(routes.HUMANBACKEND + '/api/adduser', { username: username, role:role,userId:authUser.user.uid }, {
+                headers: {
+                  "Content-Type": "application/json",
+                  'Access-Control-Allow-Origin': '*',
+                }
+              })
+              .then((res) => {
+                console.log(res.data);
+
             console.log(response)
             const userId = Auth.currentUser.uid
             const pushToken = localStorage.getItem('pushToken')
+
+            ////to send the push token id to the backend
             axios
               .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
                 headers: {
@@ -81,6 +100,16 @@ class SignUpForm extends Component {
                 // this.setState(byPropKey('error', error.message))
 
               });
+
+
+
+            this.setState(byPropKey('error', res))
+            }).catch((error) => {
+              console.log(error);
+              // this.setState(byPropKey('error', error.message))
+
+            });
+
             // this.setState({
             //     currentUsername: auth.currentUser.email
             // })
@@ -99,13 +128,14 @@ class SignUpForm extends Component {
   }
 
   render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
+    const { username, email, passwordOne, passwordTwo, error, role } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === "" ||
       email === "" ||
-      username === "";
+      username === "" ||
+      role === "";
 
     return (
       <Form horizontal onSubmit={this.onSubmit}>
@@ -125,7 +155,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup onSubmit={this.onSubmit}>
+        <FormGroup >
           <Col componentClass={ControlLabel} sm={2}>
             Email
           </Col>
@@ -141,7 +171,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup onSubmit={this.onSubmit}>
+        <FormGroup >
           <Col componentClass={ControlLabel} sm={2}>
             Password
           </Col>
@@ -157,7 +187,7 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup onSubmit={this.onSubmit}>
+        <FormGroup >
           <Col componentClass={ControlLabel} sm={2}>
             Confirm Password
           </Col>
@@ -170,6 +200,27 @@ class SignUpForm extends Component {
               type="password"
               placeholder="Confirm Password"
             />
+          </Col>
+        </FormGroup>
+        <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+            User Role
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl
+              componentClass="select"
+              placeholder="User Role"
+              value={role}
+              onChange={event =>
+                this.setState(byPropKey("role", event.target.value))
+              }
+            >
+              <option value="">Select User Role</option>
+              <option value="USER">User</option>
+              <option value="CONTRIBUTOR">Contributer</option>
+              <option value="ADMIN">Admin</option>
+
+            </FormControl>
           </Col>
         </FormGroup>
 

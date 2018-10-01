@@ -1,13 +1,16 @@
-import * as React from "react";
+import React from 'react';
+
+import AuthUserContext from './AuthUserContext';
+
 import { Col, Grid, Thumbnail, Panel, Row, Image } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-import DisplayLoc from "./DisplayLocation";
+import DisplayMultiLoc from "./DisplayMultiLocation";
 import Trigger from "./Trigger";
-class Need extends React.Component {
+class Matches extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +30,7 @@ componentDidMount(){
 
     const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     axios
-      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
+      .get(HUMANBACKEND + "/api/matchedRequest/getmatches" , {
         headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
       }
       })
@@ -64,54 +67,32 @@ componentDidMount(){
             <Grid>
               <Row>
                 <Col xs={7} md={4} lg={5}>
-                  <Image width="250" height="300" src={item.image} rounded />
+                <DisplayMultiLoc
+                      needyLoc={item.needyLoc}
+                      giverLoc={item.giverLoc}
+                    />
                 </Col>
                 <Col xs={7} md={4} lg={5}>
-                  <h3>Request ID: {item.id}</h3>
+                  <h3>Request ID: {item.matchId}</h3>
                   <p>
-                    {/* <DisplayLoc
-                      latitude={item.latitude}
-                      longitude={item.longitude}
-                    /> */}
+                    
                     <span className="input-label">
-                     
-                      Type: {item.requestType}
-                      <br /> 
-                      email: {item.email}
+                      needy: {item.needy}
                       <br />
-                      Resource: {item.resourceType}
+                      giver: {item.giver}
                       <br />
-                      Servings: {item.quantity}
-                      <br />
-                    </span>
-                    <p>Description : {item.description}</p>
-                    <Trigger item={item} />
+                  </span>
                   </p>
                 </Col>
               </Row>
             </Grid>
           </Thumbnail>
-
-          // <Panel key={i}>
-          //   <Panel.Heading>Request ID: {item.id}</Panel.Heading>
-          //   <Panel.Body>
-          //     <Col xs={15} md={0}>
-          //   <Thumbnail href="#" alt="171x180" src={item.image} />
-
-          //   <DisplayLoc latitude={item.latitude} longitude={item.longitude} />
-          //   <span className="input-label">
-          //     email: {item.email} | Type: {item.type} | Latitude: {item.latitude} | Longitude: {item.longitude}
-          //   </span>
-          //   <p>Description : {item.description}</p>
-          // </Col>
-          // </Panel.Body>
-          // </Panel>
         ))}
       </Grid>
     );
   }
 }
+  ///dont mistake the displayName, it has the user role data in it.
+const authCondition = (authUser) => !!authUser && authUser.displayName === 'CONTRIBUTOR'||authUser.displayName === 'ADMIN' ;
 
-const authCondition = authUser => !!authUser;
-export default withAuthorization(authCondition)(Need);
-// export default Feed;
+export default withAuthorization(authCondition)(Matches);

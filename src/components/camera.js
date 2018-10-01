@@ -14,6 +14,11 @@ class Cam extends Component {
             // taken:true,
         }
     }
+
+    componentWillUnmount(){
+
+
+    }
   onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
     console.log(dataUri);
@@ -34,9 +39,9 @@ class Cam extends Component {
           idealResolution = {{width: 640, height: 480}}
           imageType = {IMAGE_TYPES.JPG}
           imageCompression = {0.95}
-          // isMaxResolution = {false}
-          // isImageMirror = {false}
-          // isDisplayStartCameraError = {true}       
+          isMaxResolution = {false}
+          isImageMirror = {false}
+          isDisplayStartCameraError = {true}       
            />
       </div>
     );

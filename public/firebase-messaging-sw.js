@@ -24,7 +24,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
   var notificationTitle = payload.notification.title;
   var notificationOptions = {
     body: 'A human has accepted your request!',
-    icon: '/human.png',
+    icon: './human.png',
     vibrate: [200, 100, 200, 100, 200, 100, 200],
   };
   

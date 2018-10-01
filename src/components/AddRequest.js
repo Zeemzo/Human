@@ -3,8 +3,11 @@ import React, { Component } from "react";
 import withAuthorization from "./withAuthorization";
 import { firebase } from "../firebase/index";
 import axios from "axios";
+import AuthUserContext from './AuthUserContext';
+
 import { HUMANBACKEND } from "../constants/routes";
 import {
+  Grid,
   Col,
   Form,
   FormControl,
@@ -14,63 +17,70 @@ import {
 } from "react-bootstrap";
 import Mappy from "./map";
 import Cam from "./camera";
+import ModalCamera from "./ModalCamera";
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
 
+
 const INITIAL_STATE = {
   resourceType: "",
   description: "",
   email: "",
+  userId:'',
   latitude: null,
   longitude: null,
   status: false,
+  fulfilled: false,
+  matched: false,
+  quantity: null,
   requestType: "",
   image: "",
   error: null
 };
 
 class AddRequest extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { ...INITIAL_STATE };
-    }
-    componentDidMount() {
-        var user = firebase.auth.currentUser;
-        if (user) {
-            this.setState(byPropKey('email', user.email))
-            this.setState(byPropKey('userId', user.uid))
+  constructor(props) {
+    super(props);
+    this.state = { ...INITIAL_STATE };
+  }
+  componentDidMount() {
+    var user = firebase.auth.currentUser;
+    if (user) {
+      this.setState(byPropKey('email', user.email))
+      this.setState(byPropKey('userId', user.uid))
 
+    }
+  }
+  onSubmit = (event) => {
+    // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
+    //    console.log(this.state);
+    const token = localStorage.getItem('token')
+    // console.log(this.state);
+    axios
+      .post(HUMANBACKEND + '/api/request/add', this.state, {
+        headers: {
+          'Authorization': "bearer " + token,
+          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
         }
-    }
-    onSubmit = (event) => {
-        // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
-        //    console.log(this.state);
-        const token = localStorage.getItem('token')
-        // console.log(this.state);
-        axios
-            .post(HUMANBACKEND + '/api/request/add', this.state, {
-                headers: { 'Authorization': "bearer " + token ,
-                'Access-Control-Allow-Origin':'*',
-                "Content-Type": "application/json",
-            }
-            })
-            .then((res) => {
-                console.log(res.data);
-                this.setState(byPropKey('error', "Request Added!!"))
-              }).catch((error) => {
-                console.log(error);
-                this.setState(byPropKey('error', "Request Not Added!!"))
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.setState(byPropKey('error', "Request Added!!"))
+      }).catch((error) => {
+        console.log(error);
+        this.setState(byPropKey('error', "Request Not Added!!"))
 
-            });
+      });
 
-            this.setState(byPropKey('error', "Request Added!!"))
+    // this.setState(byPropKey('error', "Request Added!!"))
 
 
 
-        event.preventDefault();
-    }
+    event.preventDefault();
+  }
   // }
   // onSubmit = event => {
   //   // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
@@ -101,19 +111,22 @@ class AddRequest extends Component {
   };
 
   render() {
-   
-    const { 
-      resourceType, 
-      requestType, 
-      description, 
+
+    const {
+      resourceType,
+      requestType,
+      description,
+      quantity,
       error } = this.state;
 
     const isInvalid =
-      resourceType === "" || 
-      requestType === "" || 
-      description === "";
+      resourceType === "" ||
+      requestType === "" ||
+      description === "" ||
+      quantity === null;
 
     return (
+      <Grid>
       <Form horizontal onSubmit={this.onSubmit}>
         {/* <input
                     value={resourceType}
@@ -141,12 +154,18 @@ class AddRequest extends Component {
             </FormControl>
           </Col>
         </FormGroup>
-        {/* <input
-                    value={requestType}
-                    onChange={event => this.setState(byPropKey('requestType', event.target.value))}
-                    type="text"
-                    placeholder="Request Type"
-                /> */}
+        <AuthUserContext.Consumer>{
+          authUser =>
+          // console.log(authUser.uid)
+            <input
+              value={authUser.uid}
+              onChange={event => this.setState(byPropKey('userId', event.target.value))}
+              type="hidden"
+              placeholder="Request Type"
+            />
+        }
+
+        </AuthUserContext.Consumer>
         <FormGroup controlId="formControlsSelect">
           <Col componentClass={ControlLabel} sm={2}>
             Request Type
@@ -166,6 +185,35 @@ class AddRequest extends Component {
             </FormControl>
           </Col>
         </FormGroup>
+        <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+            Serving Quantity
+          </Col>
+          <Col xs={12} md={8}>
+            <FormControl
+              componentClass="select"
+              placeholder="Serving Quantity"
+              value={quantity}
+              onChange={event =>
+                this.setState(byPropKey("quantity", event.target.value))
+              }
+            >
+              <option value={0}>Select Servings</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
+              <option value={9}>9</option>
+              <option value={10}>10</option>
+
+
+            </FormControl>
+          </Col>
+        </FormGroup>
 
         <FormGroup controlId="formControlsTextarea">
           <Col componentClass={ControlLabel} sm={2}>
@@ -182,15 +230,6 @@ class AddRequest extends Component {
             />
           </Col>
         </FormGroup>
-
-        {/* <textarea
-          value={description}
-          onChange={event =>
-            this.setState(byPropKey("description", event.target.value))
-          }
-          type="text"
-          placeholder="Description"
-        /> */}
         <br />
 
         <FormGroup>
@@ -198,15 +237,16 @@ class AddRequest extends Component {
             <Mappy loc={this.handleLoc} />
           </Col>
         </FormGroup>
-        <Cam DataUrl={this.handleImage} />
-        <br />
-        <Button bsStyle="success" 
-                    bsSize="large" disabled={isInvalid} type="submit">
+        {/* <Cam DataUrl={this.handleImage} /> */}
+        <ModalCamera DataUrl={this.handleImage}/>
+        <br /><Grid>
+        <Button bsStyle="success"
+          bsSize="large" disabled={isInvalid} type="submit">
           Submit
-        </Button>
+        </Button></Grid> 
 
-  <h1>{this.state.error}</h1>
-      </Form>
+        <h1>{this.state.error}</h1>
+      </Form></Grid>
     );
   }
 }

@@ -1,6 +1,6 @@
 import { Button, Modal } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-import { Col, Grid, Thumbnail, Panel } from 'react-bootstrap';
+import { Col, Grid, Thumbnail, Panel ,Image} from 'react-bootstrap';
 import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import Chatkit from '@pusher/chatkit'
@@ -28,87 +28,87 @@ class Trigger extends React.Component {
         };
         this.sendMessage = this.sendMessage.bind(this)
 
-        }
+    }
 
-        handleHide() {
-            this.setState({ show: false });
-        }
-        sendMessage(text) {
-            this.currentUser.sendMessage({
-                text,
-                roomId: this.state.roomId
-            })
-        }
+    handleHide() {
+        this.setState({ show: false });
+    }
+    sendMessage(text) {
+        this.currentUser.sendMessage({
+            text,
+            roomId: this.state.roomId
+        })
+    }
 
-        onSubmit = (event) => {
-            event.preventDefault();
+    onSubmit = (event) => {
+        event.preventDefault();
 
-            const chatManager = new Chatkit.ChatManager({
-                instanceLocator: "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43",
-                userId: auth.currentUser.email,
-                tokenProvider: new Chatkit.TokenProvider({
-                    url: HUMANBACKEND + '/api/authenticate',
-                }),
-            })
+        const chatManager = new Chatkit.ChatManager({
+            instanceLocator: "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43",
+            userId: auth.currentUser.email,
+            tokenProvider: new Chatkit.TokenProvider({
+                url: HUMANBACKEND + '/api/authenticate',
+            }),
+        })
 
-            chatManager
-                .connect()
-                .then(currentUser => {
-                    this.setState({ currentUser })
-                    // this.state.item.email
-                    currentUser.createRoom({
-                        name: 'general',
-                        private: true,
-                        addUserIds: [this.state.item.email]
-                    }).then(room => {
-                        console.log(`Created room called ${room.name}`)
-                        console.log(room.id)
-                        localStorage.setItem('roomId',room.id);
-                        this.setState({roomId:room.id})
+        chatManager
+            .connect()
+            .then(currentUser => {
+                this.setState({ currentUser })
+                // this.state.item.email
+                currentUser.createRoom({
+                    name: 'general',
+                    private: true,
+                    addUserIds: [this.state.item.email]
+                }).then(room => {
+                    console.log(`Created room called ${room.name}`)
+                    console.log(room.id)
+                    localStorage.setItem('roomId', room.id);
+                    this.setState({ roomId: room.id })
 
-                        const token = localStorage.getItem('token')
+                    const token = localStorage.getItem('token')
 
-                        const lol = this.state.item;
-                        lol.roomId=room.id
-                        lol.sender = auth.currentUser.email
-                        // lol.reqType=0
-                        console.log(lol);
-                
-                        this.state.currentUser.sendMessage({
-                            text:this.sendMessage,
-                            roomId: parseInt(localStorage.getItem('roomId')),
-                          })
-                        
-                        axios
+                    const lol = this.state.item;
+                    lol.roomId = room.id
+                    lol.sender = auth.currentUser.email
+                    // lol.reqType=0
+                    console.log(lol);
+
+                    this.state.currentUser.sendMessage({
+                        text: this.sendMessage,
+                        roomId: parseInt(localStorage.getItem('roomId')),
+                    })
+
+                    axios
                         .post(HUMANBACKEND + '/api/request/accept', lol, {
-                            headers: { "Content-Type": "application/json",'Authorization': "bearer " + token }
-                          })
+                            headers: { "Content-Type": "application/json", 'Authorization': "bearer " + token }
+                        })
                         .then((res) => {
                             console.log(res.data);
                             // this.setState(byPropKey('error', res))
                         }).catch((error) => {
                             console.log(error);
                             // this.setState(byPropKey('error', error.message))
-                
+
                         });
 
 
-                    }).catch(err => {
-                        console.log(`Error creating room ${err}`)
-                    })
+                }).catch(err => {
+                    console.log(`Error creating room ${err}`)
                 })
-                .catch(error => console.error('error', error))
-        
+            })
+            .catch(error => console.error('error', error))
 
 
-        
+
+
         // event.preventDefault();
     }
 
     render() {
         return (
-           // style={{ height: 200 }}
-            <div > 
+            // style={{ height: 200 }}
+            <div >
                 <Button
                     bsStyle="success"
                     bsSize="medium"
@@ -130,35 +130,64 @@ class Trigger extends React.Component {
                         <Panel >
                             {/* <Panel.Heading>Request ID: {this.state.item.id}</Panel.Heading> */}
                             <Panel.Body>
-                                <Col xs={15} md={0}>
-                                    <Thumbnail href="#" alt="171x180" src={this.state.item.image} />
-                                    <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
-                                    <span className="input-label">
-                                        email: {this.state.item.email} | Type: {this.state.item.type} | Latitude: {this.state.item.latitude} | Longitude: {this.state.item.longitude}
-                                    </span>
-                                    <p>Description : {this.state.item.description}</p>
-                                    <form onSubmit={this.onSubmit}>
-                                        <input
-                                            value={this.state.item}
-                                            type="hidden"
-                                        />
 
-                                        <input onChange={e=>{this.sendMessage=e.target.value}} type="text" />
-                                        <button type="submit">
-                                            Accept Provision</button>
-                                    </form>
+                                <Col  >
+                                    <Image width="280" height="300" src={this.state.item.image} rounded />
+                                    <br/>
+                                    <br/>
+
+                                    <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
+
                                 </Col>
+                                <Col >
+                                    <h3>Request ID: {this.state.item.id}</h3>
+                                    <p>
+                                        <span className="input-label">
+
+                                            Type: {this.state.item.requestType}
+                                            <br />
+                                            email: {this.state.item.email}
+                                            <br />
+                                            Resource: {this.state.item.resourceType}
+                                            <br />
+                                            Servings: {this.state.item.quantity}
+                                            <br />
+                                            <p>Description : {this.state.item.description}</p>
+
+                                        </span>
+
+
+
+                                        {/* <Col xs={15} md={0}>
+                                            <Thumbnail href="#" alt="171x180" src={this.state.item.image} />
+                                            <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
+                                            <span className="input-label">
+                                                email: {this.state.item.email} | Type: {this.state.item.type} | Latitude: {this.state.item.latitude} | Longitude: {this.state.item.longitude}
+                                            </span>
+                                            <p>Description : {this.state.item.description}</p> */}
+                                        <form onSubmit={this.onSubmit}>
+                                            <input
+                                                value={this.state.item}
+                                                type="hidden"
+                                            />
+
+                                            <input onChange={e => { this.sendMessage = e.target.value }} type="text" />
+                                            <button type="submit">
+                                                Accept Provision</button>
+                                        </form>
+                                        </p>
+                                        </Col>
                             </Panel.Body>
                         </Panel>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.handleHide}>Close</Button>
-                    </Modal.Footer>
+                        <Modal.Footer>
+                            <Button onClick={this.handleHide}>Close</Button>
+                        </Modal.Footer>
                 </Modal>
             </div>
-        );
-    }
-}
-
-const authCondition = (authUser) => !!authUser;
-export default withAuthorization(authCondition)(Trigger);
+                );
+            }
+        }
+        
+        const authCondition = (authUser) => !!authUser;
+        export default withAuthorization(authCondition)(Trigger);

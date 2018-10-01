@@ -35,7 +35,7 @@ export default function register() {
       if (isLocalhost) {
         // This is running on localhost. Lets check if a service worker still exists or not.
         checkValidServiceWorker(swUrl);
-        showNotification()
+        // showNotification()
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
@@ -52,22 +52,22 @@ export default function register() {
   }
 }
 
-function showNotification() {
-  Notification.requestPermission(function (result) {
-    if (result === 'granted') {
-      console.log("im here to vibrate")
+// function showNotification() {
+//   Notification.requestPermission(function (result) {
+//     if (result === 'granted') {
+//       console.log("im here to vibrate")
 
-      navigator.serviceWorker.ready.then(function (registration) {
-        registration.showNotification('Vibration Sample', {
-          body: 'Buzz! Buzz!',
-          icon: '../images/touch/chrome-touch-icon-192x192.png',
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: 'vibration-sample'
-        });
-      });
-    }
-  });
-}
+//       navigator.serviceWorker.ready.then(function (registration) {
+//         registration.showNotification('Vibration Sample', {
+//           body: 'Buzz! Buzz!',
+//           icon: '../images/touch/chrome-touch-icon-192x192.png',
+//           vibrate: [200, 100, 200, 100, 200, 100, 200],
+//           tag: 'vibration-sample'
+//         });
+//       });
+//     }
+//   });
+// }
 
 function registerValidSW(swUrl) {
   navigator.serviceWorker
@@ -82,7 +82,7 @@ function registerValidSW(swUrl) {
               // the fresh content will have been added to the cache.
               // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
-              showNotification()
+              // showNotification()
               console.log('New content is available; please refresh.');
             } else {
               // At this point, everything has been precached.
