@@ -21,6 +21,8 @@ var messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   // Customize notification here
+  localStorage.setItem('roomId',payload.notification.body)
+  
   var notificationTitle = payload.notification.title;
   var notificationOptions = {
     body: 'A human has accepted your request!',

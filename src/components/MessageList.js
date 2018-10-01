@@ -14,6 +14,8 @@ class MessagesList extends Component {
       li: {
         marginTop: 13,
         marginBottom: 13,
+        marginRight:13,
+        marginLeft:13,
       },
       receiverUsername: {
         fontWeight: 'bold',

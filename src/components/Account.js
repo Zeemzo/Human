@@ -117,7 +117,7 @@ this.handleImage=this.handleImage.bind(this)
 
                   {/* <FieldGroup id="formControlsFile" type="file" /> */}
                   {
-                    this.state.lol ? <Image src={this.state.src} /> : null
+                    this.state.lol ? <Image width={300}   src={this.state.src} /> : null
                   }
 
 

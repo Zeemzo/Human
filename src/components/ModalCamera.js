@@ -60,7 +60,7 @@ class ModalCamera extends React.Component {
         return (
             // style={{ height: 200 }}
             <div > {
-                this.state.showPhoto ? <Image src={this.state.src} /> : null
+                this.state.showPhoto ? <Image width={300} src={this.state.src} /> : null
             }
                 {this.state.showPhoto ? <Button
                     bsStyle="success"

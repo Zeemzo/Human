@@ -56,6 +56,10 @@ class ChatScreen extends Component {
             .catch(error => console.error('error', error))
     }
 
+    deleteRoom(){
+        
+    }
+
     sendMessage(text) {
         this.state.currentUser.sendMessage({
           text,

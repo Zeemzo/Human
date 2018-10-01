@@ -26,22 +26,25 @@ const NavigationAuth = () => (
       </Navbar.Brand>
     </Navbar.Header> */}
     <Nav>
-    {/* <LinkContainer to={'/'}>
+      {/* <LinkContainer to={'/'}>
         <NavItem><Image  src={'./human.png'} /></NavItem>
       </LinkContainer> */}
       <LinkContainer to={routes.HOME}>
         <NavItem>Home</NavItem>
       </LinkContainer>
-
-      <LinkContainer to={routes.ACCOUNT}>
-        <NavItem>Account</NavItem>
-      </LinkContainer>
       <LinkContainer to={routes.FEED}>
         <NavItem>Feed</NavItem>
-      </LinkContainer>
+      </LinkContainer> 
       <LinkContainer to={routes.ADDREQUEST}>
         <NavItem>Add Request</NavItem>
       </LinkContainer>
+      <LinkContainer to={routes.ACCOUNT}>
+        <NavItem>Account</NavItem>
+      </LinkContainer>
+      <LinkContainer to={'/contributions'}>
+        <NavItem>My Contributions</NavItem>
+      </LinkContainer>
+     
       {/* {/* <LinkContainer to={routes.LOCATION}>
         <NavItem>Locate</NavItem>
       </LinkContainer> */}

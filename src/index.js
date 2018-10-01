@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios'
 import ReactDOM from 'react-dom';
+// import{ReactToaster}from 'react-toaster'
 import './index.css';
 import App from './components/App';
+import * as routes from './constants/routes'
 import registerServiceWorker from './registerServiceWorker';
 import { HUMANBACKEND } from './constants/routes'
 // import './firebase/messaging'
@@ -115,26 +117,63 @@ messaging.onTokenRefresh(function () {
     });
 });
 
+// const Demo = React.createClass({
+//     displayName: 'ReactToasterDemo',
+//     onShow: function(){
+//         this.refs.toast.show('<span>Hei, hei</span>');
+//     },
+//     onHide: function(){
+//         this.refs.toast.hide();
+//     },
+//     render: function(){
+//         return (
+//             <div className="demo">
+//                 <ReactToaster ref="toast" />
+//                 <input type="button" value="Show" onClick={this.onShow}/>
+//                 <input type="button" value="Hide" onClick={this.onHide}/>
+//             </div>
+//         );
+//     }
+// });
+
+Notification.requestPermission(function (result) {
+    if (result === 'granted') {
+      console.log("im here to vibrate")
+
+    //   navigator.serviceWorker.ready.then(function (registration) {
+    //     registration.showNotification('payload.notification.title', {
+    //       body: 'Your request was accepted',
+    //       icon: './human.png',
+    //       vibrate: [200, 100, 200, 100, 200, 100, 200],
+    //       tag: 'BUZZ'
+    //     });
+    //   });
+    }
+  });
+
 messaging.onMessage(function (payload) {
     console.log('Message received. ', payload);
     localStorage.setItem('roomId',payload.notification.body)
     console.log(payload.notification.body);
 
+    navigator.serviceWorker.ready.then(function (registration) {
+        registration.showNotification(payload.notification.title, {
+          body: 'Your request was accepted',
+          icon: './human.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'BUZZ'
+        });
+      });
 
-    // Notification.requestPermission(function (result) {
-    //         if (result === 'granted') {
-    //           console.log("im here to vibrate")
-        
-    //           navigator.serviceWorker.ready.then(function (registration) {
-    //             registration.showNotification('Vibration Sample', {
-    //               body: 'Buzz! Buzz!',
-    //               icon: '../images/touch/chrome-touch-icon-192x192.png',
-    //               vibrate: [200, 100, 200, 100, 200, 100, 200],
-    //               tag: 'vibration-sample'
-    //             });
-    //           });
-    //         }
-    //       });
+{/* <ReactToaster ref="toast" duration="1000" modal={false} auto={true} css={{background: 'red'}} /> */}
+
+window.alert(payload.notification.title)
+window.location.href='http://localhost:3000/chat';
+// window.location.href='https://human-24b1b.firebaseapp.com/chat';
+
+
+
+
     // [START_EXCLUDE]
     // Update the UI to include the received message.
     // appendMessage(payload);

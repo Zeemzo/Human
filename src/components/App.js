@@ -26,6 +26,7 @@ import ChatScreen from './Chatty';
 // import SlideMenu from 'react-slide-menu'
 import * as routes from '../constants/routes';
 import AddRequest from './AddRequest';
+import Contributions from './Contributions';
 
 class App extends React.Component {
   constructor(props, context) {
@@ -122,7 +123,9 @@ class App extends React.Component {
         <Route exact path={routes.FEED} component={Feed} />
         <Route exact path={routes.ADDREQUEST} component={AddRequest} />
         <Route exact path={'/admin'} component={Admin} />
-        <Route exact path={'/camera'} component={Cam} />
+        <Route exact path={'/contributions'} component={Contributions} />
+
+        {/* <Route exact path={'/camera'} component={Cam} /> */}
 
 
 
