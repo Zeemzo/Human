@@ -7,9 +7,10 @@ import withAuthorization from './withAuthorization';
 
 
 import { Map, Marker, Popup, TileLayer ,Polyline} from 'react-leaflet'
-// import AddRequest from './AddRequest';
-// import { LatLngLiteral } from '../../../node_modules/@types/leaflet';
-// import { Map, TileLayer, Marker, Popup } from '../../src'
+
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
+// import Routing from './components/routing'
 
 var greenIcon = L.icon({
   iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
@@ -81,6 +82,7 @@ class DisplayMultiLoc extends React.Component {
               <span>Giver</span>
             </Popup>
           </Marker> 
+          {/* <RoutingMachine from={[7,79.86449859999999]} to={[57.6792, 11.949]}  /> */}
           {/* <Polyline latlngs={this.state.poly} ></Polyline>       */}
           </Map>
         {/* <button onClick={this.handleClick} >locate me</button> */}

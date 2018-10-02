@@ -10,6 +10,7 @@ import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import DisplayMultiLoc from "./DisplayMultiLocation";
 import Trigger from "./Trigger";
+import RoutingMachine from './tracker';
 class Matches extends React.Component {
   constructor(props) {
     super(props);
@@ -18,10 +19,6 @@ class Matches extends React.Component {
       loading: true
     };
     // console.log(this.props.type);
-
-    
-
-
   }
 componentDidMount(){
   console.log(localStorage.getItem('token'));
@@ -71,6 +68,9 @@ componentDidMount(){
                       needyLoc={item.needyLoc}
                       giverLoc={item.giverLoc}
                     />
+                    {/* <RoutingMachine /> */}
+
+                    {/* <Map/> */}
                 </Col>
                 <Col xs={7} md={4} lg={5}>
                   <h3>Request ID: {item.matchId}</h3>
