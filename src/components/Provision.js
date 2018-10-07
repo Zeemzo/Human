@@ -3,17 +3,17 @@ import {
   Col,
   Grid,
   Thumbnail,
-  Panel,
+  // Panel,
   Row,
   Image,
-  Button
+  // Button
 } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-import DisplayLoc from "./DisplayLocation";
+// import DisplayLoc from "./DisplayLocation";
 import Trigger from "./Trigger";
 // import { Button, Modal } from 'react-bootstrap';
 

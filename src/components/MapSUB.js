@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 // import local components Filter and ForkMe
 
 
-import Filter from './Filter';
+// import Filter from './Filter';
 // import ForkMe from './ForkMe';
 
 const map=L.map()

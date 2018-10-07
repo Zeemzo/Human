@@ -2,11 +2,11 @@ import * as React from 'react';
 import withAuthorization from './withAuthorization';
 import {
   Col,
-  Form,
+  // Form,
   FormControl,
   FormGroup,
   ControlLabel,
-  Button
+  // Button
 } from "react-bootstrap";
 class SendMessageForm extends React.Component {
   constructor() {

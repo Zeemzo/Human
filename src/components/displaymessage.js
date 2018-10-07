@@ -1,14 +1,14 @@
 import { Button, Modal } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-import { Col, Grid, Thumbnail, Panel } from 'react-bootstrap';
-import DisplayLoc from './DisplayLocation';
-import axios from 'axios';
-import Chatkit from '@pusher/chatkit'
+import {  Panel } from 'react-bootstrap';
+// import DisplayLoc from './DisplayLocation';
+// import axios from 'axios';
+// import Chatkit from '@pusher/chatkit'
 
-import { HUMANBACKEND } from '../constants/routes';
+// import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
-import { auth } from '../firebase/firebase'
-import SendMessageForm from './ChatSendMessageForm';
+// import { auth } from '../firebase/firebase'
+// import SendMessageForm from './ChatSendMessageForm';
 
 // import {HUMANBACKEND} from '../constants/routes'
 

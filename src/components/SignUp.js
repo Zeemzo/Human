@@ -56,7 +56,7 @@ class SignUpForm extends Component {
 
     auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        authUser.user.updateProfile({ displayName: role }).then( ()=> {
+        authUser.user.updateProfile({ displayName: role }).then(() => {
           console.log(authUser.user);
         })
 
@@ -71,7 +71,7 @@ class SignUpForm extends Component {
           .then(response => {
             //////send user data to the backend to store in the db, includeing user roles.
             axios
-              .post(routes.HUMANBACKEND + '/api/adduser', { username: username, role:role,userId:authUser.user.uid }, {
+              .post(routes.HUMANBACKEND + '/api/adduser', { username: username, role: role, userId: authUser.user.uid }, {
                 headers: {
                   "Content-Type": "application/json",
                   'Access-Control-Allow-Origin': '*',
@@ -80,35 +80,35 @@ class SignUpForm extends Component {
               .then((res) => {
                 console.log(res.data);
 
-            console.log(response)
-            const userId = Auth.currentUser.uid
-            const pushToken = localStorage.getItem('pushToken')
+                console.log(response)
+                const userId = Auth.currentUser.uid
+                const pushToken = localStorage.getItem('pushToken')
 
-            ////to send the push token id to the backend
-            axios
-              .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
-                headers: {
-                  "Content-Type": "application/json",
-                  'Access-Control-Allow-Origin': '*',
-                }
-              })
-              .then((res) => {
-                console.log(res.data);
-                // this.setState(byPropKey('error', res))
+                ////to send the push token id to the backend
+                axios
+                  .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Access-Control-Allow-Origin': '*',
+                    }
+                  })
+                  .then((res) => {
+                    console.log(res.data);
+                    // this.setState(byPropKey('error', res))
+                  }).catch((error) => {
+                    console.log(error);
+                    // this.setState(byPropKey('error', error.message))
+
+                  });
+
+
+
+                this.setState(byPropKey('error', res))
               }).catch((error) => {
                 console.log(error);
                 // this.setState(byPropKey('error', error.message))
 
               });
-
-
-
-            this.setState(byPropKey('error', res))
-            }).catch((error) => {
-              console.log(error);
-              // this.setState(byPropKey('error', error.message))
-
-            });
 
             // this.setState({
             //     currentUsername: auth.currentUser.email

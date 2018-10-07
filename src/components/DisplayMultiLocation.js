@@ -62,7 +62,7 @@ class DisplayMultiLoc extends React.Component {
     return (
       <div>
         <Map
-          center={this.state.giver}
+          center={this.state.needy}
           length={4}
           // onClick={this.handleClick}
           // onLocationfound={this.handleLocationFound}

@@ -13,23 +13,9 @@ import {
   Row,
   Col,
   Image,
-  ControlLabel,
-  FormGroup,
-  FormControl,
-  HelpBlock, Jumbotron
 } from "react-bootstrap";
-import tumb from "./thumbnail.png";
-import { renderComponent } from "recompose";
-
-function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-}
+// import tumb from "./thumbnail.png";
+// import { renderComponent } from "recompose";
 
 
 

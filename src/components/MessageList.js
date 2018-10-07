@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { auth as Auth } from "../firebase/firebase";
-
+// import {Image} from 'react-bootstrap'
 class MessagesList extends Component {
+constructor(props){
+  super(props)
+  this.state={image:[]}
+}
+
+
   render() {
     const styles = {
       container: {
@@ -15,7 +21,7 @@ class MessagesList extends Component {
         marginTop: 13,
         marginBottom: 13,
         marginRight:13,
-        marginLeft:13,
+        // marginLeft:13,
       },
       receiverUsername: {
         fontWeight: 'bold',

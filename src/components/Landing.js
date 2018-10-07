@@ -1,6 +1,6 @@
 import React from "react";
-import { Jumbotron, Button, Carousel, Col } from "react-bootstrap";
-import { Link, withRouter } from "react-router-dom";
+import { Jumbotron, Button  } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import * as routes from "../constants/routes";
 
 const LandingPage = () => (

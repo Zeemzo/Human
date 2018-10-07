@@ -4,7 +4,7 @@ import * as L from "leaflet";
 // import { render } from 'react-dom'
 import withAuthorization from "./withAuthorization";
 // import { withRouter } from 'react-router-dom';
-import {  Grid,  Button } from "react-bootstrap";
+import {  Grid } from "react-bootstrap";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 // import AddRequest from './AddRequest';
 // import { LatLngLiteral } from '../../../node_modules/@types/leaflet';

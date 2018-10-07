@@ -7,13 +7,13 @@ import { Tab, Row, Col, NavItem, Nav } from "react-bootstrap";
 // import { ClipLoader } from 'react-spinners';
 import withAuthorization from "./withAuthorization";
 // import { HUMANBACKEND } from '../constants/routes';
-import Provision from "../components/Provision";
-import Need from "../components/Need";
-import Contributor from "../components/Contributor";
+// import Provision from "../components/Provision";
+// import Need from "../components/Need";
+// import Contributor from "../components/Contributor";
 
-import { LinkContainer } from "react-router-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 import Fulfilled from "./fulfilled";
-import Unfulfilled from "./unfulfilled";
+// import Unfulfilled from "./unfulfilled";
 
 // // import store from '../store/index'
 // const feed = () => {

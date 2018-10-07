@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import AuthUserContext from "./AuthUserContext";
-import { Nav, Navbar, NavItem, Image } from "react-bootstrap";
+import { Nav, Navbar, NavItem} from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";
-import SlideMenu from 'react-slide-menu'
+// import SlideMenu from 'react-slide-menu'
 
 import { LinkContainer } from "react-router-bootstrap";
 const Navigation = () => (
@@ -56,8 +56,14 @@ const NavigationAuth = () => (
             <NavItem>Admin</NavItem>
           </LinkContainer> : null)}
 
-      </AuthUserContext.Consumer>
 
+      </AuthUserContext.Consumer>
+      <AuthUserContext.Consumer>
+      {authUser => (authUser.displayName == 'ADMIN' ||authUser.displayName=='CONTRIBUTOR'?
+          <LinkContainer to={'/activefulfillments'}>
+            <NavItem>Active Fulfillments</NavItem>
+          </LinkContainer> : null)}
+      </AuthUserContext.Consumer>
       <LinkContainer to='/chat'>
         <NavItem>Chat</NavItem>
       </LinkContainer>

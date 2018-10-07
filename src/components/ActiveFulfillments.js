@@ -1,19 +1,20 @@
 import React from 'react';
 // import Chatkit from '@pusher/chatkit'
+import { LinkContainer } from "react-router-bootstrap";
 
 // import AuthUserContext from './AuthUserContext';
 // import { auth } from '../firebase/firebase'
-import { Col, Grid, Thumbnail, Row,  Modal, Button } from "react-bootstrap";
+import { Col, Grid, Thumbnail,Row, Modal, Button } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 // import DisplayMultiLoc from "./DisplayMultiLocation";
-import Trigger2 from "./ContributorGroupChat";
+import Fulfillment from "./fulfillment";
 // import RoutingMachine from './tracker';
 import MapContainer from './Multimap';
-class Matches extends React.Component {
+class ActiveFulfillments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +23,7 @@ class Matches extends React.Component {
       loading: true
     };
     this.handleHide = this.handleHide.bind(this);
+
 
     // console.log(this.props.type);
   }
@@ -34,11 +36,11 @@ class Matches extends React.Component {
   componentDidMount() {
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
-    // const now = new Date;
+    // const now = new Date();
 
     // const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     axios
-      .get(HUMANBACKEND + "/api/matchedRequest/getmatches", {
+      .get(HUMANBACKEND + "/api/matchedRequest/getactivematches", {
         headers: {
           'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
         }
@@ -80,7 +82,7 @@ class Matches extends React.Component {
                       needyLoc={item.needyLoc}
                       giverLoc={item.giverLoc}
                     /> */}
-                  
+
                   <Modal
                     show={this.state.show}
                     onHide={this.handleHide}
@@ -108,24 +110,29 @@ class Matches extends React.Component {
                   <p>
 
                     <span className="input-label">
-                    Resource Type: {item.need.resourceType}
+                      Resource Type: {item.need.resourceType}
                       <br />
                       From: {item.giverEmail}
                       <br />
                       To: {item.needyEmail}
                       <br />
+                      
                     </span>
                   </p>
                   <Button
                     bsStyle="success"
                     bsSize="medium"
                     onClick={() => this.setState({ show: true })}
-                  >View Route</Button> 
-                  <Trigger2 item={item} />
+                  >Fulfill Request</Button>
+                  <LinkContainer to='/chat'>
+                    <Button>Chat</Button>
+                  </LinkContainer>
+                <Fulfillment item={item}/>
+
                 </Col>
               </Row>
             </Grid>
-            
+
           </Thumbnail>
         ))}
       </Grid>
@@ -135,4 +142,4 @@ class Matches extends React.Component {
 ///dont mistake the displayName, it has the user role data in it.
 const authCondition = (authUser) => !!authUser && authUser.displayName === 'CONTRIBUTOR' || authUser.displayName === 'ADMIN';
 
-export default withAuthorization(authCondition)(Matches);
+export default withAuthorization(authCondition)(ActiveFulfillments);

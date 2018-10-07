@@ -12,3 +12,5 @@ export const CAMERA = "/camera";
 
 // export const HUMANBACKEND='https://humanbackend.herokuapp.com';
 export const HUMANBACKEND='http://localhost:7000';
+// export const HUMANAPP='https://human-24b1b.firebaseapp.com';
+export const HUMANAPP='http://localhost:3000';

@@ -5,7 +5,7 @@ import MessageList from './MessageList'
 import { auth } from '../firebase/firebase'
 import withAuthorization from './withAuthorization';
 import SendMessageForm from './ChatSendMessageForm'
-import axios from 'axios';
+// import axios from 'axios';
 
                     // const roomId=17275761
 
@@ -54,6 +54,9 @@ class ChatScreen extends Component {
                 this.setState({ currentRoom })
             })
             .catch(error => console.error('error', error))
+
+
+            
     }
 
     deleteRoom(){

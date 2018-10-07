@@ -1,14 +1,15 @@
 import { Button, Modal } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-import { Col, Grid, Thumbnail, Panel ,Image} from 'react-bootstrap';
+import { Col, Panel ,Image} from 'react-bootstrap';
 import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import Chatkit from '@pusher/chatkit'
+import * as routes from '../constants/routes'
 
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
 import { auth } from '../firebase/firebase'
-import SendMessageForm from './ChatSendMessageForm';
+// import SendMessageForm from './ChatSendMessageForm';
 
 // import {HUMANBACKEND} from '../constants/routes'
 
@@ -85,6 +86,10 @@ class Trigger extends React.Component {
                         })
                         .then((res) => {
                             console.log(res.data);
+
+                                        window.location.href= routes.HUMANAPP+'/chat';
+                                        // window.location.href='http://localhost:3000/chat';
+
                             // this.setState(byPropKey('error', res))
                         }).catch((error) => {
                             console.log(error);
@@ -101,6 +106,7 @@ class Trigger extends React.Component {
 
 
 
+            // window.location.href='https://human-24b1b.firebaseapp.com/chat';
 
         // event.preventDefault();
     }

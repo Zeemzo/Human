@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Col, Grid, Thumbnail, Panel, Row, Image } from "react-bootstrap";
+import { Col, Grid, Thumbnail,Row, Image } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-import DisplayLoc from "./DisplayLocation";
+// import DisplayLoc from "./DisplayLocation";
 import Trigger from "./Trigger";
 class Need extends React.Component {
   constructor(props) {

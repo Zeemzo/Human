@@ -4,8 +4,8 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import { Collapse, Button, Navbar, NavItem, Image, Grid } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Collapse,  Navbar, Image} from "react-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -20,13 +20,17 @@ import AccountPage from './Account';
 import withAuthentication from './withAuthentication';
 import Feed from './Feed';
 import Admin from './Admin';
-import Cam from './camera';
-import Chat from './Chat';
+// import Cam from './camera';
+// import Chat from './Chat';
 import ChatScreen from './Chatty';
 // import SlideMenu from 'react-slide-menu'
 import * as routes from '../constants/routes';
 import AddRequest from './AddRequest';
 import Contributions from './Contributions';
+import MapContainer from './Multimap';
+import ActiveFulfillments from './ActiveFulfillments'
+import Confirm from './Confirm'
+
 
 class App extends React.Component {
   constructor(props, context) {
@@ -103,6 +107,7 @@ class App extends React.Component {
             <div>
               <Navigation /></div></Collapse>
           <SlidingPane
+          zIndex={1}
             isOpen={this.state.isPaneOpenLeft}
             title={<Image height={20} src={'./logo.png'} />}
             from='left'
@@ -125,8 +130,9 @@ class App extends React.Component {
         <Route exact path={'/admin'} component={Admin} />
         <Route exact path={'/contributions'} component={Contributions} />
 
-        {/* <Route exact path={'/camera'} component={Cam} /> */}
-
+        <Route exact path={'/map'} component={MapContainer} />
+        <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
+        <Route exact path={'/confirm'} component={Confirm} />
 
 
         {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}

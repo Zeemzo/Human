@@ -16,7 +16,7 @@ import {
   Button
 } from "react-bootstrap";
 import Mappy from "./map";
-import Cam from "./camera";
+// import Cam from "./camera";
 import ModalCamera from "./ModalCamera";
 
 const byPropKey = (propertyName, value) => () => ({

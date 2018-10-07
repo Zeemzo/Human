@@ -8,7 +8,7 @@ import * as routes from './constants/routes'
 import registerServiceWorker from './registerServiceWorker';
 import { HUMANBACKEND } from './constants/routes'
 // import './firebase/messaging'
-import SlideMenu from 'react-slide-menu'
+// import SlideMenu from 'react-slide-menu'
 
 import { messaging } from './firebase/firebase';
 // import { auth } from './firebase/index';
@@ -18,7 +18,7 @@ import { auth as Auth } from './firebase/firebase'
 
 
 ReactDOM.render(
-    <App/>,
+    <App />,
     document.getElementById('root')
 );
 registerServiceWorker();
@@ -39,9 +39,10 @@ messaging.requestPermission().then(function () {
                 console.log("already logged in during push token save");
                 axios
                     .post(HUMANBACKEND + '/api/push/token', { pushToken: currentToken, userId: Auth.currentUser.uid }, {
-                        headers: { "Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
-                    }
-                      })
+                        headers: {
+                            "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+                        }
+                    })
                     .then((res) => {
                         console.log(res.data);
                         // this.setState(byPropKey('error', res))
@@ -88,22 +89,23 @@ messaging.onTokenRefresh(function () {
         console.log('Token refreshed.' + refreshedToken);
         localStorage.setItem('pushToken', refreshedToken)
 
-            if (Auth.currentUser !== null) {
-                console.log("already logged in during push token save");
-                axios
-                    .post(HUMANBACKEND + '/api/push/token', { pushToken: refreshedToken, userId: Auth.currentUser.uid }, {
-                        headers: { "Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
+        if (Auth.currentUser !== null) {
+            console.log("already logged in during push token save");
+            axios
+                .post(HUMANBACKEND + '/api/push/token', { pushToken: refreshedToken, userId: Auth.currentUser.uid }, {
+                    headers: {
+                        "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
                     }
-                      })
-                    .then((res) => {
-                        console.log(res.data);
-                        // this.setState(byPropKey('error', res))
-                    }).catch((error) => {
-                        console.log(error);
-                        // this.setState(byPropKey('error', error.message))
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    // this.setState(byPropKey('error', res))
+                }).catch((error) => {
+                    console.log(error);
+                    // this.setState(byPropKey('error', error.message))
 
-                    });
-            };
+                });
+        };
         // Indicate that the new Instance ID token has not yet been sent to the
         // app server.
         // setTokenSentToServer(false);
@@ -138,38 +140,65 @@ messaging.onTokenRefresh(function () {
 
 Notification.requestPermission(function (result) {
     if (result === 'granted') {
-      console.log("im here to vibrate")
+        console.log("im here to vibrate")
 
-    //   navigator.serviceWorker.ready.then(function (registration) {
-    //     registration.showNotification('payload.notification.title', {
-    //       body: 'Your request was accepted',
-    //       icon: './human.png',
-    //       vibrate: [200, 100, 200, 100, 200, 100, 200],
-    //       tag: 'BUZZ'
-    //     });
-    //   });
+        //   navigator.serviceWorker.ready.then(function (registration) {
+        //     registration.showNotification('payload.notification.title', {
+        //       body: 'Your request was accepted',
+        //       icon: './human.png',
+        //       vibrate: [200, 100, 200, 100, 200, 100, 200],
+        //       tag: 'BUZZ'
+        //     });
+        //   });
     }
-  });
+});
 
 messaging.onMessage(function (payload) {
-    console.log('Message received. ', payload);
-    localStorage.setItem('roomId',payload.notification.body)
-    console.log(payload.notification.body);
+    switch (payload.notification.title) {
+        case 'Confirm Contributer Identity':
+            console.log('Message received. ', payload);
+            localStorage.setItem('confirmDetails', payload.notification.body)
+            console.log(payload.notification.body)
+            window.alert(payload.notification.title)
+            window.location.href = routes.HUMANAPP+'/confirm';
+            ; break;
+        case 'You have a message from a fellow Human':
+            console.log('Message received. ', payload);
+            localStorage.setItem('roomId', payload.notification.body)
+            console.log(payload.notification.body)
+            window.alert(payload.notification.title)
+            window.location.href =  routes.HUMANAPP+'/chat';
+            ; break;
+        case 'Accepted':
+            console.log('Message received. ', payload);
+            // localStorage.setItem('roomId', payload.notification.body)
+            console.log(payload.notification.body)
+            window.alert(payload.notification.title)
+            // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
+            ; break;
+        case 'Declined':
+            console.log('Message received. ', payload);
+            // localStorage.setItem('roomId', payload.notification.body)
+            console.log(payload.notification.body)
+            window.alert(payload.notification.title)
+            // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
+            ; break;
+        default:
+    }
 
     navigator.serviceWorker.ready.then(function (registration) {
         registration.showNotification(payload.notification.title, {
-          body: 'Your request was accepted',
-          icon: './human.png',
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: 'BUZZ'
+            body: 'Your request was accepted',
+            icon: './human.png',
+            vibrate: [200, 100, 200, 100, 200, 100, 200],
+            tag: 'BUZZ'
         });
-      });
+    });
 
-{/* <ReactToaster ref="toast" duration="1000" modal={false} auto={true} css={{background: 'red'}} /> */}
+    {/* <ReactToaster ref="toast" duration="1000" modal={false} auto={true} css={{background: 'red'}} /> */ }
 
-window.alert(payload.notification.title)
-window.location.href='http://localhost:3000/chat';
-// window.location.href='https://human-24b1b.firebaseapp.com/chat';
+
+    // window.location.href='https://human-24b1b.firebaseapp.com/chat';
 
 
 

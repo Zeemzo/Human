@@ -1,55 +1,53 @@
-import { createRef } from 'react'
+import React, { Component } from 'react';
+import { Map, TileLayer } from 'react-leaflet';
 
-import React from 'react'
-import L from 'leaflet'
-import { Map, Marker, Popup, TileLayer,MapLayer } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
-import Routing from './tracker'
-import RoutingMachine from './tracker'
+// import { MAPBOX_URL } from 'consts';
+import Routing from './Routing';
 
-export default class KAKA extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      lat: 51.505,
-      lng: -0.09, // London
-      zoom: 13
-    }
-    // this.mapRef=this.mapRef.bind(this)
-  }
+// const position = [6.9271 , 79.8612];
 
-  // mapRef = createRef()
+class MapContainer extends Component {
+constructor(props)
+{
+super(props)
+this.state={
+  latlng:null,
+  canRoute:false
+}
+this.handleLocationFound=this.handleLocationFound.bind(this)
+}
 
+componentDidMount(){
+  this.map.leafletElement.locate();
+}
+  handleLocationFound = e => {
+    this.setState({
+      latlng: e.latlng,
+      canRoute:true
+    });
+  };
+  render() {
+    return (
+      <Map
+      onLocationfound={this.handleLocationFound}
 
-render() {
-  const { lat, lng, zoom } = this.state
-
-  const position = [lat, lng]
-  var markerIcon = L.icon({
-    iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-    iconSize: [30, 30], // size of the icon
-    iconAnchor: [0, 0], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
-  });
-
-  return (
-    <div>
-      <Map RoutingMachine center={position} zoom={zoom}>
+       center={this.state.latlng} zoom={13} ref={map => this.map = map}>
         <TileLayer
-          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
+          attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
 
-        <Marker position={position} icon={markerIcon}>
-          <Popup>
-            <span>A pretty CSS3 popup.<br />Easily customizable.</span>
-          </Popup>
-        </Marker>
-        {/* <RoutingMachine /> */}
-        <Routing from={[57.74, 11.94]} to={[57.6792, 11.949]} map={Map} />
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />{
+          this.state.canRoute?<Routing height={300} map={this.map} latlng={this.state.latlng} 
+          needyLoc={this.props.needyLoc}
+          giverLoc={this.props.giverLoc} />:null
+        }
+        
       </Map>
-    </div>
-  )
+    );
+  }
 }
-}
+
+MapContainer.propTypes = {};
+MapContainer.defaultProps = {};
+
+export default MapContainer;

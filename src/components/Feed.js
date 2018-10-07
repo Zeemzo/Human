@@ -11,7 +11,7 @@ import Provision from "../components/Provision";
 import Need from "../components/Need";
 import Contributor from "../components/Contributor";
 
-import { LinkContainer } from "react-router-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 
 // // import store from '../store/index'
 // const feed = () => {
