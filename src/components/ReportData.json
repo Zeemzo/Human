@@ -1,0 +1,17 @@
+{ 
+    "chart": {
+        "caption": "Countries With Most Oil Reserves [2017-18]",
+        "subCaption": "In MMbbl = One Million barrels",
+        "xAxisName": "Country",
+        "yAxisName": "Reserves (MMbbl)",
+        "numberSuffix": "K",
+        "theme": "fusion"
+    },
+    "data": [{
+        "label": "fulfilled request",
+        "value": "290"
+    }, {
+        "label": "unfulfilled request",
+        "value": "260"
+    }]
+}

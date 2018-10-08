@@ -26,3 +26,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.report__preview-container .page__table .header .col.userId,
+.report__preview-container .page__table .row .col.userId {
+  visibility: hidden;
+  display: none;
+}

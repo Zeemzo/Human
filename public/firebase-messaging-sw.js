@@ -3,6 +3,7 @@ importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js');
 // importScripts('/__/firebase/init.js');
 
+const HUMANAPP='https://human-24b1b.firebaseapp.com'
 const config= {
   apiKey:"AIzaSyDd1bmOXMc1gs1RrsygS4B-qIf22o0zaI4" ,
   authDomain: "human-24b1b.firebaseapp.com",
@@ -21,7 +22,37 @@ var messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   // Customize notification here
-  localStorage.setItem('roomId',payload.notification.body)
+  switch (payload.notification.title) {
+    case 'Confirm Contributer Identity':
+        console.log('Message received. ', payload);
+        localStorage.setItem('confirmDetails', payload.notification.body)
+        console.log(payload.notification.body)
+        window.alert(payload.notification.title)
+        window.location.href = HUMANAPP+'/confirm';
+        ; break;
+    case 'You have a message from a fellow Human':
+        console.log('Message received. ', payload);
+        localStorage.setItem('roomId', payload.notification.body)
+        console.log(payload.notification.body)
+        window.alert(payload.notification.title)
+        window.location.href =  HUMANAPP+'/chat';
+        ; break;
+    case 'Accepted':
+        console.log('Message received. ', payload);
+        // localStorage.setItem('roomId', payload.notification.body)
+        console.log(payload.notification.body)
+        window.alert(payload.notification.title)
+        // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
+        ; break;
+    case 'Declined':
+        console.log('Message received. ', payload);
+        // localStorage.setItem('roomId', payload.notification.body)
+        console.log(payload.notification.body)
+        window.alert(payload.notification.title)
+        // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
+        ; break;
+    default:
+}
   
   var notificationTitle = payload.notification.title;
   var notificationOptions = {

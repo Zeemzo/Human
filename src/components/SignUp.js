@@ -218,7 +218,7 @@ class SignUpForm extends Component {
               <option value="">Select User Role</option>
               <option value="USER">User</option>
               <option value="CONTRIBUTOR">Contributer</option>
-              <option value="ADMIN">Admin</option>
+              {/* <option value="ADMIN">Admin</option> */}
 
             </FormControl>
           </Col>
