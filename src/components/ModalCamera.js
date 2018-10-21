@@ -43,6 +43,7 @@ class ModalCamera extends React.Component {
     componentWillUnmount() {
         this.setState({ loaded: false })
     }
+    
 
     onTakePhoto(dataUri) {
         console.log(dataUri);
@@ -50,6 +51,7 @@ class ModalCamera extends React.Component {
         this.props.DataUrl(dataUri)
 
         this.setState({ showPhoto: true })
+
     }
 
     handleHide() {
@@ -95,7 +97,7 @@ class ModalCamera extends React.Component {
                                     imageCompression={0.95}
                                     isMaxResolution={false}
                                     isImageMirror={false}
-                                    isDisplayStartCameraError={true}
+                                    isDisplayStartCameraError={false}
                                 />
                             </div> : null
                         }

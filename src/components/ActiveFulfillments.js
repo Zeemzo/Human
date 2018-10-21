@@ -42,7 +42,8 @@ class ActiveFulfillments extends React.Component {
     axios
       .get(HUMANBACKEND + "/api/matchedRequest/getactivematches", {
         headers: {
-          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+          'Authorization': "bearer " + token,
+           "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
         }
       })
       .then(data => {

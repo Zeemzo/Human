@@ -1,21 +1,37 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 import AuthUserContext from "./AuthUserContext";
-import { Nav, Navbar, NavItem} from "react-bootstrap";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";
 // import SlideMenu from 'react-slide-menu'
 
 import { LinkContainer } from "react-router-bootstrap";
-const Navigation = () => (
-
-  <AuthUserContext.Consumer>
 
 
-    {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+class Navigation extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-  </AuthUserContext.Consumer>
-);
+
+  render() {
+    return (
+      <AuthUserContext.Consumer>
+        {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+      </AuthUserContext.Consumer>
+    );
+  }
+}
+// const Navigation = () => (
+
+//   <AuthUserContext.Consumer>
+
+
+//     {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+
+//   </AuthUserContext.Consumer>
+// );
 
 const NavigationAuth = () => (
   <Navbar  >
@@ -34,7 +50,7 @@ const NavigationAuth = () => (
       </LinkContainer>
       <LinkContainer to={routes.FEED}>
         <NavItem>Feed</NavItem>
-      </LinkContainer> 
+      </LinkContainer>
       <LinkContainer to={routes.ADDREQUEST}>
         <NavItem>Add Request</NavItem>
       </LinkContainer>
@@ -44,7 +60,7 @@ const NavigationAuth = () => (
       <LinkContainer to={'/contributions'}>
         <NavItem>My Contributions</NavItem>
       </LinkContainer>
-     
+
       {/* {/* <LinkContainer to={routes.LOCATION}>
         <NavItem>Locate</NavItem>
       </LinkContainer> */}
@@ -59,7 +75,7 @@ const NavigationAuth = () => (
 
       </AuthUserContext.Consumer>
       <AuthUserContext.Consumer>
-      {authUser => (authUser.displayName == 'ADMIN' ||authUser.displayName=='CONTRIBUTOR'?
+        {authUser => (authUser.displayName == 'ADMIN' || authUser.displayName == 'CONTRIBUTOR' ?
           <LinkContainer to={'/activefulfillments'}>
             <NavItem>Active Fulfillments</NavItem>
           </LinkContainer> : null)}

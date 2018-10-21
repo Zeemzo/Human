@@ -35,6 +35,7 @@ class Confirm extends React.Component {
     componentDidMount() {
         const lol = JSON.parse(localStorage.getItem('confirmDetails'));
         // console.log(lol);
+        
         this.setState({ confirm: lol })
 
         console.log(this.state.confirm)
@@ -71,7 +72,9 @@ class Confirm extends React.Component {
         axios
             .post(HUMANBACKEND + "/api/user/done", { pushToken: this.state.pushToken, message: 'confirm' }, {
                 headers: {
-                    'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+                    'Authorization': "bearer " + token, 
+                    "Content-Type": "application/json", 
+                    'Access-Control-Allow-Origin': '*',
                 }
             })
     }
@@ -81,7 +84,9 @@ class Confirm extends React.Component {
         axios
             .post(HUMANBACKEND + "/api/user/done", { pushToken: this.state.pushToken, message: 'decline' }, {
                 headers: {
-                    'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+                    'Authorization': "bearer " + token, 
+                    "Content-Type": "application/json", 
+                    'Access-Control-Allow-Origin': '*',
                 }
             })
     }

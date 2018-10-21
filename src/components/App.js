@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import { Collapse,  Navbar, Image} from "react-bootstrap";
+import { Collapse, Navbar, Image } from "react-bootstrap";
 // import { LinkContainer } from "react-router-bootstrap";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
@@ -53,6 +53,9 @@ class App extends React.Component {
       this.resize.bind(this)
     );
     this.resize();
+    window.addEventListener("mousedown",
+    () => this.setState({ isPaneOpenLeft: false })
+    );
   }
 
   resize() {
@@ -61,8 +64,8 @@ class App extends React.Component {
 
   }
 
-  // mousedown() {
-  //   this.setState({open:false});
+  // // mousedown() {
+  // //   this.setState({open:false});
   // }
 
   render() {
@@ -107,38 +110,39 @@ class App extends React.Component {
             <div>
               <Navigation /></div></Collapse>
           <SlidingPane
-          zIndex={1}
+            zIndex={1}
             isOpen={this.state.isPaneOpenLeft}
             title={<Image height={20} src={'./logo.png'} />}
             from='left'
             width='230px'
             onRequestClose={() => this.setState({ isPaneOpenLeft: false })}>
             <div>
-            <Navigation /></div>
+              <Navigation />
+            </div>
           </SlidingPane>
 
-        <hr />
+          <hr />
 
-        <Route exact path={routes.LANDING} component={LandingPage} />
-        <Route exact path={routes.SIGN_UP} component={SignUpPage} />
-        <Route exact path={routes.SIGN_IN} component={SignInPage} />
-        <Route exact path={routes.PASSWORD_FORGET} component={PasswordForgetPage} />
-        <Route exact path={routes.HOME} component={HomePage} />
-        <Route exact path={routes.ACCOUNT} component={AccountPage} />
-        <Route exact path={routes.FEED} component={Feed} />
-        <Route exact path={routes.ADDREQUEST} component={AddRequest} />
-        <Route exact path={'/admin'} component={Admin} />
-        <Route exact path={'/contributions'} component={Contributions} />
+          <Route exact path={routes.LANDING} component={LandingPage} />
+          <Route exact path={routes.SIGN_UP} component={SignUpPage} />
+          <Route exact path={routes.SIGN_IN} component={SignInPage} />
+          <Route exact path={routes.PASSWORD_FORGET} component={PasswordForgetPage} />
+          <Route exact path={routes.HOME} component={HomePage} />
+          <Route exact path={routes.ACCOUNT} component={AccountPage} />
+          <Route exact path={routes.FEED} component={Feed} />
+          <Route exact path={routes.ADDREQUEST} component={AddRequest} />
+          <Route exact path={'/admin'} component={Admin} />
+          <Route exact path={'/contributions'} component={Contributions} />
 
-        <Route exact path={'/map'} component={MapContainer} />
-        <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
-        <Route exact path={'/confirm'} component={Confirm} />
+          {/* <Route exact path={'/map'} component={MapContainer} /> */}
+          <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
+          <Route exact path={'/confirm'} component={Confirm} />
 
 
-        {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}
-        {/* <Route exact path={routes.CAMERA} component={Cam} /> */}
-        <Route exact path={'/chat'} component={ChatScreen} />
-        {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
+          {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}
+          {/* <Route exact path={routes.CAMERA} component={Cam} /> */}
+          <Route exact path={'/chat'} component={ChatScreen} />
+          {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 
 
 

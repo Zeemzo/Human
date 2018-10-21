@@ -92,13 +92,16 @@ class Trigger2 extends React.Component {
                 }).then(res => {
 
                   console.log(res.data);
-                  const update=this.state.item
-                  update.active=true
+                  const update = this.state.item
+                  update.active = true
+
                   axios
-                    .post(HUMANBACKEND + '/api/matchedRequest/updatematchrequest', update , {
+                    .post(HUMANBACKEND + '/api/matchedRequest/updatematchrequest', update, {
                       headers: { "Content-Type": "application/json", 'Authorization': "bearer " + token }
-                    }).then(() => {
-                      window.location.href =  routes.HUMANAPP+'/chat';
+                    }).then((res) => {
+                        window.location.href = routes.HUMANAPP + '/chat';
+
+                      
 
 
                     }).catch()
@@ -153,5 +156,5 @@ class Trigger2 extends React.Component {
   }
 }
 
-const authCondition = (authUser) => !!authUser ;
+const authCondition = (authUser) => !!authUser;
 export default withAuthorization(authCondition)(Trigger2);

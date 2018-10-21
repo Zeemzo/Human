@@ -4,12 +4,13 @@
   "icons": [
     {
       "src": "./human.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "196x196 144x144 96x96 64x64 32x32 24x24 16x16",
       "type": "image/png"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "theme_color": "#45bf0d",
   "background_color": "#ffffff",
   "gcm_sender_id": "103953800507"
