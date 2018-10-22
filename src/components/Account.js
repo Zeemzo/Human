@@ -14,10 +14,6 @@ import {
   Col,
   Image,
 } from "react-bootstrap";
-// import tumb from "./thumbnail.png";
-// import { renderComponent } from "recompose";
-
-
 
 class AccountPage extends React.Component {
   constructor(props) {
@@ -27,12 +23,10 @@ class AccountPage extends React.Component {
       lol: true,
     }
     this.handleImage = this.handleImage.bind(this)
-    // this.view=th
   }
   componentDidMount() {
 
     const token = localStorage.getItem('token')
-    // console.log(this.state);
 
     axios.get(routes.HUMANBACKEND + '/api/user/view/' + auth.currentUser.uid, {
       headers: {
@@ -67,7 +61,6 @@ class AccountPage extends React.Component {
     this.setState({ lol: false })
 
     const token = localStorage.getItem('token')
-    // console.log(this.state);
     axios
       .post(routes.HUMANBACKEND + '/api/user/update', { userId: auth.currentUser.uid, image: url }, {
         headers: {
@@ -112,7 +105,6 @@ class AccountPage extends React.Component {
 
 
                 <Col xs={12} sm={6} md={6} lg={6} >
-                  {/* <PasswordForgetForm /> */}
                   <PasswordChangeForm />
                 </Col>
               </Row>

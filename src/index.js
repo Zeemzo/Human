@@ -1,17 +1,12 @@
 import React from 'react';
 import axios from 'axios'
 import ReactDOM from 'react-dom';
-// import{ReactToaster}from 'react-toaster'
 import './index.css';
 import App from './components/App';
 import * as routes from './constants/routes'
 import registerServiceWorker from './registerServiceWorker';
 import { HUMANBACKEND } from './constants/routes'
-// import './firebase/messaging'
-// import SlideMenu from 'react-slide-menu'
-
 import { messaging } from './firebase/firebase';
-// import { auth } from './firebase/index';
 import { auth as Auth } from './firebase/firebase'
 
 

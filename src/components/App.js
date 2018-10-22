@@ -1,11 +1,9 @@
-
 import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
 import { Collapse, Navbar, Image } from "react-bootstrap";
-// import { LinkContainer } from "react-router-bootstrap";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -20,10 +18,7 @@ import AccountPage from './Account';
 import withAuthentication from './withAuthentication';
 import Feed from './Feed';
 import Admin from './Admin';
-// import Cam from './camera';
-// import Chat from './Chat';
 import AllChat from './AllChat';
-// import SlideMenu from 'react-slide-menu'
 import * as routes from '../constants/routes';
 import AddRequest from './AddRequest';
 import Contributions from './Contributions';

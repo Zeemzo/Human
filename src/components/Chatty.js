@@ -160,8 +160,8 @@ class ChatScreen extends Component {
                     <Modal.Body>
 
 
-                        <div style={styles.container}>
-                            <h1 style={{ float: 'center', }}>CHAT</h1>
+                        <div style={styles.container} width="280">
+                            <h4 style={{ float: 'center', }}>{this.props.room.sender}</h4>
                             <div style={styles.chatContainer}>
                                 {/* <below style={styles.whosOnlineListContainer}>
                         <h2>Whos online PLACEHOLDER</h2>

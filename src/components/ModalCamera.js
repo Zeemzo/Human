@@ -81,10 +81,8 @@ class ModalCamera extends React.Component {
                     show={this.state.show}
                     onHide={this.handleHide}
                     container={this}
-                // aria-labelledby="contained-modal-title"
                 >
                     <Modal.Header closeButton />
-                    {/* </Modal.Header> */}
                     <Modal.Body>
 
                         {this.state.loaded ?

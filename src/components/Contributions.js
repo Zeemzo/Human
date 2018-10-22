@@ -1,24 +1,8 @@
 import * as React from "react";
 import AuthUserContext from './AuthUserContext';
-
 import { Tab, Row, Col, NavItem, Nav } from "react-bootstrap";
-// import tumb from './thumbnail.png';
-// import axios from 'axios';
-// import { ClipLoader } from 'react-spinners';
 import withAuthorization from "./withAuthorization";
-// import { HUMANBACKEND } from '../constants/routes';
-// import Provision from "../components/Provision";
-// import Need from "../components/Need";
-// import Contributor from "../components/Contributor";
-
-// import { LinkContainer } from "react-router-bootstrap";
 import Fulfilled from "./fulfilled";
-// import Unfulfilled from "./unfulfilled";
-
-// // import store from '../store/index'
-// const feed = () => {
-
-// }
 
 class Contributions extends React.Component {
   constructor(props) {
@@ -27,7 +11,7 @@ class Contributions extends React.Component {
 
   render() {
     return (
-      <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={2}>
+      <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={1}>
         <Row className="clearfix">
           <Col>
 
@@ -59,19 +43,9 @@ class Contributions extends React.Component {
         </Row>
       </Tab.Container>
 
-      // <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-      //   <Tab eventKey={1} title="Provision">
-      //     <Provision type={"provision"} />
-      //   </Tab>
-      //   <Tab eventKey={2} title="Need">
-      //     <Need type={"need"} />
-      //   </Tab>
-      //   <Tab eventKey={3} title="Matched Request" />
-      // </Tabs>
     );
   }
 }
 
 const authCondition = authUser => !!authUser;
 export default withAuthorization(authCondition)(Contributions);
-// export default Feed;

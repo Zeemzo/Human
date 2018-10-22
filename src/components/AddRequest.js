@@ -1,11 +1,9 @@
-// import { Col, Grid, Thumbnail } from 'react-bootstrap';
 import React, { Component } from "react";
 import withAuthorization from "./withAuthorization";
 import { firebase } from "../firebase/index";
 import axios from "axios";
 import AuthUserContext from './AuthUserContext';
-
-import { HUMANBACKEND } from "../constants/routes";
+import { HUMANBACKEND ,HUMANAPP} from "../constants/routes";
 import {
   Grid,
   Col,
@@ -16,7 +14,6 @@ import {
   Button
 } from "react-bootstrap";
 import Mappy from "./map";
-// import Cam from "./camera";
 import ModalCamera from "./ModalCamera";
 
 const byPropKey = (propertyName, value) => () => ({
@@ -54,10 +51,8 @@ class AddRequest extends Component {
     }
   }
   onSubmit = (event) => {
-    // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZWVtYXNocmFmQG91dGxvb2suY29tIiwiaWF0IjoxNTM3NjE2Mjk4fQ.RWrfOXSu7i3YnCjb1LfCz1ws4_L5bujeYg19PQKon9s";
-    //    console.log(this.state);
+
     const token = localStorage.getItem('token')
-    // console.log(this.state);
     axios
       .post(HUMANBACKEND + '/api/request/add', this.state, {
         headers: {
@@ -69,13 +64,15 @@ class AddRequest extends Component {
       .then((res) => {
         console.log(res.data);
         this.setState(byPropKey('error', "Request Added!!"))
+        window.alert( "Request Added!!");        
+
+        window.location.href=HUMANAPP + '/feed';
       }).catch((error) => {
         console.log(error);
         this.setState(byPropKey('error', "Request Not Added!!"))
-
+        window.alert( "Request Not Added!!");
       });
 
-    // this.setState(byPropKey('error', "Request Added!!"))
 
 
 
@@ -131,7 +128,6 @@ class AddRequest extends Component {
         </FormGroup>
         <AuthUserContext.Consumer>{
           authUser =>
-          // console.log(authUser.uid)
             <input
               value={authUser.uid}
               onChange={event => this.setState(byPropKey('userId', event.target.value))}
@@ -212,7 +208,6 @@ class AddRequest extends Component {
             <Mappy loc={this.handleLoc} />
           </Col>
         </FormGroup>
-        {/* <Cam DataUrl={this.handleImage} /> */}
         <ModalCamera DataUrl={this.handleImage}/>
         <br /><Grid>
         <Button bsStyle="success"

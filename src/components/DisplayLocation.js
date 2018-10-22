@@ -1,15 +1,9 @@
 import * as React from 'react'
 import { createRef } from 'react'
 import * as L from 'leaflet';
-// import { render } from 'react-dom'
 import withAuthorization from './withAuthorization';
-// import { withRouter } from 'react-router-dom';
-
-
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
-// import AddRequest from './AddRequest';
-// import { LatLngLiteral } from '../../../node_modules/@types/leaflet';
-// import { Map, TileLayer, Marker, Popup } from '../../src'
+
 
 var greenIcon = L.icon({
   iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
@@ -34,39 +28,13 @@ class DisplayLoc extends React.Component {
 
   mapRef = createRef()
 
-
-  // componentDidMount(){
-  //   this.mapRef.current.leafletElement.locate()
-
-
-  // }
-  // handleClick = () => {
-  //   this.props.latitude = this.state.latlng.lat;
-  //   this.props.longitude = this.state.latlng.lng;
-  //   // withRouter(AddRequest);
-  // }
-
-
-
-  // handleLocationFound = e => {
-  //   this.setState({
-  //     hasLocation: true,
-  //     latlng: e.latlng,
-  //   })
-
-  // }
   render() {
-    // const marker = this.state.hasLocation ? (
-
-    // ) : null
-
+  
     return (
       <div>
         <Map
           center={this.state.latlng}
           length={4}
-          // onClick={this.handleClick}
-          // onLocationfound={this.handleLocationFound}
           ref={this.mapRef}
           zoom={13}>
           <TileLayer
@@ -79,7 +47,6 @@ class DisplayLoc extends React.Component {
             </Popup>
           </Marker>      
           </Map>
-        {/* <button onClick={this.handleClick} >locate me</button> */}
       </div>
     )
   }

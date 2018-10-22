@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Map, TileLayer } from 'react-leaflet';
-
-// import { MAPBOX_URL } from 'consts';
 import Routing from './Routing';
-
-// const position = [6.9271 , 79.8612];
 
 class MapContainer extends Component {
 constructor(props)

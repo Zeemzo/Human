@@ -197,7 +197,7 @@ class Trigger extends React.Component {
 
                                             <input onChange={e => { this.sendMessage = e.target.value }} type="text" />
                                             <button type="submit">
-                                                Accept Provision</button>
+                                                Accept {this.state.item.requestType}</button>
                                         </form>
                                         </p>
                                         </Col>

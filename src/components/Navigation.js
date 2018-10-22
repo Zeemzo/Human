@@ -1,11 +1,8 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import AuthUserContext from "./AuthUserContext";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";
-// import SlideMenu from 'react-slide-menu'
-
 import { LinkContainer } from "react-router-bootstrap";
 
 
@@ -23,28 +20,10 @@ class Navigation extends React.Component {
     );
   }
 }
-// const Navigation = () => (
-
-//   <AuthUserContext.Consumer>
-
-
-//     {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
-
-//   </AuthUserContext.Consumer>
-// );
 
 const NavigationAuth = () => (
   <Navbar  >
-    {/* <Navbar.Header>
-      <Navbar.Brand>
-        <a href="/"><Image height={20} src={'./logo.png'} />
-        </a>
-      </Navbar.Brand>
-    </Navbar.Header> */}
     <Nav>
-      {/* <LinkContainer to={'/'}>
-        <NavItem><Image  src={'./human.png'} /></NavItem>
-      </LinkContainer> */}
       <LinkContainer to={routes.HOME}>
         <NavItem>Home</NavItem>
       </LinkContainer>

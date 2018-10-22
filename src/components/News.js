@@ -22,7 +22,7 @@ class News extends React.Component {
   componentDidMount() {
 
     axios
-      .get("https://newsapi.org/v2/everything?q=poor+hunger&apiKey=aa6c44bcbe44451b94d83e41c3c3db97")
+      .get("https://newsapi.org/v2/everything?q=poor+hunger&pageSize=5&apiKey=aa6c44bcbe44451b94d83e41c3c3db97")
       .then(data => {
         this.setState({ loading: false });
         var obj = data.data.articles;
@@ -43,6 +43,8 @@ class News extends React.Component {
           color={"#123abc"}
           loading={this.state.loading}
         />
+         {this.state.news.length==0 && !this.state.loading? 
+         <h2>No News </h2> : <div>
         {this.state.news.map((item, i) => (
           <Thumbnail key={i}>
             <Grid>
@@ -64,6 +66,8 @@ class News extends React.Component {
             </Grid>
           </Thumbnail>
         ))}
+        </div>
+        }
       </Grid>
     );
   }
@@ -71,4 +75,3 @@ class News extends React.Component {
 
 const authCondition = authUser => !!authUser;
 export default withAuthorization(authCondition)(News);
-// export default Feed;

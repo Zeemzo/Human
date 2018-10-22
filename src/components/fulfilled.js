@@ -60,6 +60,8 @@ componentDidMount(){
           color={"#123abc"}
           loading={this.state.loading}
         />
+                  {this.state.needs.length==0 && !this.state.loading? 
+         <h2>No {this.props.type} Requests</h2> : <div>
         {this.state.needs.map((item, i) => (
           <Thumbnail key={i}>
             <Grid>
@@ -107,6 +109,8 @@ componentDidMount(){
           // </Panel.Body>
           // </Panel>
         ))}
+        </div>
+      }
       </Grid>
     );
   }

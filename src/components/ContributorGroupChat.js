@@ -1,17 +1,10 @@
-// import { Button, Modal } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-// import { Col, Grid, Thumbnail, Panel, Image } from 'react-bootstrap';
-// import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import Chatkit from '@pusher/chatkit'
 import * as routes from '../constants/routes'
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
 import { auth } from '../firebase/firebase'
-// import SendMessageForm from './ChatSendMessageForm';
-
-// import {HUMANBACKEND} from '../constants/routes'
-
 
 class Trigger2 extends React.Component {
   constructor(props, context) {
@@ -51,33 +44,35 @@ class Trigger2 extends React.Component {
     chatManager
       .connect()
       .then(currentUser => {
+
         this.setState({ currentUser })
-        // this.state.item.email
+
         currentUser.createRoom({
           name: 'general',
           private: true,
           addUserIds: [this.state.item.needyEmail, this.state.item.giverEmail]
-        }).then(room => {
+        })
+        .then(room => {
           console.log(`Created room called ${room.name}`)
           console.log(room.id)
           if (localStorage.getItem('chat') != null) {
             var temp = JSON.parse(localStorage.getItem('chat'));
             temp.chats.push({
-                roomId: room.id,
-                sender: ""+this.state.item.needyEmail+","+this.state.item.giverEmail,
-              })
+              roomId: room.id,
+              sender: "" + this.state.item.needyEmail + "," + this.state.item.giverEmail,
+            })
             localStorage.setItem('chat', JSON.stringify(temp))
             console.log(temp)
-        } else {
+          } else {
             var chat = { chats: [] };
             chat.chats.push(
-                {
-                    roomId: room.id,
-                    sender: ""+this.state.item.needyEmail+","+this.state.item.giverEmail,
-                }
+              {
+                roomId: room.id,
+                sender: "" + this.state.item.needyEmail + "," + this.state.item.giverEmail,
+              }
             )
             localStorage.setItem('chat', JSON.stringify(chat))
-        }
+          }
           this.setState({ roomId: room.id })
 
           const token = localStorage.getItem('token')
@@ -86,7 +81,6 @@ class Trigger2 extends React.Component {
           lol.roomId = room.id
           lol.sender = auth.currentUser.email
 
-          // lol.reqType=0
           console.log(lol);
 
           this.state.currentUser.sendMessage({
@@ -117,22 +111,12 @@ class Trigger2 extends React.Component {
                       headers: { "Content-Type": "application/json", 'Authorization': "bearer " + token }
                     }).then((res) => {
                       window.location.href = routes.HUMANAPP + '/chat';
-
-
-
-
                     }).catch()
-                  // window.location.href='https://human-24b1b.firebaseapp.com/chat';
                 }).catch(err => {
 
                 })
-
-
-
-              // this.setState(byPropKey('error', res))
             }).catch((error) => {
               console.log(error);
-              // this.setState(byPropKey('error', error.message))
 
             });
 
@@ -142,19 +126,12 @@ class Trigger2 extends React.Component {
         })
       })
       .catch(error => console.error('error', error))
-
-
-
-    // window.location.href='https://human-24b1b.firebaseapp.com/chat';
-
-    // event.preventDefault();
   }
 
   render() {
 
 
     return (
-      // style={{ height: 200 }}
       <div >
 
         <form onSubmit={this.onSubmit}>

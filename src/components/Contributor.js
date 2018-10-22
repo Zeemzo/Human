@@ -1,17 +1,10 @@
 import React from 'react';
-// import Chatkit from '@pusher/chatkit'
-
-// import AuthUserContext from './AuthUserContext';
-// import { auth } from '../firebase/firebase'
 import { Col, Grid, Thumbnail, Row,  Modal, Button } from "react-bootstrap";
-// import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-// import DisplayMultiLoc from "./DisplayMultiLocation";
 import Trigger2 from "./ContributorGroupChat";
-// import RoutingMachine from './tracker';
 import MapContainer from './Multimap';
 class Matches extends React.Component {
   constructor(props) {
@@ -22,8 +15,6 @@ class Matches extends React.Component {
       loading: true
     };
     this.handleHide = this.handleHide.bind(this);
-
-    // console.log(this.props.type);
   }
 
   handleHide() {
@@ -34,9 +25,7 @@ class Matches extends React.Component {
   componentDidMount() {
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
-    // const now = new Date;
 
-    // const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     axios
       .get(HUMANBACKEND + "/api/matchedRequest/getmatches", {
         headers: {
@@ -46,7 +35,6 @@ class Matches extends React.Component {
       .then(data => {
         this.setState({ loading: false });
         var obj = data.data;
-        // console.log(obj);
         var arr = [];
         for (var key in obj) {
           obj[key].id = key;
@@ -65,31 +53,26 @@ class Matches extends React.Component {
     return (
       <Grid>
         <ClipLoader
-          // className={override}
           sizeUnit={"px"}
           size={150}
           color={"#123abc"}
           loading={this.state.loading}
         />
+            {this.state.needs.length==0 && !this.state.loading? 
+         <h2>No Matched Requests Available</h2> : <div>
         {this.state.needs.map((item, i) => (
           <Thumbnail key={i}>
             <Grid>
               <Row>
                 <Col >
-                  {/* <DisplayMultiLoc
-                      needyLoc={item.needyLoc}
-                      giverLoc={item.giverLoc}
-                    /> */}
                   
                   <Modal
                     show={this.state.show}
                     onHide={this.handleHide}
                     container={this}
 
-                  // aria-labelledby="contained-modal-title"
                   >
                     <Modal.Header closeButton />
-                    {/* </Modal.Header> */}
                     <Modal.Body>
 
                       <MapContainer needyLoc={item.needyLoc}
@@ -128,6 +111,8 @@ class Matches extends React.Component {
             
           </Thumbnail>
         ))}
+        </div>
+      }
       </Grid>
     );
   }

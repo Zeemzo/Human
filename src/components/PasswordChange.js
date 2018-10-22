@@ -92,25 +92,7 @@ class PasswordChangeForm extends Component {
         </FormGroup>
         {error && <p>{error.message}</p>}
       </Form>
-      // <form onSubmit={this.onSubmit}>
-      //   <input
-      //     value={passwordOne}
-      //     onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-      //     type="password"
-      //     placeholder="New Password"
-      //   />
-      //   <input
-      //     value={passwordTwo}
-      //     onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-      //     type="password"
-      //     placeholder="Confirm New Password"
-      //   />
-      //   <button disabled={isInvalid} type="submit">
-      //     Reset My Password
-      //   </button>
-
-      //   { error && <p>{error.message}</p> }
-      // </form>
+      
     );
   }
 }

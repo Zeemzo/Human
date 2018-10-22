@@ -155,44 +155,10 @@ class SignInForm extends Component {
         </FormGroup>
       </Form>
 
-      // <FormGroup>
-
-      // <form onSubmit={this.onSubmit}>
-      // <FormControl
-      //     value={email}
-      //     onChange={event => this.setState(byPropKey('email', event.target.value))}
-      //     type="text"
-      //     placeholder="Email Address"
-      //   /><br/>
-      // <FormControl
-      //     value={password}
-      //     onChange={event => this.setState(byPropKey('password', event.target.value))}
-      //     type="password"
-      //     placeholder="Password"
-      //   /><br/>
-      //   <Button disabled={isInvalid} type="submit">
-      //     Sign In
-      //   </Button>
-      //   {error && <p>{error.message}</p>}
-      // </form>
-      // </FormGroup>
+ 
     );
   }
 }
-
-// const mapStateToProps = (token) => {
-//   return {
-//     token: token.token
-//   }
-// }
-// const mapDispachToProps = (dispatch) => {
-//   return {
-//     onToken: () => dispatch({ type: 'SET_TOKEN' }),
-//     onRequest: () => dispatch({ type: 'GET_TOKEN' }),
-
-//   }
-// }
-//  connect(mapDispachToProps,mapStateToProps)
 
 export default (withRouter(SignInPage));
 

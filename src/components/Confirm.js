@@ -1,18 +1,10 @@
 import { Button, Modal } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
 import {  Panel, Image } from 'react-bootstrap';
-// import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
-// import Chatkit from '@pusher/chatkit'
 import * as routes from '../constants/routes'
-
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
-// import { auth } from '../firebase/firebase'
-// import SendMessageForm from './ChatSendMessageForm';
-
-// import {HUMANBACKEND} from '../constants/routes'
-
 
 class Confirm extends React.Component {
     constructor(props) {
@@ -26,7 +18,6 @@ class Confirm extends React.Component {
             userDetails: null,
             src: null
         }
-        // this.sendMessage = this.sendMessage.bind(this)
         this.confirm = this.confirm.bind(this)
         this.decline = this.decline.bind(this)
 
@@ -34,15 +25,12 @@ class Confirm extends React.Component {
 
     componentDidMount() {
         const lol = JSON.parse(localStorage.getItem('confirmDetails'));
-        // console.log(lol);
         
         this.setState({ confirm: lol })
 
         console.log(this.state.confirm)
 
         const token = localStorage.getItem('token')
-        // console.log(this.state);
-
         axios.get(routes.HUMANBACKEND + '/api/user/view/' + lol.senderId, {
             headers: {
                 'Authorization': "bearer " + token,
@@ -63,7 +51,6 @@ class Confirm extends React.Component {
     handleHide() {
         this.setState({ show: false });
         window.location.href =  routes.HUMANAPP+'/contributions';
-        // window.location.href = 'http://localhost:3000/contributions';
 
     }
     confirm() {
@@ -96,7 +83,6 @@ class Confirm extends React.Component {
 
     render() {
         return (
-            // style={{ height: 200 }}
             <div >
 
 
@@ -104,7 +90,6 @@ class Confirm extends React.Component {
                     show={this.state.show}
                     onHide={this.handleHide}
                     container={this}
-                // aria-labelledby="contained-modal-title"
                 >
                     <Modal.Header closeButton>
                         <Modal.Title >
@@ -114,7 +99,6 @@ class Confirm extends React.Component {
                         <h2>Is this your contributor?</h2>
 
                         <Panel >
-                            {/* <Panel.Heading>Request ID: {this.state.item.id}</Panel.Heading> */}
                             <Panel.Body>
                                 <Image width={300} src={this.state.src} />
                                 <Button onClick={this.confirm}>Confirm</Button>

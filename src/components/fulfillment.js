@@ -1,17 +1,9 @@
 import { Button } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-// import { Col, Grid, Thumbnail, Panel, Image } from 'react-bootstrap';
-// import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
-// import Chatkit from '@pusher/chatkit'
-
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
 import { auth } from '../firebase/firebase'
-// import SendMessageForm from './ChatSendMessageForm';
-
-// import {HUMANBACKEND} from '../constants/routes'
-
 
 class Fulfillment extends React.Component {
     constructor(props, context) {
@@ -24,7 +16,6 @@ class Fulfillment extends React.Component {
             need: this.props.item.need,
             match: this.props.item,
         };
-        // this.sendMessage = this.sendMessage.bind(this)
         this.provisionReceived = this.provisionReceived.bind(this)
         this.needFulfilled = this.needFulfilled.bind(this)
     }
@@ -34,7 +25,6 @@ class Fulfillment extends React.Component {
 
         console.log(this.state.provision)
 
-        // const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
         const pack = this.state.provision
         pack.senderId = auth.currentUser.uid
 

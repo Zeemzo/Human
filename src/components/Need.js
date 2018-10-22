@@ -1,11 +1,9 @@
 import * as React from "react";
 import { Col, Grid, Thumbnail,Row, Image } from "react-bootstrap";
-// import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-// import DisplayLoc from "./DisplayLocation";
 import Trigger from "./Trigger";
 class Need extends React.Component {
   constructor(props) {
@@ -14,11 +12,6 @@ class Need extends React.Component {
       needs: [],
       loading: true
     };
-    // console.log(this.props.type);
-
-    
-
-
   }
 componentDidMount(){
   console.log(localStorage.getItem('token'));
@@ -53,12 +46,13 @@ componentDidMount(){
     return (
       <Grid>
         <ClipLoader
-          // className={override}
           sizeUnit={"px"}
           size={150}
           color={"#123abc"}
           loading={this.state.loading}
         />
+        {this.state.needs.length==0 && !this.state.loading? 
+         <h2>No Requests Available</h2> : <div>
         {this.state.needs.map((item, i) => (
           <Thumbnail key={i}>
             <Grid>
@@ -69,10 +63,6 @@ componentDidMount(){
                 <Col xs={7} md={4} lg={5}>
                   <h3>Request ID: {item.id}</h3>
                   <p>
-                    {/* <DisplayLoc
-                      latitude={item.latitude}
-                      longitude={item.longitude}
-                    /> */}
                     <span className="input-label">
                      
                       Type: {item.requestType}
@@ -92,21 +82,9 @@ componentDidMount(){
             </Grid>
           </Thumbnail>
 
-          // <Panel key={i}>
-          //   <Panel.Heading>Request ID: {item.id}</Panel.Heading>
-          //   <Panel.Body>
-          //     <Col xs={15} md={0}>
-          //   <Thumbnail href="#" alt="171x180" src={item.image} />
-
-          //   <DisplayLoc latitude={item.latitude} longitude={item.longitude} />
-          //   <span className="input-label">
-          //     email: {item.email} | Type: {item.type} | Latitude: {item.latitude} | Longitude: {item.longitude}
-          //   </span>
-          //   <p>Description : {item.description}</p>
-          // </Col>
-          // </Panel.Body>
-          // </Panel>
         ))}
+         </div>
+        }
       </Grid>
     );
   }
@@ -114,4 +92,3 @@ componentDidMount(){
 
 const authCondition = authUser => !!authUser;
 export default withAuthorization(authCondition)(Need);
-// export default Feed;

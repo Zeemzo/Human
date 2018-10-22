@@ -9,7 +9,6 @@ const LandingPage = () => (
       <h1>Being You</h1>
       <p>
         HUMAN is the bridge that connects the needy with the providers, making sure that excess resources are effectively distributed by this sharing initative.
-        {/* <br /> not thrown away.*/}
         <br /> 
         If you love food, hate waste, care about people or want to connect with
         your community,

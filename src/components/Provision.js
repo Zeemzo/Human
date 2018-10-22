@@ -3,19 +3,14 @@ import {
   Col,
   Grid,
   Thumbnail,
-  // Panel,
   Row,
   Image,
-  // Button
 } from "react-bootstrap";
-// import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-// import DisplayLoc from "./DisplayLocation";
 import Trigger from "./Trigger";
-// import { Button, Modal } from 'react-bootstrap';
 
 class Provision extends React.Component {
   constructor(props) {
@@ -26,13 +21,13 @@ class Provision extends React.Component {
     };
     // console.log(this.props.type);
 
-  
+
 
 
 
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
     const now = new Date;
@@ -44,10 +39,12 @@ class Provision extends React.Component {
     );
     axios
       .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
-        headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
-      }
+        headers: {
+          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+        }
       })
       .then(data => {
+
         this.setState({ loading: false });
         var obj = data.data;
         // console.log(obj);
@@ -56,13 +53,18 @@ class Provision extends React.Component {
           obj[key].id = key;
           arr.push(obj[key]);
         }
-        arr=arr.reverse();
+        arr = arr.reverse();
         console.log(arr);
         this.setState({ needs: arr });
+
+
       })
-      .catch((err) => { })
+      .catch((err) => {
+
+
+      })
   }
- 
+
   render() {
     return (
       <Grid>
@@ -73,52 +75,40 @@ class Provision extends React.Component {
           color={"#123abc"}
           loading={this.state.loading}
         />
-        {this.state.needs.map((item, i) => (
-          <Thumbnail key={i}>
-            <Grid>
-              <Row>
-                <Col xs={7} md={4} lg={5} >
-                  <Image width="280" height="300" src={item.image} rounded />
-                </Col>
-                <Col xs={7} md={4} lg={5}>
-                  <h3>Request ID: {item.id}</h3>
-                  <p>
-                  <span className="input-label">
-                     
-                     Type: {item.requestType}
-                     <br /> 
-                     email: {item.email}
-                     <br />
-                     Resource: {item.resourceType}
-                     <br />
-                     Servings: {item.quantity}
-                      <br />
-                   </span>
-                   <p>Description : {item.description}</p>
-                   <Trigger item={item} />
-                  </p>
-                </Col>
-              </Row>
-            </Grid>
-          </Thumbnail>
+        {this.state.needs.length == 0 && !this.state.loading ?
+          <h2>No Requests Available</h2> : <div>
+            {this.state.needs.map((item, i) => (
+              <Thumbnail key={i}>
+                <Grid>
+                  <Row>
+                    <Col xs={7} md={4} lg={5} >
+                      <Image width="280" height="300" src={item.image} rounded />
+                    </Col>
+                    <Col xs={7} md={4} lg={5}>
+                      <h3>Request ID: {item.id}</h3>
+                      <p>
+                        <span className="input-label">
 
-          // <Grid key={i}>
-          //   <Panel.Heading>Request ID: {item.id}</Panel.Heading>
-          //   <Panel.Body>
-          //     <Col xs={15} md={0}>
-          //       <Thumbnail href="#" alt="171x180" src={item.image} />
+                          Type: {item.requestType}
+                          <br />
+                          email: {item.email}
+                          <br />
+                          Resource: {item.resourceType}
+                          <br />
+                          Servings: {item.quantity}
+                          <br />
+                        </span>
+                        <p>Description : {item.description}</p>
+                        <Trigger item={item} />
+                      </p>
+                    </Col>
+                  </Row>
+                </Grid>
+              </Thumbnail>
+            ))}
+          </div>
+        }
 
-          //       {/* <DisplayLoc latitude={item.latitude} longitude={item.longitude} /> */}
-          //       <span className="input-label">
-          //         email: {item.email} | Type: {item.type} | Latitude:{" "}
-          //         {item.latitude} | Longitude: {item.longitude}
-          //       </span>
-          //       <p>Description : {item.description}</p>
-          //       <Trigger item={item} />
-          //     </Col>
-          //   </Panel.Body>
-          // </Grid>
-        ))}
       </Grid>
     );
   }

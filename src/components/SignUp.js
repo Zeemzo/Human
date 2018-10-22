@@ -4,9 +4,7 @@ import { auth } from "../firebase";
 import * as routes from "../constants/routes";
 
 import { auth as Auth } from '../firebase/firebase'
-// import * as routes from '../constants/routes';
 import axios from 'axios'
-// import * as routes from '../constants/routes';
 import {
   Button,
   FormGroup,
@@ -106,13 +104,9 @@ class SignUpForm extends Component {
                 this.setState(byPropKey('error', res))
               }).catch((error) => {
                 console.log(error);
-                // this.setState(byPropKey('error', error.message))
 
               });
 
-            // this.setState({
-            //     currentUsername: auth.currentUser.email
-            // })
           })
 
         this.setState({ ...INITIAL_STATE });

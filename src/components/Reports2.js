@@ -19,14 +19,6 @@ import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 // Step 6 - Adding the chart as dependency to the core fusioncharts
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
-// // Step 7 - Creating the JSON object to store the chart configurations
-// const chartConfigs = {
-//     type: 'column2d',// The chart type
-//     width: '700', // Width of the chart
-//     height: '400', // Height of the chart
-//     dataFormat: 'json', // Data type
-//     dataSource: null
-// };
 
 const chartConfigs2 = {
     type: 'pie3d',// The chart type
