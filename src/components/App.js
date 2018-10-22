@@ -22,7 +22,7 @@ import Feed from './Feed';
 import Admin from './Admin';
 // import Cam from './camera';
 // import Chat from './Chat';
-import ChatScreen from './Chatty';
+import AllChat from './AllChat';
 // import SlideMenu from 'react-slide-menu'
 import * as routes from '../constants/routes';
 import AddRequest from './AddRequest';
@@ -41,32 +41,25 @@ class App extends React.Component {
       isPaneOpenLeft: false,
 
     };
-
+    this.mousedown=this.mousedown.bind(this)
   }
-
-
-  //  
-
   componentDidMount() {
     Modal.setAppElement(this.el);
     window.addEventListener("resize",
       this.resize.bind(this)
     );
     this.resize();
-    window.addEventListener("mousedown",
-    () => this.setState({ isPaneOpenLeft: false })
-    );
+ 
   }
 
   resize() {
     this.setState({ open: window.innerWidth >= 760 });
     this.setState({ isVisible: window.innerWidth <= 760 });
-
   }
 
-  // // mousedown() {
-  // //   this.setState({open:false});
-  // }
+  mousedown() {
+    this.setState({ isPaneOpenLeft: false });
+  }
 
   render() {
     return (
@@ -74,40 +67,16 @@ class App extends React.Component {
 
         <div ref={ref => this.el = ref}>
           {this.state.isVisible ?
-            <Navbar fluid  >
-              {/* <LinkContainer to={'/home'}>
-                <NavItem>Home</NavItem>
-              </LinkContainer> */}
+            <Navbar  >
               <button onClick={() => this.setState({ isPaneOpenLeft: true })}>
                 <Image width="32" height="24" src={'./menu.png'} rounded />
               </button>
 
-              {/* {this.state.isVisible ?
-                <Navbar.Header>
-                  <div><Button onClick={() =>
-                    this.setState({ open: !this.state.open })}>
-                    <Image width="32" height="24" src={'./menu.png'} rounded />
-                  </Button></div>
-                </Navbar.Header>
-                : null}
-            </Navbar> :
-            null} */}
-              {/* {this.state.isVisible ?
-                <Button onClick={() =>
-                    this.setState({ open: !this.state.open })}>
-                  </Button>
-                : null} */}
             </Navbar> :
             null}
 
-
-          {/* <h1  > */}
-          {/* <Image width="90" height="85" src={'./human.png'} /></h1> */}
-          {/* <br />
-          <br /> */}
-
           <Collapse in={this.state.hideNav ? false : this.state.open}>
-            <div>
+            <div >
               <Navigation /></div></Collapse>
           <SlidingPane
             zIndex={1}
@@ -116,7 +85,7 @@ class App extends React.Component {
             from='left'
             width='230px'
             onRequestClose={() => this.setState({ isPaneOpenLeft: false })}>
-            <div>
+            <div onMouseDown ={() => this.setState({ isPaneOpenLeft: false })}>
               <Navigation />
             </div>
           </SlidingPane>
@@ -131,17 +100,17 @@ class App extends React.Component {
           <Route exact path={routes.ACCOUNT} component={AccountPage} />
           <Route exact path={routes.FEED} component={Feed} />
           <Route exact path={routes.ADDREQUEST} component={AddRequest} />
-          <Route exact path={'/admin'} component={Admin} />
+          <Route exact path={'/reports'} component={Admin} />
           <Route exact path={'/contributions'} component={Contributions} />
 
-          {/* <Route exact path={'/map'} component={MapContainer} /> */}
+          <Route exact path={'/map'} component={MapContainer} />
           <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
           <Route exact path={'/confirm'} component={Confirm} />
 
 
           {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}
           {/* <Route exact path={routes.CAMERA} component={Cam} /> */}
-          <Route exact path={'/chat'} component={ChatScreen} />
+          <Route exact path={'/chat'} component={AllChat} />
           {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 
 

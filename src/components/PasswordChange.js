@@ -84,7 +84,8 @@ class PasswordChangeForm extends Component {
 
         <FormGroup>
           <Col smOffset={2} sm={10}>
-            <Button disabled={isInvalid} type="submit">
+            <Button disabled={isInvalid} type="submit"  bsStyle="success"
+                    bsSize="medium">
               Reset My Password
             </Button>
           </Col>

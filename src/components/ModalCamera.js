@@ -21,6 +21,7 @@ class ModalCamera extends React.Component {
 
         };
         // this.sendMessage = this.sendMessage.bind(this)
+       this.onTakePhoto=this.onTakePhoto.bind(this)
         this.renderButtons = this.renderButtons.bind(this);
     }
 
@@ -66,11 +67,11 @@ class ModalCamera extends React.Component {
             }
                 {this.state.showPhoto ? <Button
                     bsStyle="success"
-                    bsSize="medium"
+                    bsSize="large"
                     onClick={() => this.setState({ show: true })}
                 >Retake Photo</Button> : <Button
                     bsStyle="success"
-                    bsSize="medium"
+                    bsSize="large"
                     onClick={() => this.setState({ show: true })}
                 >Take a Photo</Button>}
 
@@ -87,7 +88,7 @@ class ModalCamera extends React.Component {
                     <Modal.Body>
 
                         {this.state.loaded ?
-                            <div className="App">
+                            <div className="App" width="300">
                                 {this.renderButtons()}
                                 <Camera
                                     onTakePhoto={(dataUri) => { this.onTakePhoto(dataUri); }}
@@ -96,7 +97,7 @@ class ModalCamera extends React.Component {
                                     imageType={IMAGE_TYPES.JPG}
                                     imageCompression={0.95}
                                     isMaxResolution={false}
-                                    isImageMirror={false}
+                                    isImageMirror={true}
                                     isDisplayStartCameraError={false}
                                 />
                             </div> : null

@@ -14,8 +14,8 @@ class AdminPage extends React.Component {
         <AuthUserContext.Consumer>
           {authUser =>
             <div>
-              <h1>Admin</h1>
-              <p>Restricted area! Only users with the admin rule are authorized.</p>
+              <h1>Reports</h1>
+              {/* <p>Restricted area! Only users with the admin rule are authorized.</p> */}
             </div>
           }
 

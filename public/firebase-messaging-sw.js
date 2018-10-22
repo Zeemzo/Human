@@ -32,8 +32,21 @@ messaging.setBackgroundMessageHandler(function(payload) {
         ; break;
     case 'You have a message from a fellow Human':
         console.log('Message received. ', payload);
-        localStorage.setItem('roomId', payload.notification.body)
-        console.log(payload.notification.body)
+        if (localStorage.getItem('chat') != null) {
+            var temp = JSON.parse(localStorage.getItem('chat'));
+            temp.chats.push(JSON.parse(payload.notification.body))
+            localStorage.setItem('chat',  JSON.stringify(temp))
+            console.log(payload.notification.body)
+        } else {
+            var chat = { chats: [] };
+            chat.chats.push(
+                {
+                    roomId: payload.notification.body.roomId,
+                    sender: payload.notification.body.sender
+                }
+            )
+            localStorage.setItem('chat', JSON.stringify(chat))
+        }
         window.alert(payload.notification.title)
         window.location.href =  HUMANAPP+'/chat';
         ; break;

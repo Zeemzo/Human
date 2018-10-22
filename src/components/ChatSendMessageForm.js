@@ -21,6 +21,8 @@ class SendMessageForm extends React.Component {
     this.setState({
       message: e.target.value
     })
+    e.preventDefault()
+
   }
   handleSubmit(e) {
 
@@ -74,6 +76,7 @@ class SendMessageForm extends React.Component {
               value={this.state.message}
               placeholder="Type your message and hit ENTER"
               type="textArea" /> */}
+              <button onClick={this.handleSubmit}></button>
           </form>
           </div></div>
     )

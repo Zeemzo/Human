@@ -60,16 +60,12 @@ const NavigationAuth = () => (
       <LinkContainer to={'/contributions'}>
         <NavItem>My Contributions</NavItem>
       </LinkContainer>
-
-      {/* {/* <LinkContainer to={routes.LOCATION}>
-        <NavItem>Locate</NavItem>
-      </LinkContainer> */}
       <AuthUserContext.Consumer>
 
 
         {authUser => (authUser.displayName == 'ADMIN' ?
-          <LinkContainer to={'/admin'}>
-            <NavItem>Admin</NavItem>
+          <LinkContainer to={'/reports'}>
+            <NavItem>Reports</NavItem>
           </LinkContainer> : null)}
 
 
@@ -96,30 +92,16 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-  //  <Navbar default collapseOnSelect>
-  //   <Navbar.Collapse>
-  //     <Nav>
-  //     <NavItem componentClass={Link} to={routes.LANDING}>Landing</NavItem>
-  //     <NavItem  componentClass={Link}>Sign In</NavItem>
 
-  //    </Nav>
-  //   </Navbar.Collapse>
-  //   </Navbar>
   <Navbar >
-    {/* <Navbar.Header>
-      <Navbar.Brand>
-        <a href="/">Human</a>
-      </Navbar.Brand>
-    </Navbar.Header> */}
     <Nav>
       <LinkContainer to="/">
         <NavItem>Human</NavItem>
       </LinkContainer>
-      {/* <Link to={routes.SIGN_IN}>Sign In</Link> */}
     </Nav>
     <Nav pullRight>
       <LinkContainer to="/signin">
-        <NavItem>Sigin</NavItem>
+        <NavItem>Signin</NavItem>
       </LinkContainer>
     </Nav>
   </Navbar>

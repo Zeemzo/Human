@@ -24,9 +24,9 @@ class AccountPage extends React.Component {
     super(props);
     this.state = {
       src: null,
-      lol:true,
+      lol: true,
     }
-this.handleImage=this.handleImage.bind(this)
+    this.handleImage = this.handleImage.bind(this)
     // this.view=th
   }
   componentDidMount() {
@@ -44,21 +44,27 @@ this.handleImage=this.handleImage.bind(this)
     ).then(
       (res) => {
         console.log(res)
-        this.setState({ src: res.data.image })
+        if (res.data.image != null) {
+          this.setState({ src: res.data.image })
+
+        }else{
+          this.setState({ src: './human.png' })
+
+        }
         console.log(this.state)
       }
     ).catch(
-      // this.setState({src:'./human.png'})
+      
     )
 
   }
 
-  componentWillUpdate(){
+  componentWillUpdate() {
   }
 
   handleImage(url) {
 
-    this.setState({lol:false})
+    this.setState({ lol: false })
 
     const token = localStorage.getItem('token')
     // console.log(this.state);
@@ -72,50 +78,43 @@ this.handleImage=this.handleImage.bind(this)
       })
       .then((res) => {
         console.log(res.data);
-            // this.setState({view:false});
 
         this.setState({ src: url })
-        // this.setState(byPropKey('error', "Request Added!!"))
       }).catch((error) => {
         console.log(error);
-        // this.setState(byPropKey('error', "Request Not Added!!"))
-
       })
 
 
-    }
+  }
   render() {
     return (
 
       <AuthUserContext.Consumer>
         {authUser => (
-          //  <Jumbotron>
           <div>
 
             <Grid>
               <Row>
-                <Col xs={10} md={8}>
+                <Col xs={11} md={11} lg={11}>
                   <h2>Account: {authUser.email}</h2>
                 </Col>
-                <Col xs={10} md={8}>
+                <Col xs={12} sm={6} md={6} lg={6}>
 
-                  {/* {/* <Image src={src} rounded /> */}
-
-                  {/* <FieldGroup id="formControlsFile" type="file" /> */}
                   {
-                    this.state.lol ? <Image width={300}   src={this.state.src} /> : null
+                    this.state.lol ? <Image width={300} src={this.state.src} /> : null
                   }
 
 
                   <ModalCamera DataUrl={this.handleImage} />
-
+                  <hr />
 
                 </Col>
-              </Row>
-              <Row>
-                <PasswordForgetForm />
-                <PasswordChangeForm />
 
+
+                <Col xs={12} sm={6} md={6} lg={6} >
+                  {/* <PasswordForgetForm /> */}
+                  <PasswordChangeForm />
+                </Col>
               </Row>
             </Grid></div>
 

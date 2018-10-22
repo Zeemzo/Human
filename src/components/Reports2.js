@@ -117,11 +117,11 @@ class App extends React.Component {
     render() {
         return (
             <Grid><Row>
-                <Col xs={7} md={4} lg={5} >
+                <Col  xs={10} sm={5} md={5} lg={5} >
                 <ReactFC
                     {...this.state.config} />
                     </Col>
-                     <Col xs={7} md={4} lg={5}  >
+                    <Col  xs={10} sm={5} md={5} lg={5} >
                     <ReactFC
                     {...this.state.config1} />
                    

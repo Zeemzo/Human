@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import {
+  Button,
+  Form,
+  FormGroup,
+  Col,
+  FormControl,
+  ControlLabel
+} from "react-bootstrap";
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
@@ -51,11 +59,24 @@ class PasswordForgetForm extends Component {
     return (
 
 
-      <form onSubmit={this.onSubmit}>
-        
-
-        { error && <p>{error.message}</p> }
-      </form>
+      <Form horizontal onSubmit={this.onSubmit}>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>
+            Email          </Col>{" "}
+          <Col xs={6} md={4}>
+            <FormControl
+              value={email}
+              onChange={event =>
+                this.setState(byPropKey("email", event.target.value))
+              }
+              type="text"
+              placeholder="Email"
+            />
+          </Col>
+        </FormGroup>
+        <Button disabled={isInvalid} onClick={this.onSubmit}>Reset Password</Button>
+        {error && <p>{error.message}</p>}
+      </Form>
     );
   }
 }

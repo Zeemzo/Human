@@ -64,7 +64,25 @@ class Trigger extends React.Component {
                 }).then(room => {
                     console.log(`Created room called ${room.name}`)
                     console.log(room.id)
-                    localStorage.setItem('roomId', room.id);
+                    // localStorage.setItem('roomId', room.id);
+                    if (localStorage.getItem('chat') != null) {
+                        var temp = JSON.parse(localStorage.getItem('chat'));
+                        temp.chats.push({
+                            roomId: room.id,
+                            sender: this.state.item.email
+                        })
+                        localStorage.setItem('chat',  JSON.stringify(temp))
+                        console.log(temp)
+                    } else {
+                        var chat = { chats: [] };
+                        chat.chats.push(
+                            {
+                                roomId: room.id,
+                                sender: this.state.item.email
+                            }
+                        )
+                        localStorage.setItem('chat', JSON.stringify(chat))
+                    }
                     this.setState({ roomId: room.id })
 
                     const token = localStorage.getItem('token')
@@ -77,7 +95,7 @@ class Trigger extends React.Component {
 
                     this.state.currentUser.sendMessage({
                         text: this.sendMessage,
-                        roomId: parseInt(localStorage.getItem('roomId')),
+                        roomId: room.id,
                     })
 
                     axios
