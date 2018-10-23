@@ -1,6 +1,6 @@
 import * as React from "react";
 import AuthUserContext from './AuthUserContext';
-import { Tab, Row, Col, NavItem, Nav } from "react-bootstrap";
+import { Tab, Row, Col, NavItem, Nav ,Grid} from "react-bootstrap";
 import withAuthorization from "./withAuthorization";
 import Fulfilled from "./fulfilled";
 
@@ -12,6 +12,7 @@ class Contributions extends React.Component {
   render() {
     return (
       <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={1}>
+      <Grid>
         <Row className="clearfix">
           <Col>
 
@@ -40,7 +41,7 @@ class Contributions extends React.Component {
               </Tab.Pane>
             </Tab.Content>
           </Col>
-        </Row>
+        </Row></Grid>
       </Tab.Container>
 
     );

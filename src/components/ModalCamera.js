@@ -27,6 +27,8 @@ class ModalCamera extends React.Component {
 
 
     renderButtons() {
+
+        
         return (
             <div>
                 <button onClick={(e) => {
@@ -59,19 +61,28 @@ class ModalCamera extends React.Component {
         this.setState({ show: false });
     }
 
+
     render() {
+        const wellStyles = { maxWidth: 400, margin: '0 auto 10px' };
+
         return (
             // style={{ height: 200 }}
             <div > {
-                this.state.showPhoto ? <Image width={300} src={this.state.src} /> : null
+                this.state.showPhoto ? <Image 
+                style={wellStyles}
+                src={this.state.src} /> : null
             }
                 {this.state.showPhoto ? <Button
-                    bsStyle="success"
-                    bsSize="large"
+                    // bsStyle="info"
+                    style={wellStyles}
+                     block
+                    bsSize="medium"
                     onClick={() => this.setState({ show: true })}
                 >Retake Photo</Button> : <Button
-                    bsStyle="success"
-                    bsSize="large"
+                // bsStyle="info"
+                style={wellStyles}
+
+                    bsSize="medium" block
                     onClick={() => this.setState({ show: true })}
                 >Take a Photo</Button>}
 
@@ -81,14 +92,16 @@ class ModalCamera extends React.Component {
                     show={this.state.show}
                     onHide={this.handleHide}
                     container={this}
+                    // bsSize="small"
                 >
                     <Modal.Header closeButton />
+
                     <Modal.Body>
 
                         {this.state.loaded ?
                             <div className="App" width="300">
                                 {this.renderButtons()}
-                                <Camera
+                                <Camera width="300"
                                     onTakePhoto={(dataUri) => { this.onTakePhoto(dataUri); }}
                                     idealFacingMode={this.state.idealFacingMode}
                                     idealResolution={{ width: 640, height: 480 }}

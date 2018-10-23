@@ -22,7 +22,7 @@ class Navigation extends React.Component {
 }
 
 const NavigationAuth = () => (
-  <Navbar  >
+  <Navbar className="SideMenu" >
     <Nav>
       <LinkContainer to={routes.HOME}>
         <NavItem>Home</NavItem>
@@ -72,7 +72,7 @@ const NavigationAuth = () => (
 
 const NavigationNonAuth = () => (
 
-  <Navbar >
+  <Navbar className="SideMenu">
     <Nav>
       <LinkContainer to="/">
         <NavItem>Human</NavItem>

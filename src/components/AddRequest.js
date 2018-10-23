@@ -102,6 +102,7 @@ class AddRequest extends Component {
       description === "" ||
       quantity === null;
 
+      
     return (
       <Grid>
       <Form horizontal onSubmit={this.onSubmit}>
@@ -211,7 +212,7 @@ class AddRequest extends Component {
         <ModalCamera DataUrl={this.handleImage}/>
         <br /><Grid>
         <Button bsStyle="success"
-          bsSize="large" disabled={isInvalid} type="submit">
+          bsSize="large" disabled={isInvalid} type="submit" block>
           Submit
         </Button></Grid> 
 

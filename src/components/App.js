@@ -7,6 +7,7 @@ import { Collapse, Navbar, Image } from "react-bootstrap";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
+import { Link } from "react-router-dom";
 
 import Navigation from './Navigation';
 import LandingPage from './Landing';
@@ -25,6 +26,7 @@ import Contributions from './Contributions';
 import MapContainer from './Multimap';
 import ActiveFulfillments from './ActiveFulfillments'
 import Confirm from './Confirm'
+import FloatingMenu from "./FloatingMenu"
 
 
 class App extends React.Component {
@@ -57,36 +59,37 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <Router>
+            
 
         <div ref={ref => this.el = ref}>
           {this.state.isVisible ?
-            <Navbar  >
-              <button onClick={() => this.setState({ isPaneOpenLeft: true })}>
-                <Image width="32" height="24" src={'./menu.png'} rounded />
-              </button>
-
+            <Navbar  className="SideMenu" >
+                <Image onClick={() => this.setState({ isPaneOpenLeft: true })} width="40"  src={'./white-menu-icon-4.jpg'} rounded />
             </Navbar> :
             null}
 
           <Collapse in={this.state.hideNav ? false : this.state.open}>
-            <div >
-              <Navigation /></div></Collapse>
-          <SlidingPane
-            zIndex={1}
+            <div>
+              <Navigation   className="SideMenu" /></div></Collapse>
+          <SlidingPane className="SideMenu"
+         zIndex={1}
             isOpen={this.state.isPaneOpenLeft}
             title={<Image height={20} src={'./logo.png'} />}
             from='left'
-            width='230px'
+            width='300px'
             onRequestClose={() => this.setState({ isPaneOpenLeft: false })}>
             <div onMouseDown ={() => this.setState({ isPaneOpenLeft: false })}>
-              <Navigation />
+              <Navigation className="SideMenu" />
             </div>
           </SlidingPane>
 
           <hr />
-
+          <Link to={routes.ADDREQUEST}><FloatingMenu/>
+                    </Link>
+          
           <Route exact path={routes.LANDING} component={LandingPage} />
           <Route exact path={routes.SIGN_UP} component={SignUpPage} />
           <Route exact path={routes.SIGN_IN} component={SignInPage} />
@@ -97,14 +100,9 @@ class App extends React.Component {
           <Route exact path={routes.ADDREQUEST} component={AddRequest} />
           <Route exact path={'/reports'} component={Admin} />
           <Route exact path={'/contributions'} component={Contributions} />
-
           <Route exact path={'/map'} component={MapContainer} />
           <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
           <Route exact path={'/confirm'} component={Confirm} />
-
-
-          {/* <Route exact path={routes.LOCATION} component={Mappy} /> */}
-          {/* <Route exact path={routes.CAMERA} component={Cam} /> */}
           <Route exact path={'/chat'} component={AllChat} />
           {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 

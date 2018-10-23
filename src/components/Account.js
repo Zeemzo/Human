@@ -84,20 +84,19 @@ class AccountPage extends React.Component {
 
       <AuthUserContext.Consumer>
         {authUser => (
-          <div>
-
+          
             <Grid>
               <Row>
                 <Col xs={11} md={11} lg={11}>
                   <h2>Account: {authUser.email}</h2>
                 </Col>
                 <Col xs={12} sm={6} md={6} lg={6}>
-
+<Grid>
                   {
                     this.state.lol ? <Image width={300} src={this.state.src} /> : null
                   }
 
-
+</Grid>
                   <ModalCamera DataUrl={this.handleImage} />
                   <hr />
 
@@ -108,7 +107,7 @@ class AccountPage extends React.Component {
                   <PasswordChangeForm />
                 </Col>
               </Row>
-            </Grid></div>
+            </Grid>
 
         )}
       </AuthUserContext.Consumer>
