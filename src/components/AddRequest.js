@@ -5,8 +5,10 @@ import axios from "axios";
 import AuthUserContext from './AuthUserContext';
 import { HUMANBACKEND, HUMANAPP } from "../constants/routes";
 import { ToastContainer, ToastStore } from 'react-toasts';
+import { ClipLoader } from "react-spinners";
 
 import {
+  Row,
   Grid,
   Col,
   Form,
@@ -37,7 +39,8 @@ const INITIAL_STATE = {
   quantity: null,
   requestType: "",
   image: "",
-  error: null
+  error: null,
+  loading: false,
 };
 
 class AddRequest extends Component {
@@ -57,6 +60,7 @@ class AddRequest extends Component {
   onSubmit = (event) => {
 
     if (navigator.onLine) {
+      this.setState({loading:true})
       const token = localStorage.getItem('token')
       axios
         .post(HUMANBACKEND + '/api/request/add', this.state, {
@@ -70,6 +74,8 @@ class AddRequest extends Component {
           console.log(res.data);
           this.setState(byPropKey('error', "Request Added!!"))
           // this.setState({...INITIAL_STATE})
+          this.setState({loading:false})
+
           ToastStore.success("Request Added!!")
           // window.alert( "Request Added!!");        
           // event.preventDefault();
@@ -117,6 +123,14 @@ class AddRequest extends Component {
 
     return (
       <Grid>
+         <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+              // style={override}
+              sizeUnit={"px"}
+              size={300}
+              color={"green"}
+              loading={this.state.loading}
+            // style="text-align:center"
+            /></p></Col></Row></Grid>
         <Form horizontal
           onSubmit={this.onSubmit}
         >

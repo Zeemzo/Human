@@ -88,8 +88,8 @@ class ActiveFulfillments extends React.Component {
                     </Modal>
 
                   </Col>
-                  <Col xs={7} md={4} lg={5}>
-                    <h3>Request ID: {item.matchId}</h3>
+                  <Col xs={12} sm={12} md={12} lg={12}>
+                    <h3>Match ID: {item.matchId}</h3>
                     <p>
 
                       <span className="input-label">

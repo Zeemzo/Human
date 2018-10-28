@@ -105,10 +105,9 @@ class ChatScreen extends Component {
     }
 
     render() {
-
         const styles = {
             container: {
-                height: '100vh',
+                height: '75vh',
                 display: 'flex',
                 flexDirection: 'column',
             },
@@ -135,7 +134,7 @@ class ChatScreen extends Component {
         }
 
         return (
-            <div><Grid>
+            <div ><Grid>
                 <Row><Col xs={10} sm={10} md={10} lg={10}>
                     {this.props.room.sender != 'no chats' ?
                         <Button
@@ -169,7 +168,7 @@ class ChatScreen extends Component {
                                 <section style={styles.chatContainer}>
                                     <MessageList
                                         messages={this.state.messages}
-                                        style={styles.chatList} />   </section>
+                                        />   </section>
                             </div>
 
                             <SendMessageForm sendMessage={this.sendMessage} />

@@ -156,17 +156,17 @@ handleChangeNext(e) {
 
 
 
-        {this.state.needs.length == 0 && !this.state.loading ? <div>
+        {this.state.needs.length == 0 && !this.state.loading ? <div><p>
           <Button onClick={this.handleChangePrev}>Previous Day</Button>
           {utc_timestamp == this.state.startDate ? 
             null :(utc_timestamp==yesterday? 
             <Button onClick={this.handleChangeNext}>Today</Button>:
             <Button onClick={this.handleChangeNext}>Next Day</Button>)}
-          <h2>No Requests Available</h2></div> : <div>
+          <h2>No Requests Available</h2></p></div> : <div><p>
             <Button onClick={this.handleChangePrev}>Previous Day</Button>
             {utc_timestamp == this.state.startDate ? null : (utc_timestamp==yesterday? 
             <Button onClick={this.handleChangeNext}>Today</Button>:
-            <Button onClick={this.handleChangeNext}>Next Day</Button>)}
+            <Button onClick={this.handleChangeNext}>Next Day</Button>)}</p>
            
             {this.state.needs.map((item, i) => (
               <Panel key={i}>
@@ -194,7 +194,7 @@ handleChangeNext(e) {
                           <Trigger item={item} />
                         </p>
                       </Col>
-                      <Col xs={12} sm={6} md={6} lg={6}><Image width="300" src={item.image} rounded /></Col>
+                      <Col xs={12} sm={6} md={6} lg={6}><Image width="250" src={item.image} rounded /></Col>
                     </Panel.Body>
 
                       : <Panel.Body> <Col xs={12} sm={12} md={12} lg={12}>

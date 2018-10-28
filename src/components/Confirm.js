@@ -5,6 +5,7 @@ import axios from 'axios';
 import * as routes from '../constants/routes'
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
+import { ToastContainer, ToastStore } from 'react-toasts';
 
 class Confirm extends React.Component {
     constructor(props) {
@@ -63,6 +64,9 @@ class Confirm extends React.Component {
                     "Content-Type": "application/json", 
                     'Access-Control-Allow-Origin': '*',
                 }
+            }).then(()=>{
+                ToastStore.success("Confirmed")
+
             })
     }
     decline() {
@@ -75,6 +79,9 @@ class Confirm extends React.Component {
                     "Content-Type": "application/json", 
                     'Access-Control-Allow-Origin': '*',
                 }
+            }).then(()=>{
+                ToastStore.success("Declined")
+
             })
     }
 
@@ -85,6 +92,7 @@ class Confirm extends React.Component {
         return (
             <div >
 
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
 
                 <Modal
                     show={this.state.show}

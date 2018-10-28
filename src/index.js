@@ -16,7 +16,7 @@ import { ToastContainer, ToastStore } from 'react-toasts';
 
 ReactDOM.render(
     <div>
-        <App />
+        <App height="100%" />
         <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
     </div>
     ,

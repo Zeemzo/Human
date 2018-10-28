@@ -1,11 +1,16 @@
-import { Button, Modal } from 'react-bootstrap';
+import {
+    Button, Modal, Row,
+    Grid,
+    Col,
+} from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-import { Col, Panel, Image } from 'react-bootstrap';
+import { Panel, Image } from 'react-bootstrap';
 import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import Chatkit from '@pusher/chatkit'
 import * as routes from '../constants/routes'
 import { ToastContainer, ToastStore } from 'react-toasts';
+import { ClipLoader } from "react-spinners";
 
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
@@ -26,7 +31,9 @@ class Trigger extends React.Component {
             item: this.props.item,
             currentUsername: '',
             roomId: null,
-            messages: ''
+            messages: '',
+            loading: false,
+
         };
         this.sendMessage = this.sendMessage.bind(this)
 
@@ -43,6 +50,8 @@ class Trigger extends React.Component {
     }
 
     onSubmit = (event) => {
+        this.setState({ loading: true })
+
         event.preventDefault();
 
         const chatManager = new Chatkit.ChatManager({
@@ -105,7 +114,9 @@ class Trigger extends React.Component {
                         })
                         .then((res) => {
                             console.log(res.data);
-                            ToastStore.success(this.state.item.resourceType+" accepted!!!")
+                            this.setState({ loading: false })
+
+                            ToastStore.success(this.state.item.requestType + " accepted!!!")
 
                             window.location.href = routes.HUMANAPP + '/chat';
                             // window.location.href='http://localhost:3000/chat';
@@ -137,6 +148,7 @@ class Trigger extends React.Component {
             <div >
                 <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
 
+
                 <Button
                     bsStyle="success"
                     bsSize="medium"
@@ -158,7 +170,6 @@ class Trigger extends React.Component {
                         <Panel >
                             {/* <Panel.Heading>Request ID: {this.state.item.id}</Panel.Heading> */}
                             <Panel.Body>
-
                                 <Col  >
                                     {/* <Image width="280" src={this.state.item.image} rounded /> */}
                                     {/* <br/>
@@ -196,6 +207,7 @@ class Trigger extends React.Component {
                                                 email: {this.state.item.email} | Type: {this.state.item.type} | Latitude: {this.state.item.latitude} | Longitude: {this.state.item.longitude}
                                             </span>
                                             <p>Description : {this.state.item.description}</p> */}
+                                                         
                                         <form onSubmit={this.onSubmit}>
                                             <input
                                                 value={this.state.item}
@@ -203,13 +215,22 @@ class Trigger extends React.Component {
                                             />
 
                                             <input onChange={e => { this.sendMessage = e.target.value }} type="text" />
+                             
                                             <button type="submit">
                                                 Accept {this.state.item.requestType}</button>
-                                        </form>
+                                        </form>   <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+                                                // style={override}
+                                                sizeUnit={"px"}
+                                                size={30}
+                                                color={"green"}
+                                                loading={this.state.loading}
+                                            // style="text-align:center"
+                                            /></p></Col></Row></Grid>
                                     </p>
                                 </Col>
                             </Panel.Body>
                         </Panel>
+                     
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleHide}>Close</Button>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { auth as Auth } from "../firebase/firebase";
+import autoscroll from 'autoscroll-react'
+
 // import {Image} from 'react-bootstrap'
 class MessagesList extends Component {
 constructor(props){
@@ -77,4 +79,4 @@ constructor(props){
   }
 }
 
-export default MessagesList
+export default autoscroll(MessagesList)
