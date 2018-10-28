@@ -1,4 +1,4 @@
-import { Button, Modal, Image } from 'react-bootstrap';
+import { Button, Modal, Image,Grid } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
 
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
@@ -31,15 +31,17 @@ class ModalCamera extends React.Component {
         
         return (
             <div>
-                <button onClick={(e) => {
+                <Button onClick={(e) => {
                     this.setState({ flip: !this.state.flip })
                     if (this.state.flip) {
                         this.setState({ idealFacingMode: FACING_MODES.USER });
+                        e.preventDefault()
                     }else{
                         this.setState({ idealFacingMode: FACING_MODES.ENVIRONMENT });
+                        e.preventDefault()
 
                     }
-                }}> Flip </button>
+                }}> Flip </Button>
             </div>
         );
     }
@@ -49,6 +51,7 @@ class ModalCamera extends React.Component {
     
 
     onTakePhoto(dataUri) {
+        
         console.log(dataUri);
         this.setState({ src: dataUri })
         this.props.DataUrl(dataUri)
@@ -63,10 +66,11 @@ class ModalCamera extends React.Component {
 
 
     render() {
-        const wellStyles = { maxWidth: 400, margin: '0 auto 10px' };
+        const wellStyles = { maxWidth: 300 };
 
         return (
             // style={{ height: 200 }}
+            <Grid>
             <div > {
                 this.state.showPhoto ? <Image 
                 style={wellStyles}
@@ -122,7 +126,7 @@ class ModalCamera extends React.Component {
                         <Button onClick={this.handleHide}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-            </div>
+            </div></Grid>
         );
     }
 }

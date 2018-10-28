@@ -1,10 +1,11 @@
 import { Button, Modal } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-import { Col, Panel ,Image} from 'react-bootstrap';
+import { Col, Panel, Image } from 'react-bootstrap';
 import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import Chatkit from '@pusher/chatkit'
 import * as routes from '../constants/routes'
+import { ToastContainer, ToastStore } from 'react-toasts';
 
 import { HUMANBACKEND } from '../constants/routes';
 import * as React from 'react';
@@ -71,7 +72,7 @@ class Trigger extends React.Component {
                             roomId: room.id,
                             sender: this.state.item.email
                         })
-                        localStorage.setItem('chat',  JSON.stringify(temp))
+                        localStorage.setItem('chat', JSON.stringify(temp))
                         console.log(temp)
                     } else {
                         var chat = { chats: [] };
@@ -104,9 +105,10 @@ class Trigger extends React.Component {
                         })
                         .then((res) => {
                             console.log(res.data);
+                            ToastStore.success(this.state.item.resourceType+" accepted!!!")
 
-                                        window.location.href= routes.HUMANAPP+'/chat';
-                                        // window.location.href='http://localhost:3000/chat';
+                            window.location.href = routes.HUMANAPP + '/chat';
+                            // window.location.href='http://localhost:3000/chat';
 
                             // this.setState(byPropKey('error', res))
                         }).catch((error) => {
@@ -124,7 +126,7 @@ class Trigger extends React.Component {
 
 
 
-            // window.location.href='https://human-24b1b.firebaseapp.com/chat';
+        // window.location.href='https://human-24b1b.firebaseapp.com/chat';
 
         // event.preventDefault();
     }
@@ -133,6 +135,8 @@ class Trigger extends React.Component {
         return (
             // style={{ height: 200 }}
             <div >
+                <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+
                 <Button
                     bsStyle="success"
                     bsSize="medium"
@@ -147,7 +151,7 @@ class Trigger extends React.Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title >
-                            {this.state.item.id}
+                            Request ID:{this.state.item.id}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -156,17 +160,20 @@ class Trigger extends React.Component {
                             <Panel.Body>
 
                                 <Col  >
-                                    <Image width="280" height="300" src={this.state.item.image} rounded />
-                                    <br/>
-                                    <br/>
+                                    {/* <Image width="280" src={this.state.item.image} rounded /> */}
+                                    {/* <br/>
+                                    <br/>  */}
 
                                     <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
 
                                 </Col>
                                 <Col >
-                                    <h3>Request ID: {this.state.item.id}</h3>
+                                    {/* <h3>Request ID: {this.state.item.id}</h3> */}
+                                    <h3>{this.state.item.title}</h3>
                                     <p>
-                                        <span className="input-label">
+                                        <span
+                                        //  className="input-label"
+                                        >
 
                                             Type: {this.state.item.requestType}
                                             <br />
@@ -199,19 +206,19 @@ class Trigger extends React.Component {
                                             <button type="submit">
                                                 Accept {this.state.item.requestType}</button>
                                         </form>
-                                        </p>
-                                        </Col>
+                                    </p>
+                                </Col>
                             </Panel.Body>
                         </Panel>
                     </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.handleHide}>Close</Button>
-                        </Modal.Footer>
+                    <Modal.Footer>
+                        <Button onClick={this.handleHide}>Close</Button>
+                    </Modal.Footer>
                 </Modal>
             </div>
-                );
-            }
-        }
-        
-        const authCondition = (authUser) => !!authUser;
-        export default withAuthorization(authCondition)(Trigger);
+        );
+    }
+}
+
+const authCondition = (authUser) => !!authUser;
+export default withAuthorization(authCondition)(Trigger);

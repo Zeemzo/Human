@@ -66,10 +66,10 @@ componentDidMount(){
           <Thumbnail key={i}>
             <Grid>
               <Row>
-                <Col xs={7} md={4} lg={5}>
-                  <Image width="250" height="300" src={item.image} rounded />
+              <Col xs={10} sm={5} md={5} lg={5}>
+                  <Image width="250" src={item.image} rounded />
                 </Col>
-                <Col xs={7} md={4} lg={5}>
+                <Col xs={10} sm={5} md={5} lg={5}>
                   <h3>Request ID: {item.id}</h3>
                   <p>
                     {/* <DisplayLoc

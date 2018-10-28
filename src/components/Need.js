@@ -1,24 +1,38 @@
 import * as React from "react";
-import { Col, Grid, Thumbnail,Row, Image } from "react-bootstrap";
+import { Col, Grid, Panel,Row, Image,Button } from "react-bootstrap";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import Trigger from "./Trigger";
+import { ToastContainer, ToastStore } from 'react-toasts';
+
+const now = new Date;
+var count = 0;
+const utc_timestamp = Date.UTC(
+  now.getFullYear(),
+  now.getMonth(),
+  now.getDate()
+);
 class Need extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       needs: [],
-      loading: true
+      loading: true,
+      startDate: utc_timestamp,
+      UTC: utc_timestamp,
+      count: 0,
     };
+
+    this.handleChangePrev = this.handleChangePrev.bind(this)
+    this.handleChangeNext = this.handleChangeNext.bind(this)
+    // this.componentDidMount=this.componentDidMount.bind(this)
+
   }
 componentDidMount(){
   console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
-    const now = new Date;
-
-    const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     axios
       .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
         headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
@@ -42,49 +56,178 @@ componentDidMount(){
 
 }
  
+handleChangePrev(e) {
+  this.setState({ needs: [] });
+
+  this.setState({ loading: true });
+
+  count++;
+  const now = new Date;
+  const utc_timestamp = Date.UTC(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - count
+  );
+  const token = localStorage.getItem('token')
+  axios
+    .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
+      headers: {
+        'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+      }
+    })
+    .then(data => {
+      this.setState({ loading: false });
+      var obj = data.data;
+      var arr = [];
+      for (var key in obj) {
+        obj[key].id = key;
+        arr.push(obj[key]);
+      }
+      arr = arr.reverse();
+      console.log(arr);
+      this.setState({ needs: arr });
+    })
+    .catch((err) => {
+    })
+  e.preventDefault();
+}
+handleChangeNext(e) {
+  this.setState({ needs: [] });
+
+  this.setState({ loading: true });
+
+  console.log(count)
+
+  count--;
+  const now = new Date;
+  const utc_timestamp = Date.UTC(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - count
+  );
+  console.log(count)
+
+  const token = localStorage.getItem('token')
+  axios
+    .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
+      headers: {
+        'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+      }
+    })
+    .then(data => {
+
+      this.setState({ loading: false });
+      var obj = data.data;
+      // console.log(obj);
+      var arr = [];
+      for (var key in obj) {
+        obj[key].id = key;
+        arr.push(obj[key]);
+      }
+      arr = arr.reverse();
+      console.log(arr);
+      this.setState({ needs: arr });
+    })
+    .catch((err) => {
+    })
+  // this.setState({count:this.state.count-1});
+}
+
   render() {
+
+    const now = new Date;
+    const utc_timestamp = Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - count
+    );
+
+    const yesterday = Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - 1
+    );
     return (
       <Grid>
-        <ClipLoader
-          sizeUnit={"px"}
-          size={150}
-          color={"#123abc"}
-          loading={this.state.loading}
-        />
-        {this.state.needs.length==0 && !this.state.loading? 
-         <h2>No Requests Available</h2> : <div>
-        {this.state.needs.map((item, i) => (
-          <Thumbnail key={i}>
-            <Grid>
-              <Row>
-                <Col xs={10} sm={5} md={5} lg={5}>
-                  <Image width="250" src={item.image} rounded />
-                </Col>
-                <Col xs={10} sm={5} md={5} lg={5}>
-                  <h3>Request ID: {item.id}</h3>
-                  <p>
-                    <span className="input-label">
-                     
-                      Type: {item.requestType}
-                      <br /> 
-                      email: {item.email}
-                      <br />
-                      Resource: {item.resourceType}
-                      <br />
-                      Servings: {item.quantity}
-                      <br />
-                    </span>
-                    <p>Description : {item.description}</p>
-                    <Trigger item={item} />
-                  </p>
-                </Col>
-              </Row>
-            </Grid>
-          </Thumbnail>
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+        {/* <Sort/> */}
+        <h3>{(now.getDate()-count )}-{(now.getMonth())}-{now.getFullYear()}</h3>
 
-        ))}
-         </div>
+
+
+
+        {this.state.needs.length == 0 && !this.state.loading ? <div>
+          <Button onClick={this.handleChangePrev}>Previous Day</Button>
+          {utc_timestamp == this.state.startDate ? 
+            null :(utc_timestamp==yesterday? 
+            <Button onClick={this.handleChangeNext}>Today</Button>:
+            <Button onClick={this.handleChangeNext}>Next Day</Button>)}
+          <h2>No Requests Available</h2></div> : <div>
+            <Button onClick={this.handleChangePrev}>Previous Day</Button>
+            {utc_timestamp == this.state.startDate ? null : (utc_timestamp==yesterday? 
+            <Button onClick={this.handleChangeNext}>Today</Button>:
+            <Button onClick={this.handleChangeNext}>Next Day</Button>)}
+           
+            {this.state.needs.map((item, i) => (
+              <Panel key={i}>
+                <Grid>
+                  <Row>
+                    <Col xs={12} sm={12} md={12} lg={12}>
+                      <Panel.Heading>
+                        {/* <Grid> */}
+                        <h4 > {item.title}</h4>
+                        {/* </Grid> */}
+                      </Panel.Heading>
+                    </Col>
+
+                    {item.image != "" ? <Panel.Body>
+
+                      <Col xs={12} sm={6} md={6} lg={6}>
+                        <p>
+                          email: {item.email}
+                          <br />
+                          Resource: {item.resourceType}
+                          <br />
+                          Servings: {item.quantity}
+                          <br />
+                          {/* <p>Description : {item.description}</p> */}
+                          <Trigger item={item} />
+                        </p>
+                      </Col>
+                      <Col xs={12} sm={6} md={6} lg={6}><Image width="300" src={item.image} rounded /></Col>
+                    </Panel.Body>
+
+                      : <Panel.Body> <Col xs={12} sm={12} md={12} lg={12}>
+                        {/* <h3>Request ID: {item.id}</h3> */}
+                        <p>
+                          email: {item.email}
+                          <br />
+                          Resource: {item.resourceType}
+                          <br />
+                          Servings: {item.quantity}
+                          <br />
+                          {/* <p>Description : {item.description}</p> */}
+                          <Trigger item={item} />
+                        </p>
+                      </Col></Panel.Body>}
+                    {/* // <Image width="250" src={item.image} rounded /> */}
+                    {/* </Col> */}
+
+                  </Row>
+                </Grid>
+              </Panel>
+            ))}
+            <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+              // style={override}
+              sizeUnit={"px"}
+              size={300}
+              color={"green"}
+              loading={this.state.loading}
+            // style="text-align:center"
+            /></p></Col></Row></Grid>
+          </div>
         }
+
       </Grid>
     );
   }

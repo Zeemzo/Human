@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import { Link } from "react-router-dom";
+import {ToastContainer, ToastStore} from 'react-toasts';
 
 import Navigation from './Navigation';
 import LandingPage from './Landing';
@@ -41,6 +42,10 @@ class App extends React.Component {
     this.mousedown=this.mousedown.bind(this)
   }
   componentDidMount() {
+    if (!navigator.onLine) {
+      ToastStore.error("You are Offline!!!")
+
+    }
     Modal.setAppElement(this.el);
     window.addEventListener("resize",
       this.resize.bind(this)
@@ -107,6 +112,7 @@ class App extends React.Component {
           {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 
 
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore}/>
 
 
 

@@ -21,6 +21,7 @@ class AdminPage extends React.Component {
 
         </AuthUserContext.Consumer>
         <App/>
+        
         {/* <Reports /> */}
         </Grid>
       // </div>

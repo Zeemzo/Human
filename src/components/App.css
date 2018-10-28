@@ -46,9 +46,9 @@
 
 .floating-menu {
 	position: absolute;
-	right: 15px;
-	bottom: 15px;
-	height: 42px;
+	right: 20px;
+	bottom: 20px;
+	height: 35px;
   text-align: right;
   z-index: 2;
 	position:fixed;
@@ -84,7 +84,8 @@
 	height: 42px;
 	line-height: 42px;
 	vertical-align: middle;
-	background: #e53935;
+  background:black;
+  color: white;
 	border-radius: 50%;
 	border: none;
 	box-shadow: 0 2px 4px rgba(0,0,0,.2);
@@ -95,4 +96,11 @@
 	font-size: 32px;
 	color: #fff;
 	vertical-align: middle;
+}
+
+.override{
+	vertical-align: middle;
+	text-align: center;
+
+
 }

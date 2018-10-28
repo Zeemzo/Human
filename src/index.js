@@ -9,12 +9,19 @@ import { HUMANBACKEND } from './constants/routes'
 import { messaging } from './firebase/firebase';
 import { auth as Auth } from './firebase/firebase'
 
+import { ToastContainer, ToastStore } from 'react-toasts';
+
 
 
 
 ReactDOM.render(
-    <App />,
+    <div>
+        <App />
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+    </div>
+    ,
     document.getElementById('root')
+
 );
 registerServiceWorker();
 
@@ -159,10 +166,22 @@ messaging.onMessage(function (payload) {
             ; break;
         case 'You have a message from a fellow Human':
             console.log('Message received. ', payload);
+            var repeat = false;
             if (localStorage.getItem('chat') != null) {
+
                 var temp = JSON.parse(localStorage.getItem('chat'));
-                temp.chats.push(JSON.parse(payload.notification.body))
-                localStorage.setItem('chat',  JSON.stringify(temp))
+                for (var i = 0; i < (temp.chats).length; i++) {
+                    if (temp.chats[i].roomId == payload.notification.body.roomId) {
+                        repeat = true;
+                        break;
+                    }
+                }
+                if (!repeat) {
+                    temp.chats.push(JSON.parse(payload.notification.body))
+                    localStorage.setItem('chat', JSON.stringify(temp))
+                }
+
+
                 console.log(payload.notification.body)
             } else {
                 var chat = { chats: [] };
@@ -182,14 +201,17 @@ messaging.onMessage(function (payload) {
             console.log('Message received. ', payload);
             // localStorage.setItem('roomId', payload.notification.body)
             console.log(payload.notification.body)
-            window.alert(payload.notification.title)
+            ToastStore.error(payload.notification.body)
+                // window.alert(payload.notification.title)
                 // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
                 ; break;
         case 'Declined':
             console.log('Message received. ', payload);
             // localStorage.setItem('roomId', payload.notification.body)
             console.log(payload.notification.body)
-            window.alert(payload.notification.title)
+            ToastStore.error(payload.notification.body)
+
+                // window.alert(payload.notification.title)
                 // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
                 ; break;
         default:

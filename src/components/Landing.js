@@ -1,10 +1,11 @@
 import React from "react";
-import { Jumbotron, Button  } from "react-bootstrap";
+import { Jumbotron, Button ,Grid } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import * as routes from "../constants/routes";
 
 const LandingPage = () => (
   <div>
+    <Grid>
     <Jumbotron>
       <h1>Being You</h1>
       <p>
@@ -19,7 +20,7 @@ const LandingPage = () => (
           <Button bsStyle="success">Join Now</Button>
         </Link>
       </p>
-    </Jumbotron>
+    </Jumbotron></Grid>
   </div>
 );
 

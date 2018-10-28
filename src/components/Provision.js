@@ -3,42 +3,51 @@ import {
   Col,
   Grid,
   Thumbnail,
+  Button,
   Row,
   Image,
+  Panel
 } from "react-bootstrap";
+import { ToastContainer, ToastStore } from 'react-toasts';
+import Sort from './Sort';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import Trigger from "./Trigger";
-
+const now = new Date;
+var count = 0;
+const utc_timestamp = Date.UTC(
+  now.getFullYear(),
+  now.getMonth(),
+  now.getDate()-count
+);
 class Provision extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       needs: [],
-      loading: true
+      loading: true,
+      startDate: utc_timestamp,
+      UTC: utc_timestamp,
+      count: 0,
+
     };
-    // console.log(this.props.type);
-
-
-
+    this.handleChangePrev = this.handleChangePrev.bind(this)
+    this.handleChangeNext = this.handleChangeNext.bind(this)
+    // this.componentDidMount=this.componentDidMount.bind(this)
 
 
   }
 
   componentDidMount() {
+    // console.log(count)
+
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
-    const now = new Date;
 
-    const utc_timestamp = Date.UTC(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate()
-    );
     axios
-      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
+      .get(HUMANBACKEND + "/api/request/getall/" + this.state.startDate + "/provision/", {
         headers: {
           'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
         }
@@ -64,48 +73,177 @@ class Provision extends React.Component {
 
       })
   }
+  handleChangePrev(e) {
+    this.setState({ needs: [] });
+
+    this.setState({ loading: true });
+
+    count++;
+    const now = new Date;
+    const utc_timestamp = Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - count
+    );
+    const token = localStorage.getItem('token')
+    axios
+      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
+        headers: {
+          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+        }
+      })
+      .then(data => {
+        this.setState({ loading: false });
+        var obj = data.data;
+        var arr = [];
+        for (var key in obj) {
+          obj[key].id = key;
+          arr.push(obj[key]);
+        }
+        arr = arr.reverse();
+        console.log(arr);
+        this.setState({ needs: arr });
+      })
+      .catch((err) => {
+      })
+    e.preventDefault();
+  }
+  handleChangeNext(e) {
+    this.setState({ needs: [] });
+
+    this.setState({ loading: true });
+
+    console.log(count)
+
+    count--;
+    const now = new Date;
+    const utc_timestamp = Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - count
+    );
+    console.log(count)
+
+    const token = localStorage.getItem('token')
+    axios
+      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/provision/", {
+        headers: {
+          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+        }
+      })
+      .then(data => {
+
+        this.setState({ loading: false });
+        var obj = data.data;
+        // console.log(obj);
+        var arr = [];
+        for (var key in obj) {
+          obj[key].id = key;
+          arr.push(obj[key]);
+        }
+        arr = arr.reverse();
+        console.log(arr);
+        this.setState({ needs: arr });
+      })
+      .catch((err) => {
+      })
+    // this.setState({count:this.state.count-1});
+  }
+
+
 
   render() {
+    const now = new Date;
+    const utc_timestamp = Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - count
+    );
+
+    const yesterday = Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - 1
+    );
+
     return (
       <Grid>
-        <ClipLoader
-          // className={override}
-          sizeUnit={"px"}
-          size={200}
-          color={"#123abc"}
-          loading={this.state.loading}
-        />
-        {this.state.needs.length == 0 && !this.state.loading ?
-          <h2>No Requests Available</h2> : <div>
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+        {/* <Sort/> */}
+        <h3>{(now.getDate()-count )}-{(now.getMonth())}-{now.getFullYear()}</h3>
+
+
+
+
+        {this.state.needs.length == 0 && !this.state.loading ? <div>
+          <Button onClick={this.handleChangePrev}>Previous Day</Button>
+          {utc_timestamp == this.state.startDate ? 
+            null :(utc_timestamp==yesterday? 
+            <Button onClick={this.handleChangeNext}>Today</Button>:
+            <Button onClick={this.handleChangeNext}>Next Day</Button>)}
+          <h2>No Requests Available</h2></div> : <div>
+            <Button onClick={this.handleChangePrev}>Previous Day</Button>
+            {utc_timestamp == this.state.startDate ? null : (utc_timestamp==yesterday? 
+            <Button onClick={this.handleChangeNext}>Today</Button>:
+            <Button onClick={this.handleChangeNext}>Next Day</Button>)}
+           
             {this.state.needs.map((item, i) => (
-              <Thumbnail key={i}>
+              <Panel key={i}>
                 <Grid>
                   <Row>
-                    <Col xs={7} md={4} lg={5} >
-                      <Image width="280" height="300" src={item.image} rounded />
+                    <Col xs={12} sm={12} md={12} lg={12}>
+                      <Panel.Heading>
+                        {/* <Grid> */}
+                        <h4 > {item.title}</h4>
+                        {/* </Grid> */}
+                      </Panel.Heading>
                     </Col>
-                    <Col xs={7} md={4} lg={5}>
-                      <h3>Request ID: {item.id}</h3>
-                      <p>
-                        <span className="input-label">
 
-                          Type: {item.requestType}
-                          <br />
+                    {item.image != "" ? <Panel.Body>
+
+                      <Col xs={12} sm={6} md={6} lg={6}>
+                        <p>
                           email: {item.email}
                           <br />
                           Resource: {item.resourceType}
                           <br />
                           Servings: {item.quantity}
                           <br />
-                        </span>
-                        <p>Description : {item.description}</p>
-                        <Trigger item={item} />
-                      </p>
-                    </Col>
+                          {/* <p>Description : {item.description}</p> */}
+                          <Trigger item={item} />
+                        </p>
+                      </Col>
+                      <Col xs={12} sm={6} md={6} lg={6}><Image width="300" src={item.image} rounded /></Col>
+                    </Panel.Body>
+
+                      : <Panel.Body> <Col xs={12} sm={12} md={12} lg={12}>
+                        {/* <h3>Request ID: {item.id}</h3> */}
+                        <p>
+                          email: {item.email}
+                          <br />
+                          Resource: {item.resourceType}
+                          <br />
+                          Servings: {item.quantity}
+                          <br />
+                          {/* <p>Description : {item.description}</p> */}
+                          <Trigger item={item} />
+                        </p>
+                      </Col></Panel.Body>}
+                    {/* // <Image width="250" src={item.image} rounded /> */}
+                    {/* </Col> */}
+
                   </Row>
                 </Grid>
-              </Thumbnail>
+              </Panel>
             ))}
+            <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+              // style={override}
+              sizeUnit={"px"}
+              size={300}
+              color={"green"}
+              loading={this.state.loading}
+            // style="text-align:center"
+            /></p></Col></Row></Grid>
           </div>
         }
 
@@ -116,4 +254,4 @@ class Provision extends React.Component {
 
 const authCondition = authUser => !!authUser;
 export default withAuthorization(authCondition)(Provision);
-// export default Feed;
+    // export default Feed;
