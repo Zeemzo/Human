@@ -7,7 +7,7 @@ import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import DisplayLoc from "./DisplayLocation";
 import Trigger from "./Trigger";
-import {auth} from '../firebase/firebase'
+import { auth } from '../firebase/firebase'
 class Fulfilled extends React.Component {
   constructor(props) {
     super(props);
@@ -15,102 +15,85 @@ class Fulfilled extends React.Component {
       needs: [],
       loading: true
     };
-    // console.log(this.props.type);
-
-    
-
 
   }
-componentDidMount(){
-  console.log(localStorage.getItem('token'));
+  componentDidMount() {
+    console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
     const now = new Date;
 
     const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     axios
-      .get(HUMANBACKEND + "/api/user/contributions/" +auth.currentUser.uid+'/'+this.props.type, {
-        headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
-      }
+      .get(HUMANBACKEND + "/api/user/contributions/" + auth.currentUser.uid + '/' + this.props.type, {
+        headers: {
+          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+        }
       })
       .then(data => {
         this.setState({ loading: false });
         var obj = data.data;
-        // console.log(obj);
         var arr = [];
         for (var key in obj) {
           obj[key].id = key;
           arr.push(obj[key]);
         }
-        arr=arr.reverse();
+        arr = arr.reverse();
 
         console.log(arr);
         this.setState({ needs: arr });
       })
       .catch((err) => { })
 
-}
- 
+  }
+
   render() {
     return (
       <Grid>
-        <ClipLoader
-          // className={override}
+        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+          // style={override}
           sizeUnit={"px"}
-          size={150}
-          color={"#123abc"}
+          size={100}
+          color={"green"}
           loading={this.state.loading}
-        />
-                  {this.state.needs.length==0 && !this.state.loading? 
-         <h2>No {this.props.type} Requests</h2> : <div>
-        {this.state.needs.map((item, i) => (
-          <Thumbnail key={i}>
-            <Grid>
-              <Row>
-              <Col xs={10} sm={5} md={5} lg={5}>
-                  <Image width="250" src={item.image} rounded />
-                </Col>
-                <Col xs={10} sm={5} md={5} lg={5}>
-                  <h3>Request ID: {item.id}</h3>
-                  <p>
-                    {/* <DisplayLoc
+        // style="text-align:center"
+        /></p></Col></Row></Grid>
+        {this.state.needs.length == 0 && !this.state.loading ?
+          <h2>No {this.props.type} Requests</h2> : <div>
+            {this.state.needs.map((item, i) => (
+              <Thumbnail key={i}>
+                <Grid>
+                  <Row>
+                    <Col xs={12} sm={6} md={6} lg={6}>
+                      <Image width="250" src={item.image} rounded />
+                    </Col>
+                    <Col xs={12} sm={6} md={6} lg={6}>
+                      <h3>Request ID: {item.id}</h3>
+                      <p>
+                        {/* <DisplayLoc
                       latitude={item.latitude}
                       longitude={item.longitude}
                     /> */}
-                    <span className="input-label">
-                     
-                      Type: {item.requestType}
-                      <br /> 
-                      email: {item.email}
-                      <br />
-                      Resource: {item.resourceType}
-                      <br />
-                      Servings: {item.quantity}
-                      <br />
-                    </span>
-                    <p>Description : {item.description}</p>
-                  </p>
-                </Col>
-              </Row>
-            </Grid>
-          </Thumbnail>
+                        <span className="input-label">
 
-          // <Panel key={i}>
-          //   <Panel.Heading>Request ID: {item.id}</Panel.Heading>
-          //   <Panel.Body>
-          //     <Col xs={15} md={0}>
-          //   <Thumbnail href="#" alt="171x180" src={item.image} />
+                          Type: {item.requestType}
+                          <br />
+                          email: {item.email}
+                          <br />
+                          Resource: {item.resourceType}
+                          <br />
+                          Servings: {item.quantity}
+                          <br />
+                        </span>
+                        <p>Description : {item.description}</p>
+                      </p>
+                    </Col>
+                  </Row>
+                </Grid>
+              </Thumbnail>
 
-          //   <DisplayLoc latitude={item.latitude} longitude={item.longitude} />
-          //   <span className="input-label">
-          //     email: {item.email} | Type: {item.type} | Latitude: {item.latitude} | Longitude: {item.longitude}
-          //   </span>
-          //   <p>Description : {item.description}</p>
-          // </Col>
-          // </Panel.Body>
-          // </Panel>
-        ))}
-        </div>
-      }
+            ))}
+          </div>
+        }
       </Grid>
     );
   }

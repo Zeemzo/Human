@@ -201,7 +201,7 @@ messaging.onMessage(function (payload) {
             console.log('Message received. ', payload);
             // localStorage.setItem('roomId', payload.notification.body)
             console.log(payload.notification.body)
-            ToastStore.error(payload.notification.body)
+            ToastStore.success("Fulfillment Verification Accepted")
                 // window.alert(payload.notification.title)
                 // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';
                 ; break;
@@ -209,7 +209,7 @@ messaging.onMessage(function (payload) {
             console.log('Message received. ', payload);
             // localStorage.setItem('roomId', payload.notification.body)
             console.log(payload.notification.body)
-            ToastStore.error(payload.notification.body)
+            ToastStore.error("Fulfillment Verification Declined")
 
                 // window.alert(payload.notification.title)
                 // window.location.href = 'https://human-24b1b.firebaseapp.com/chat';

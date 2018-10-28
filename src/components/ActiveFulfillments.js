@@ -26,7 +26,7 @@ class ActiveFulfillments extends React.Component {
   componentDidMount() {
     console.log(localStorage.getItem('token'));
     const token = localStorage.getItem('token')
-  
+
     axios
       .get(HUMANBACKEND + "/api/matchedRequest/getactivematches", {
         headers: {
@@ -53,17 +53,20 @@ class ActiveFulfillments extends React.Component {
   }
 
   render() {
+  // const bool=false;
     return (
       <Grid>
-        <ClipLoader
-          // className={override}
+        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+          // style={override}
           sizeUnit={"px"}
-          size={150}
-          color={"#123abc"}
+          size={100}
+          color={"green"}
           loading={this.state.loading}
-        />
-        
-        {this.state.needs.map((item, i) => (
+        // style="text-align:center"
+        /></p></Col></Row></Grid>
+
+        {this.state.needs != []?( 
+        <div> {this.state.needs.map((item, i) => (
           <div>{!item.fulfilled ?
             <Thumbnail key={i}>
               <Grid>
@@ -117,9 +120,12 @@ class ActiveFulfillments extends React.Component {
               </Grid>
 
             </Thumbnail>
-            : <h2>No ActiveFulfillments</h2>}
+            :null }
+            
           </div>
-        ))}
+        ))}</div> ):<h2>No ActiveFulfillments</h2>}
+
+        {}
       </Grid>
     );
   }
