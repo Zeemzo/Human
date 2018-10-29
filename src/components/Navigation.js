@@ -37,7 +37,7 @@ const NavigationAuth = () => (
         <NavItem>Account</NavItem>
       </LinkContainer>
       <LinkContainer to={'/contributions'}>
-        <NavItem>My Contributions</NavItem>
+        <NavItem>Contributions</NavItem>
       </LinkContainer>
       <AuthUserContext.Consumer>
 
@@ -52,7 +52,7 @@ const NavigationAuth = () => (
       <AuthUserContext.Consumer>
         {authUser => (authUser.displayName == 'ADMIN' || authUser.displayName == 'CONTRIBUTOR' ?
           <LinkContainer to={'/activefulfillments'}>
-            <NavItem>Active Fulfillments</NavItem>
+            <NavItem>Active Matches</NavItem>
           </LinkContainer> : null)}
       </AuthUserContext.Consumer>
       <LinkContainer to='/chat'>
@@ -80,7 +80,7 @@ const NavigationNonAuth = () => (
     </Nav>
     <Nav pullRight>
       <LinkContainer to="/signin">
-        <NavItem>Signin</NavItem>
+        <NavItem>Sign In</NavItem>
       </LinkContainer>
     </Nav>
   </Navbar>

@@ -25,7 +25,7 @@ class Feed extends React.Component {
               <AuthUserContext.Consumer>
                 {authUser =>
                   authUser.displayName == 'ADMIN' || authUser.displayName == 'CONTRIBUTOR' ?
-                    <Nav bsStyle="tabs">
+                    <Nav bsStyle="tabs" >
                     
                       <NavItem eventKey={1}>Provision</NavItem>
                       <NavItem eventKey={2}>Need</NavItem>

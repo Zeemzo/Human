@@ -63,30 +63,46 @@ class Fulfilled extends React.Component {
               <Thumbnail key={i}>
                 <Grid>
                   <Row>
-                    <Col xs={12} sm={6} md={6} lg={6}>
-                      <Image width="250" src={item.image} rounded />
-                    </Col>
-                    <Col xs={12} sm={6} md={6} lg={6}>
+                    <Col xs={12} sm={12} md={12} lg={12}>
                       <h3>Request ID: {item.id}</h3>
-                      <p>
-                        {/* <DisplayLoc
-                      latitude={item.latitude}
-                      longitude={item.longitude}
-                    /> */}
-                        <span className="input-label">
-
-                          Type: {item.requestType}
-                          <br />
-                          email: {item.email}
-                          <br />
-                          Resource: {item.resourceType}
-                          <br />
-                          Servings: {item.quantity}
-                          <br />
-                        </span>
-                        <p>Description : {item.description}</p>
-                      </p>
                     </Col>
+                    {item.image != "" ? <div>
+                      <Col xs={12} sm={6} md={6} lg={6}>
+                        <p>
+                          <span className="input-label">
+
+                            Type: {item.requestType}
+                            <br />
+                            email: {item.email}
+                            <br />
+                            Resource: {item.resourceType}
+                            <br />
+                            Servings: {item.quantity}
+                            <br />
+                          </span>
+                          <p>Description : {item.description}</p>
+                        </p>
+                      </Col>
+                      <Col xs={12} sm={6} md={6} lg={6}>
+                        <Image width="250" src={item.image} rounded />
+                      </Col></div> :
+                      <Col xs={12} sm={12} md={12} lg={12}>
+                        <p>
+                          <span className="input-label">
+
+                            Type: {item.requestType}
+                            <br />
+                            email: {item.email}
+                            <br />
+                            Resource: {item.resourceType}
+                            <br />
+                            Servings: {item.quantity}
+                            <br />
+                          </span>
+                          <p>Description : {item.description}</p>
+                        </p>
+                      </Col>
+                    }
                   </Row>
                 </Grid>
               </Thumbnail>
@@ -101,4 +117,4 @@ class Fulfilled extends React.Component {
 
 const authCondition = authUser => !!authUser;
 export default withAuthorization(authCondition)(Fulfilled);
-// export default Feed;
+    // export default Feed;

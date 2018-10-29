@@ -4,13 +4,14 @@ import axios from "axios";
 // import store from '../store/index';
 // import {connect} from 'react-redux'
 import {
+  Grid,
   Button,
   FormGroup,
   FormControl,
   Form,
   Col,
   ControlLabel,
-  Checkbox
+  Checkbox,Image
 } from "react-bootstrap";
 import { SignUpLink } from "./SignUp";
 import { PasswordForgetLink } from "./PasswordForget";
@@ -22,7 +23,7 @@ import * as routes from "../constants/routes";
 
 const SignInPage = ({ history }) => (
   <div>
-    <h1>Human</h1>
+    <h1><Image width={300} src={'./human2.png'}/></h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
 
@@ -105,7 +106,9 @@ class SignInForm extends Component {
 
     const isInvalid = password === "" || email === "";
 
+    const err={color:"red"}
     return (
+      <Grid>
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup
           value={email}
@@ -115,10 +118,10 @@ class SignInForm extends Component {
           type="text"
           placeholder="Email Address"
         >
-          <Col componentClass={ControlLabel} sm={2}>
-            Email
+          <Col componentClass={ControlLabel} sm={3} >
+            Email *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl type="email" placeholder="Email" />
           </Col>
         </FormGroup>
@@ -131,10 +134,10 @@ class SignInForm extends Component {
           type="password"
           placeholder="Password"
         >
-          <Col componentClass={ControlLabel} sm={2}>
-            Password
+          <Col componentClass={ControlLabel}sm={3}>
+            Password *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl type="password" placeholder="Password" />
           </Col>
         </FormGroup>
@@ -146,16 +149,16 @@ class SignInForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Button disabled={isInvalid} type="submit">
+          <p >
+            <Button bsStyle="success" disabled={isInvalid} type="submit">
               Sign In
             </Button>
-          </Col>
-          {error && <p>{error.message}</p>}
+          </p>
+          {error && <p style={err}>{error.message}</p>}
         </FormGroup>
       </Form>
 
- 
+ </Grid>
     );
   }
 }

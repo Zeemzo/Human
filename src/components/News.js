@@ -39,7 +39,7 @@ class News extends React.Component {
         <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
           // style={override}
           sizeUnit={"px"}
-          size={300}
+          size={100}
           color={"green"}
           loading={this.state.loading}
         // style="text-align:center"

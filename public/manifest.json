@@ -3,8 +3,8 @@
   "name": "Being You",
   "icons": [
     {
-      "src": "./human.png",
-      "sizes": "196x196 144x144 96x96 64x64 32x32 24x24 16x16",
+      "src": "./human2.png",
+      "sizes": "512x512 196x196 144x144 96x96 64x64 32x32 24x24 16x16",
       "type": "image/png"
     }
   ],

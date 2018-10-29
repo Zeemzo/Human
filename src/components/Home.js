@@ -8,8 +8,8 @@ const HomePage = () => (
   <div>
     <Grid>
       <Jumbotron>
-        <h1>Home</h1>
-        <p>Here are some pressing matters</p>
+        {/* <h1>Home</h1> */}
+        <h4>Here are some pressing matters</h4>
       </Jumbotron>
       <News/>
     </Grid>

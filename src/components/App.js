@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import { Collapse, Navbar, Image } from "react-bootstrap";
+import { Collapse, Navbar, Image,Row,Grid,Col } from "react-bootstrap";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -72,7 +72,13 @@ class App extends React.Component {
         <div ref={ref => this.el = ref}>
           {this.state.isVisible ?
             <Navbar  className="SideMenu" >
-                <Image onClick={() => this.setState({ isPaneOpenLeft: true })} width="40"  src={'./white-menu-icon-4.jpg'} rounded />
+            <Col xs={2} xsPull={1}>
+                <Image onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
+            </Col><Grid><Row>
+            <Col xs={10}><p>
+                <Image width="180"  src={'./humanName.png'}  /></p>
+            </Col>
+            </Row></Grid>
             </Navbar> :
             null}
 
@@ -82,7 +88,7 @@ class App extends React.Component {
           <SlidingPane className="SideMenu"
          zIndex={1}
             isOpen={this.state.isPaneOpenLeft}
-            title={<Image height={20} src={'./logo.png'} />}
+            title={<Image height={40} src={'./humanName.png'} />}
             from='left'
             width='300px'
             onRequestClose={() => this.setState({ isPaneOpenLeft: false })}>

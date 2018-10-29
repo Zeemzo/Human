@@ -1,4 +1,4 @@
-import { Button, Modal, Image,Grid } from 'react-bootstrap';
+import { Button, Modal, Image, Grid } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
 
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
@@ -21,14 +21,14 @@ class ModalCamera extends React.Component {
 
         };
         // this.sendMessage = this.sendMessage.bind(this)
-       this.onTakePhoto=this.onTakePhoto.bind(this)
+        this.onTakePhoto = this.onTakePhoto.bind(this)
         this.renderButtons = this.renderButtons.bind(this);
     }
 
 
     renderButtons() {
 
-        
+
         return (
             <div>
                 <Button onClick={(e) => {
@@ -36,7 +36,7 @@ class ModalCamera extends React.Component {
                     if (this.state.flip) {
                         this.setState({ idealFacingMode: FACING_MODES.USER });
                         e.preventDefault()
-                    }else{
+                    } else {
                         this.setState({ idealFacingMode: FACING_MODES.ENVIRONMENT });
                         e.preventDefault()
 
@@ -48,10 +48,10 @@ class ModalCamera extends React.Component {
     componentWillUnmount() {
         this.setState({ loaded: false })
     }
-    
+
 
     onTakePhoto(dataUri) {
-        
+
         console.log(dataUri);
         this.setState({ src: dataUri })
         this.props.DataUrl(dataUri)
@@ -71,62 +71,63 @@ class ModalCamera extends React.Component {
         return (
             // style={{ height: 200 }}
             <Grid>
-            <div > {
-                this.state.showPhoto ? <Image 
-                style={wellStyles}
-                src={this.state.src} /> : null
-            }
-                {this.state.showPhoto ? <Button
-                    // bsStyle="info"
-                    style={wellStyles}
-                     block
-                    bsSize="medium"
-                    onClick={() => this.setState({ show: true })}
-                >Retake Photo</Button> : <Button
-                // bsStyle="info"
-                style={wellStyles}
+                <div > {
+                    this.state.showPhoto ? <Image
+                        style={wellStyles}
+                        src={this.state.src} /> : null
+                }
+                    {this.state.showPhoto ? <Button
+                        // bsStyle="info"
+                        style={wellStyles}
+                        block
+                        bsSize="medium"
+                        onClick={() => this.setState({ show: true })}
+                    >Retake Photo</Button> : <Button
+                        // bsStyle="info"
+                        style={wellStyles}
+                        block
+                        bsSize="medium"
+                        onClick={() => this.setState({ show: true })}
+                    >Take a Photo</Button>}
 
-                    bsSize="medium" block
-                    onClick={() => this.setState({ show: true })}
-                >Take a Photo</Button>}
 
 
-
-                <Modal
-                    show={this.state.show}
-                    onHide={this.handleHide}
-                    container={this}
+                    <Modal
+                        show={this.state.show}
+                        onHide={this.handleHide}
+                        container={this}
                     // bsSize="small"
-                >
-                    <Modal.Header closeButton />
+                    >
+                        <Modal.Header closeButton />
 
-                    <Modal.Body>
+                        <Modal.Body>
 
-                        {this.state.loaded ?
-                            <div className="App" width="300">
-                                {this.renderButtons()}
-                                <Camera width="300"
-                                    onTakePhoto={(dataUri) => { this.onTakePhoto(dataUri); }}
-                                    idealFacingMode={this.state.idealFacingMode}
-                                    idealResolution={{ width: 640, height: 480 }}
-                                    imageType={IMAGE_TYPES.JPG}
-                                    imageCompression={0.95}
-                                    isMaxResolution={false}
-                                    isImageMirror={true}
-                                    isDisplayStartCameraError={false}
-                                />
-                            </div> : null
-                        }
+                            {this.state.loaded ?
+                                <div className="App" width="300">
+                                    {this.renderButtons()}
+                                    <p>
+                                        <Camera width="300"
+                                            onTakePhoto={(dataUri) => { this.onTakePhoto(dataUri); }}
+                                            idealFacingMode={this.state.idealFacingMode}
+                                            idealResolution={{ width: 640, height: 480 }}
+                                            imageType={IMAGE_TYPES.JPG}
+                                            imageCompression={0.95}
+                                            isMaxResolution={false}
+                                            isImageMirror={true}
+                                            isDisplayStartCameraError={false}
+                                        /></p>
+                                </div> : null
+                            }
 
 
 
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.handleHide}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-            </div></Grid>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.handleHide}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div></Grid>
         );
     }
 }

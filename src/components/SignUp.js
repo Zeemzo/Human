@@ -123,6 +123,7 @@ class SignUpForm extends Component {
 
   render() {
     const { username, email, passwordOne, passwordTwo, error, role } = this.state;
+    const err={color:"red"}
 
     const isInvalid =
       passwordOne !== passwordTwo ||
@@ -134,10 +135,10 @@ class SignUpForm extends Component {
     return (
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={2}>
-            Full Name
+          <Col componentClass={ControlLabel} sm={3}>
+            Full Name *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl
               value={username}
               onChange={event =>
@@ -150,10 +151,10 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={2}>
-            Email
+          <Col componentClass={ControlLabel} sm={3}>
+            Email *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl
               value={email}
               onChange={event =>
@@ -166,10 +167,10 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={2}>
-            Password
+          <Col componentClass={ControlLabel} sm={3}>
+            Password *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl
               value={passwordOne}
               onChange={event =>
@@ -182,10 +183,10 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={2}>
-            Confirm Password
+          <Col componentClass={ControlLabel} sm={3}>
+            Confirm Password *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl
               value={passwordTwo}
               onChange={event =>
@@ -197,10 +198,10 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
         <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={2}>
-            User Role
+          <Col componentClass={ControlLabel} sm={3}>
+            User Role *
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl
               componentClass="select"
               placeholder="User Role"
@@ -219,12 +220,12 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Button disabled={isInvalid} type="submit">
+        <p >
+            <Button bsStyle="success" disabled={isInvalid} type="submit">
               Sign Up
             </Button>
-          </Col>
-          {error && <p>{error.message}</p>}
+            </p >
+          {error && <p  style={err}>{error.message}</p>}
         </FormGroup>
       </Form>
 

@@ -1,0 +1,45 @@
+#f {
+  font-family: "Saira Semi Condensed", sans-serif;
+}
+
+#p {
+  font-family: "Saira Semi Condensed", sans-serif;
+  font-size: large;
+}
+
+#h {
+  font-family: "Saira Semi Condensed", sans-serif;
+  font-size: x-large;
+  font-weight: 600;
+}
+
+#jum {
+  color: #313131;
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+  background: #5cb85c; /* old browsers fallback color*/
+  background: -webkit-linear-gradient(to right, #bae7ba, #5cb85c);
+  background: linear-gradient(to right, #bae7ba, #5cb85c);
+}
+
+#div {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+#P_tumb {
+  border: 6px solid #b4f0b4;
+}
+
+#Need_tumb {
+  border: 6px solid #ffe8e8;
+}
+
+#pill {
+  background-color: #bae7ba;
+}
+
+#slide {
+  background: #5cb85c;
+}

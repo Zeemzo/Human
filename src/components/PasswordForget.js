@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { ClipLoader } from "react-spinners";
+import { ToastContainer, ToastStore } from 'react-toasts';
 
 import {
+  Row,
+  Grid,
   Button,
   Form,
   FormGroup,
@@ -24,6 +28,7 @@ const byPropKey = (propertyName, value) => () => ({
 
 const INITIAL_STATE = {
   email: '',
+  loading: false,
   error: null,
 };
 
@@ -35,11 +40,15 @@ class PasswordForgetForm extends Component {
   }
 
   onSubmit = (event) => {
+    this.setState({ loading: true })
+
     const { email } = this.state;
 
     auth.doPasswordReset(email)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
+        ToastStore.success("Password reset email sent!")
+
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
@@ -55,15 +64,16 @@ class PasswordForgetForm extends Component {
     } = this.state;
 
     const isInvalid = email === '';
+    const err={color:"red"}
 
     return (
 
-
+<Grid>
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>
-            Email          </Col>{" "}
-          <Col xs={6} md={4}>
+          <Col componentClass={ControlLabel} sm={3}>
+            Email *          </Col>{" "}
+          <Col xs={12} sm={6} md={6} lg={6}>
             <FormControl
               value={email}
               onChange={event =>
@@ -74,9 +84,19 @@ class PasswordForgetForm extends Component {
             />
           </Col>
         </FormGroup>
-        <Button disabled={isInvalid} onClick={this.onSubmit}>Reset Password</Button>
-        {error && <p>{error.message}</p>}
-      </Form>
+        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+            // style={override}
+            sizeUnit={"px"}
+            size={30}
+            color={"green"}
+            loading={this.state.loading}
+          // style="text-align:center"
+          /></p></Col></Row></Grid>
+        <p><Button bsStyle="success" disabled={isInvalid} onClick={this.onSubmit}>Reset Password</Button></p>
+        {error && <p  style={err}>{error.message}</p>}
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+
+      </Form></Grid>
     );
   }
 }

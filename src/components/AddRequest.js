@@ -60,7 +60,7 @@ class AddRequest extends Component {
   onSubmit = (event) => {
 
     if (navigator.onLine) {
-      this.setState({loading:true})
+      this.setState({ loading: true })
       const token = localStorage.getItem('token')
       axios
         .post(HUMANBACKEND + '/api/request/add', this.state, {
@@ -74,7 +74,7 @@ class AddRequest extends Component {
           console.log(res.data);
           this.setState(byPropKey('error', "Request Added!!"))
           // this.setState({...INITIAL_STATE})
-          this.setState({loading:false})
+          this.setState({ loading: false })
 
           ToastStore.success("Request Added!!")
           // window.alert( "Request Added!!");        
@@ -123,23 +123,16 @@ class AddRequest extends Component {
 
     return (
       <Grid>
-         <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
-              // style={override}
-              sizeUnit={"px"}
-              size={300}
-              color={"green"}
-              loading={this.state.loading}
-            // style="text-align:center"
-            /></p></Col></Row></Grid>
+
         <Form horizontal
           onSubmit={this.onSubmit}
         >
 
-          <h1>ADD REQUEST</h1>
+          <h2>ADD REQUEST</h2>
           <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={2}>
-              Request Title</Col>
-            <Col xs={12} md={8}>
+            <Col componentClass={ControlLabel} sm={3}>
+              Request Title *</Col>
+            <Col xs={12} sm={6} md={6} lg={6}>
               <FormControl
                 value={title}
                 onChange={event =>
@@ -149,12 +142,12 @@ class AddRequest extends Component {
                 placeholder="Title"
               />
             </Col>
-            </FormGroup>
-            <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>
-              Resource Type
+          </FormGroup>
+          <FormGroup>
+            <Col componentClass={ControlLabel} sm={3}>
+              Resource Type *
           </Col>
-            <Col xs={12} md={8}>
+            <Col xs={12} sm={6} md={6} lg={6}>
               <FormControl
                 componentClass="select"
                 placeholder="Resource Type"
@@ -181,10 +174,10 @@ class AddRequest extends Component {
 
           </AuthUserContext.Consumer>
           <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={2}>
-              Request Type
+            <Col componentClass={ControlLabel} sm={3}>
+              Request Type *
           </Col>
-            <Col xs={12} md={8}>
+            <Col xs={12} sm={6} md={6} lg={6}>
               <FormControl
                 componentClass="select"
                 placeholder="Request Type"
@@ -200,10 +193,10 @@ class AddRequest extends Component {
             </Col>
           </FormGroup>
           <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={2}>
-              Serving Quantity
+            <Col componentClass={ControlLabel} sm={3}>
+              Serving Quantity *
           </Col>
-            <Col xs={12} md={8}>
+            <Col xs={12} sm={6} md={6} lg={6}>
               <FormControl
                 componentClass="select"
                 placeholder="Serving Quantity"
@@ -230,10 +223,10 @@ class AddRequest extends Component {
           </FormGroup>
 
           <FormGroup controlId="formControlsTextarea">
-            <Col componentClass={ControlLabel} sm={2}>
-              Description
+            <Col componentClass={ControlLabel} sm={3}>
+              Description *
           </Col>
-            <Col xs={12} md={8}>
+            <Col xs={12} sm={6} md={6} lg={6}>
               <FormControl
                 value={description}
                 onChange={event =>
@@ -247,19 +240,31 @@ class AddRequest extends Component {
           <br />
 
           <FormGroup>
-            <Col xs={12} md={8}>
+            <Col xs={12} sm={12} md={12} lg={12}>
               <Mappy loc={this.handleLoc} />
             </Col>
           </FormGroup>
-          <ModalCamera DataUrl={this.handleImage} />
-          <br /><Grid>
+          <Col xs={12} sm={12} md={12} lg={12}>           
+             <ModalCamera DataUrl={this.handleImage} />
+          </Col>
+
+          <br /><Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+            // style={override}
+            sizeUnit={"px"}
+            size={30}
+            color={"green"}
+            loading={this.state.loading}
+          // style="text-align:center"
+          /></p></Col></Row></Grid>
+          <p>
+
             <Button bsStyle="success"
-              bsSize="large" disabled={isInvalid} type="submit" block
+              bsSize="large" disabled={isInvalid} type="submit" 
               // onClick={()=>this.onSubmit}
               onSubmit={this.onSubmit}
             >
               Submit
-        </Button></Grid>
+        </Button></p>
           <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
           <h1>{this.state.error}</h1>
         </Form></Grid>

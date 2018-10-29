@@ -10,10 +10,11 @@
 
 .SideMenu {
   background-color:black;
-  color: white;
+  color: rgb(13, 112, 29);
   font-size: 1.1em;
   border-color: black;
-  opacity: 0.95;
+	opacity: 0.95;
+	background-image: url("/human2.png")
   /* filter: alpha(opacity=50); */
 }
 
@@ -50,7 +51,7 @@
 	bottom: 20px;
 	height: 35px;
   text-align: right;
-  z-index: 2;
+  z-index: 1;
 	position:fixed;
 	/*transition: height 250ms ease-in-out;*/
 }
@@ -84,7 +85,7 @@
 	height: 42px;
 	line-height: 42px;
 	vertical-align: middle;
-  background:black;
+  background:green;
   color: white;
 	border-radius: 50%;
 	border: none;

@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import {
+  Grid,
   Button,
   Form,
   FormGroup,
   Col,
   FormControl,
-  ControlLabel
+  ControlLabel,Row
 } from "react-bootstrap";
+import { ClipLoader } from "react-spinners";
+import { ToastContainer, ToastStore } from 'react-toasts';
 
 import { auth } from "../firebase";
 
@@ -17,6 +20,8 @@ const byPropKey = (propertyName, value) => () => ({
 const INITIAL_STATE = {
   passwordOne: "",
   passwordTwo: "",
+  loading: false,
+
   error: null
 };
 
@@ -28,12 +33,17 @@ class PasswordChangeForm extends Component {
   }
 
   onSubmit = event => {
+    this.setState({ loading: true })
+
     const { passwordOne } = this.state;
 
     auth
       .doPasswordUpdate(passwordOne)
       .then(() => {
+
         this.setState({ ...INITIAL_STATE });
+        ToastStore.success("Password has successfully been changed!")
+
         this.setState(byPropKey("error", "Password has successfully been changed!"));
 
       })
@@ -48,12 +58,13 @@ class PasswordChangeForm extends Component {
     const { passwordOne, passwordTwo, error } = this.state;
 
     const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
+    const err={color:"red"}
 
     return (
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>
-            New Password
+            New Password *
           </Col>{" "}
           <Col xs={6} md={4}>
             <FormControl
@@ -68,7 +79,7 @@ class PasswordChangeForm extends Component {
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>
-            Confirm Password
+            Confirm Password *
           </Col>{" "}
           <Col xs={6} md={4}>
             <FormControl
@@ -81,8 +92,16 @@ class PasswordChangeForm extends Component {
             />
           </Col>
         </FormGroup>
-
+        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+            // style={override}
+            sizeUnit={"px"}
+            size={30}
+            color={"green"}
+            loading={this.state.loading}
+          // style="text-align:center"
+          /></p></Col></Row></Grid>
         <FormGroup>
+        
           <Col smOffset={2} sm={10}>
             <Button disabled={isInvalid} type="submit"  bsStyle="success"
                     bsSize="medium"
@@ -91,7 +110,9 @@ class PasswordChangeForm extends Component {
             </Button>
           </Col>
         </FormGroup>
-        {error && <p>{error.message}</p>}
+        {error && <p  style={err}>{error.message}</p>}
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+
       </Form>
       
     );
