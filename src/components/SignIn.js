@@ -3,6 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 // import store from '../store/index';
 // import {connect} from 'react-redux'
+import { ClipLoader } from "react-spinners";
+
 import {
   Grid,
   Button,
@@ -11,7 +13,7 @@ import {
   Form,
   Col,
   ControlLabel,
-  Checkbox,Image
+  Checkbox, Image, Row
 } from "react-bootstrap";
 import { SignUpLink } from "./SignUp";
 import { PasswordForgetLink } from "./PasswordForget";
@@ -23,7 +25,7 @@ import * as routes from "../constants/routes";
 
 const SignInPage = ({ history }) => (
   <div>
-    <h1><Image width={300} src={'./human2.png'}/></h1>
+    <h1><Image width={300} src={'./human2.png'} /></h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
 
@@ -38,6 +40,8 @@ const byPropKey = (propertyName, value) => () => ({
 const INITIAL_STATE = {
   email: "",
   password: "",
+  loading: false,
+
   error: null
 };
 
@@ -50,6 +54,8 @@ class SignInForm extends Component {
   }
 
   onSubmit = event => {
+    this.setState({ loading: true })
+
     const { email, password } = this.state;
 
     const { history } = this.props;
@@ -62,7 +68,7 @@ class SignInForm extends Component {
 
         axios.post(routes.HUMANBACKEND + '/api/token', { email: email },
           {
-            'Access-Control-Allow-Origin':'*',
+            'Access-Control-Allow-Origin': '*',
             "Content-Type": "application/json"
           })
           .then((res) => {
@@ -74,13 +80,14 @@ class SignInForm extends Component {
           });
 
         const token = localStorage.getItem('token')
-        const userId=Auth.currentUser.uid
+        const userId = Auth.currentUser.uid
         const pushToken = localStorage.getItem('pushToken')
         axios
           .post(routes.HUMANBACKEND + '/api/push/token', { pushToken: pushToken, userId: userId }, {
-            headers: { "Content-Type": "application/json",
-            'Access-Control-Allow-Origin':'*',
-          }
+            headers: {
+              "Content-Type": "application/json",
+              'Access-Control-Allow-Origin': '*',
+            }
           })
           .then((res) => {
             console.log(res.data);
@@ -95,6 +102,8 @@ class SignInForm extends Component {
         history.push(routes.HOME);
       })
       .catch(error => {
+        this.setState({ loading: false })
+
         this.setState(byPropKey("error", error));
       });
 
@@ -106,59 +115,67 @@ class SignInForm extends Component {
 
     const isInvalid = password === "" || email === "";
 
-    const err={color:"red"}
+    const err = { color: "red" }
     return (
       <Grid>
-      <Form horizontal onSubmit={this.onSubmit}>
-        <FormGroup
-          value={email}
-          onChange={event =>
-            this.setState(byPropKey("email", event.target.value))
-          }
-          type="text"
-          placeholder="Email Address"
-        >
-          <Col componentClass={ControlLabel} sm={3} >
-            Email *
+        <Form horizontal onSubmit={this.onSubmit}>
+          <FormGroup
+            value={email}
+            onChange={event =>
+              this.setState(byPropKey("email", event.target.value))
+            }
+            type="text"
+            placeholder="Email Address"
+          >
+            <Col componentClass={ControlLabel} sm={3} >
+              Email *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
-            <FormControl type="email" placeholder="Email" />
-          </Col>
-        </FormGroup>
+            <Col xs={12} sm={6} md={6} lg={6}>
+              <FormControl type="email" placeholder="Email" />
+            </Col>
+          </FormGroup>
 
-        <FormGroup
-          value={password}
-          onChange={event =>
-            this.setState(byPropKey("password", event.target.value))
-          }
-          type="password"
-          placeholder="Password"
-        >
-          <Col componentClass={ControlLabel}sm={3}>
-            Password *
+          <FormGroup
+            value={password}
+            onChange={event =>
+              this.setState(byPropKey("password", event.target.value))
+            }
+            type="password"
+            placeholder="Password"
+          >
+            <Col componentClass={ControlLabel} sm={3}>
+              Password *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
-            <FormControl type="password" placeholder="Password" />
-          </Col>
-        </FormGroup>
+            <Col xs={12} sm={6} md={6} lg={6}>
+              <FormControl type="password" placeholder="Password" />
+            </Col>
+          </FormGroup>
 
-        <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Checkbox>Remember me</Checkbox>
-          </Col>
-        </FormGroup>
-
-        <FormGroup>
-          <p >
-            <Button bsStyle="success" disabled={isInvalid} type="submit">
-              Sign In
-            </Button>
-          </p>
+          <FormGroup>
+            <Col smOffset={2} sm={10}>
+              <Checkbox>Remember me</Checkbox>
+            </Col>
+          </FormGroup>
+          <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+            // style={override}
+            sizeUnit={"px"}
+            size={30}
+            color={"green"}
+            loading={this.state.loading}
+          // style="text-align:center"
+          /></p></Col></Row></Grid>
           {error && <p style={err}>{error.message}</p>}
-        </FormGroup>
-      </Form>
 
- </Grid>
+          <FormGroup>
+            <p >
+              <Button bsStyle="success" disabled={isInvalid} type="submit">
+                Sign In
+            </Button>
+            </p>
+          </FormGroup>
+        </Form>
+
+      </Grid>
     );
   }
 }

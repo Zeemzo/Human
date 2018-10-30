@@ -104,7 +104,7 @@ class AccountPage extends React.Component {
 
           <Grid>
             <Row>
-              <Col xs={11} md={11} lg={11}>
+              <Col xs={12} md={12} lg={12}>
                 <h2>Account: {authUser.email}</h2>
               </Col>
               <Col xs={12} sm={6} md={6} lg={6}>

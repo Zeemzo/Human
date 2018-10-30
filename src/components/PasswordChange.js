@@ -63,10 +63,10 @@ class PasswordChangeForm extends Component {
     return (
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} xs={12} sm={5} md={5} lg={5}>
             New Password *
           </Col>{" "}
-          <Col xs={6} md={4}>
+          <Col xs={12} sm={12} md={12} lg={12}>
             <FormControl
               value={passwordOne}
               onChange={event =>
@@ -78,10 +78,10 @@ class PasswordChangeForm extends Component {
           </Col>
         </FormGroup>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} xs={12} sm={4}>
             Confirm Password *
           </Col>{" "}
-          <Col xs={6} md={4}>
+          <Col xs={12} sm={12} md={12} lg={12}>
             <FormControl
               value={passwordTwo}
               onChange={event =>

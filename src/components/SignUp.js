@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { auth } from "../firebase";
 import * as routes from "../constants/routes";
+import { ClipLoader } from "react-spinners";
 
 import { auth as Auth } from '../firebase/firebase'
 import axios from 'axios'
@@ -11,7 +12,7 @@ import {
   FormControl,
   ControlLabel,
   Col,
-  Form
+  Form,Grid,Row
 } from "react-bootstrap";
 
 const SignUpPage = ({ history }) => (
@@ -27,6 +28,8 @@ const INITIAL_STATE = {
   passwordOne: "",
   passwordTwo: "",
   role: "",
+  loading: false,
+
   error: null
 };
 
@@ -41,6 +44,7 @@ class SignUpForm extends Component {
   }
 
   onSubmit = event => {
+    this.setState({loading:true})
     const { role,
       username,
       email,
@@ -101,7 +105,7 @@ class SignUpForm extends Component {
 
 
 
-                this.setState(byPropKey('error', res))
+                // this.setState(byPropKey('error', res))
               }).catch((error) => {
                 console.log(error);
 
@@ -114,6 +118,8 @@ class SignUpForm extends Component {
 
       })
       .catch(error => {
+        this.setState({loading:false})
+
         this.setState(byPropKey('error', error));
       });
 
@@ -218,14 +224,22 @@ class SignUpForm extends Component {
             </FormControl>
           </Col>
         </FormGroup>
-
+        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+            // style={override}
+            sizeUnit={"px"}
+            size={30}
+            color={"green"}
+            loading={this.state.loading}
+          // style="text-align:center"
+          /></p></Col></Row></Grid>
+          {error && <p style={err}>{error.message}</p>}
         <FormGroup>
         <p >
             <Button bsStyle="success" disabled={isInvalid} type="submit">
               Sign Up
             </Button>
             </p >
-          {error && <p  style={err}>{error.message}</p>}
+          {/* {error && <p  style={err}>{error.message}</p>} */}
         </FormGroup>
       </Form>
 

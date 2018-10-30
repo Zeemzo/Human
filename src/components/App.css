@@ -14,7 +14,7 @@
   font-size: 1.1em;
   border-color: black;
 	opacity: 0.95;
-	background-image: url("/human2.png")
+	/* background-image: url("/human.png") */
   /* filter: alpha(opacity=50); */
 }
 

@@ -24,7 +24,6 @@ ReactDOM.render(
 
 );
 registerServiceWorker();
-
 messaging.requestPermission().then(function () {
     console.log('Notification permission granted.');
     // TODO(developer): Retrieve an Instance ID token for use with FCM.
@@ -170,8 +169,14 @@ messaging.onMessage(function (payload) {
             if (localStorage.getItem('chat') != null) {
 
                 var temp = JSON.parse(localStorage.getItem('chat'));
-                for (var i = 0; i < (temp.chats).length; i++) {
-                    if (temp.chats[i].roomId == payload.notification.body.roomId) {
+                var arr = temp.chats
+                // console.log(arr.length)
+                console.log(arr.length)
+
+                for (var i = 0; i < arr.length; i++) {
+                    // if (arr[i].roomId == payload.notification.body.roomId) {
+                   
+                    if (arr[i].roomId == JSON.parse(payload.notification.body).roomId) {
                         repeat = true;
                         break;
                     }
@@ -184,17 +189,24 @@ messaging.onMessage(function (payload) {
 
                 console.log(payload.notification.body)
             } else {
-                var chat = { chats: [] };
-                chat.chats.push(
+                var chats= []
+                
+                chats.push(
                     {
-                        roomId: payload.notification.body.roomId,
-                        sender: payload.notification.body.sender
+                        roomId: JSON.parse(payload.notification.body).roomId,
+                        sender: JSON.parse(payload.notification.body).sender
                     }
                 )
+                console.log(chats)
+                var chat={chats:chats};
+                // chat.chats=;
+                console.log(chat)
+
                 localStorage.setItem('chat', JSON.stringify(chat))
             }
 
             window.alert(payload.notification.title)
+            // setTimeout(( window.location.href = routes.HUMANAPP + '/chat'),60)
             window.location.href = routes.HUMANAPP + '/chat';
             ; break;
         case 'Accepted':

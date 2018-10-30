@@ -214,7 +214,7 @@ class Trigger extends React.Component {
                                                 type="hidden"
                                             />
 
-                                            <input onChange={e => { this.sendMessage = e.target.value }} type="text" />
+                                            <input onChange={e => { this.sendMessage = e.target.value }} type="text" placeholder="Enter Message" />
                              
                                             <button type="submit">
                                                 Accept {this.state.item.requestType}</button>
