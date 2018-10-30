@@ -23,6 +23,8 @@ ReactDOM.render(
     document.getElementById('root')
 
 );
+
+// navigator.vibrate
 registerServiceWorker();
 messaging.requestPermission().then(function () {
     console.log('Notification permission granted.');

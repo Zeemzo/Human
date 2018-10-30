@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import { Collapse, Navbar, Image,Row,Grid,Col } from "react-bootstrap";
+import { Collapse, Navbar, Image,Row,Button,Grid,Col } from "react-bootstrap";
 import Modal from 'react-modal';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -20,6 +20,8 @@ import AccountPage from './Account';
 import withAuthentication from './withAuthentication';
 import Feed from './Feed';
 import Admin from './Admin';
+import Settings from './Settings';
+
 import AllChat from './AllChat';
 import * as routes from '../constants/routes';
 import AddRequest from './AddRequest';
@@ -61,6 +63,8 @@ class App extends React.Component {
 
   mousedown() {
     this.setState({ isPaneOpenLeft: false });
+    this.setState({ isPaneOpenRight: false });
+
   }
 
   render() {
@@ -71,21 +75,27 @@ class App extends React.Component {
 
         <div ref={ref => this.el = ref}>
           {this.state.isVisible ?
-            <Navbar  className="SideMenu" >
+            <Navbar  className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
             <Col xs={2} xsPull={1}>
                 <Image onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
             </Col><Grid><Row>
-            <Col xs={10}><p>
-                <Image width="180"  src={'./humanName.png'}  /></p>
+            <Col xs={8}><p>
+            {/* {window.location.pathname} */}
+                <Image width="180"  src={'./humanName.png'} rounded />
+                </p>
+            </Col>  <Col xs={2}>
+            <Link to={"/settings"}><Image width="50"  src={'./settingsz.png'} rounded /></Link>
             </Col>
             </Row></Grid>
+          
+           
             </Navbar> :
             null}
 
           <Collapse in={this.state.hideNav ? false : this.state.open}>
             <div>
-              <Navigation   className="SideMenu" /></div></Collapse>
-          <SlidingPane className="SideMenu"
+              <Navigation   className={localStorage.getItem("SideMenu")==null?"SideMenuBlack":"SideMenuGreen"} /></div></Collapse>
+          <SlidingPane className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"}
          zIndex={1}
             isOpen={this.state.isPaneOpenLeft}
             title={<Image height={40} src={'./humanName.png'} />}
@@ -93,9 +103,11 @@ class App extends React.Component {
             width='300px'
             onRequestClose={() => this.setState({ isPaneOpenLeft: false })}>
             <div onMouseDown ={() => this.setState({ isPaneOpenLeft: false })}>
-              <Navigation className="SideMenu" />
+              <Navigation className={localStorage.getItem("SideMenu")!=null&&
+              localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} />
             </div>
           </SlidingPane>
+     
 
           <hr />
           <Link to={routes.ADDREQUEST}><FloatingMenu/>
@@ -115,6 +127,8 @@ class App extends React.Component {
           <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
           <Route exact path={'/confirm'} component={Confirm} />
           <Route exact path={'/chat'} component={AllChat} />
+          <Route exact path={'/settings'} component={Settings} />
+
           {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 
 

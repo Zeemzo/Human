@@ -22,7 +22,8 @@ class Navigation extends React.Component {
 }
 
 const NavigationAuth = () => (
-  <Navbar className="SideMenu" >
+  <Navbar className={localStorage.getItem("SideMenu")!=null&&
+  localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
     <Nav>
       <LinkContainer to={routes.HOME}>
         <NavItem>Home</NavItem>
@@ -37,7 +38,7 @@ const NavigationAuth = () => (
         <NavItem>Account</NavItem>
       </LinkContainer>
       <LinkContainer to={'/contributions'}>
-        <NavItem>Contributions</NavItem>
+        <NavItem >Contributions</NavItem>
       </LinkContainer>
       <AuthUserContext.Consumer>
 
@@ -72,7 +73,8 @@ const NavigationAuth = () => (
 
 const NavigationNonAuth = () => (
 
-  <Navbar className="SideMenu">
+  <Navbar className={localStorage.getItem("SideMenu")!=null&&
+  localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"}>
     <Nav>
       <LinkContainer to="/">
         <NavItem>Human</NavItem>

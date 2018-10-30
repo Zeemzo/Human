@@ -8,11 +8,23 @@
   height: 80px;
 }
 
-.SideMenu {
+.SideMenuBlack {
   background-color:black;
   color: rgb(13, 112, 29);
-  font-size: 1.1em;
+	font-size: 1.1em;
+	font-weight: 800;
   border-color: black;
+	opacity: 0.95;
+	/* background-image: url("/human.png") */
+  /* filter: alpha(opacity=50); */
+}
+
+.SideMenuGreen {
+  background-color:rgb(13, 112, 29);
+  color: black;
+	font-size: 1.1em;
+	font-weight: 800;
+  border-color: rgb(13, 112, 29);
 	opacity: 0.95;
 	/* background-image: url("/human.png") */
   /* filter: alpha(opacity=50); */

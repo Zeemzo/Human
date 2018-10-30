@@ -9,7 +9,6 @@ import {
   Panel
 } from "react-bootstrap";
 import { ToastContainer, ToastStore } from 'react-toasts';
-import Sort from './Sort';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
