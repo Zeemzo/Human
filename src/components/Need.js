@@ -194,7 +194,7 @@ handleChangeNext(e) {
                           <Trigger item={item} />
                         </p>
                       </Col>
-                      <Col xs={12} sm={6} md={6} lg={6}><Image width="250" src={item.image} rounded /></Col>
+                      <Col xs={12} sm={6} md={6} lg={6}><Image width="250" src={item.image} rounded responsive /></Col>
                     </Panel.Body>
 
                       : <Panel.Body> <Col xs={12} sm={12} md={12} lg={12}>

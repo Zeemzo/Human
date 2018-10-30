@@ -43,7 +43,7 @@ class AccountPage extends React.Component {
           this.setState({ src: res.data.image })
 
         } else {
-          this.setState({ src: './human.png' })
+          this.setState({ src: './human2.png' })
 
         }
         console.log(this.state)
@@ -110,7 +110,7 @@ class AccountPage extends React.Component {
               <Col xs={12} sm={6} md={6} lg={6}>
                 <Grid>
                   {
-                    this.state.lol ? <Image style={wellStyles} src={this.state.src} /> : null
+                    this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive /> : null
                   }
 
                 </Grid>
