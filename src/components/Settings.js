@@ -47,6 +47,7 @@ class Settings extends Component {
     this.setState({loading:true})
     localStorage.setItem("SideMenu",this.state.theme )
     this.setState({loading:false})
+    ToastStore.success("Theme Changed!!!")
 
     window.location.href = routes.HUMANAPP+'/settings';
   }
