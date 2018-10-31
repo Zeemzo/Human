@@ -49,13 +49,12 @@ class AccountPage extends React.Component {
         console.log(this.state)
       }
     ).catch(
-
+      // this.setState({ src: './human2.png' })
     )
 
   }
 
-  componentWillUpdate() {
-  }
+
 
   handleImage(url) {
 
@@ -84,7 +83,7 @@ class AccountPage extends React.Component {
 
         }).catch((error) => {
           console.log(error);
-          ToastStore.Error("Profile Picture Not Changed!!")
+          ToastStore.error("Profile Picture Not Changed!!")
 
         })
 
@@ -105,22 +104,22 @@ class AccountPage extends React.Component {
           <Grid>
             <Row>
               <Col xs={12} md={12} lg={12}>
-                <h2>Account: {authUser.email}</h2>
+                <h4>Account: {authUser.email}</h4>
               </Col>
-              <Col xs={12} sm={6} md={6} lg={6}>
+              <Col xs={12} sm={6} md={4} lg={4}>
                 <Grid>
                   {
                     this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive /> : null
                   }
 
                 </Grid>
-                <ModalCamera DataUrl={this.handleImage} />
+                <ModalCamera id={"modalwidth"} DataUrl={this.handleImage} />
                 <hr />
 
               </Col>
 
 
-              <Col xs={12} sm={6} md={6} lg={6} >
+              <Col xs={12} sm={6} md={8} lg={8} >
                 <PasswordChangeForm />
                 <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
 

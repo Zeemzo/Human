@@ -23,8 +23,14 @@ ReactDOM.render(
     document.getElementById('root')
 
 );
+window.addEventListener("offline",()=>{
+    ToastStore.error("You are offline! Some of the features may not work!")
 
-// navigator.vibrate
+})
+window.addEventListener("online", () => {
+    ToastStore.success("You are online!")
+
+  });// navigator.vibrate
 registerServiceWorker();
 messaging.requestPermission().then(function () {
     console.log('Notification permission granted.');

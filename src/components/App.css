@@ -12,18 +12,36 @@
   background-color:black;
   color: rgb(13, 112, 29);
 	font-size: 1.1em;
-	font-weight: 800;
+	font-weight: 600;
   border-color: black;
 	opacity: 0.95;
+	/* z-index:2; */
+
 	/* background-image: url("/human.png") */
   /* filter: alpha(opacity=50); */
 }
 
+/* #nonscroll{
+	margin: 0 0 0 0;
+	/* height: 50px; */
+	/* position: fixed;
+	padding-top: 0;
+	width: 100%;
+	z-index:1; */
+	/* scroll-behavior: unset */
+
+/* } */ 
+
+#modalwidth{
+	/* width:1000px; */
+	max-width: 80%;
+
+}
 .SideMenuGreen {
   background-color:rgb(13, 112, 29);
   color: black;
 	font-size: 1.1em;
-	font-weight: 800;
+	font-weight: 600;
   border-color: rgb(13, 112, 29);
 	opacity: 0.95;
 	/* background-image: url("/human.png") */
@@ -50,6 +68,41 @@
 }
 
 
+#n1 {
+	color:white;
+}
+
+#n1:active {
+	color:black;
+	background-color: white
+}
+
+#n1:focus {
+	color:black;
+	background-color: grey
+
+}
+
+#n1:hover {
+	color:black;
+	background-color: white
+
+}
+
+#imagepress {
+	background-color: transparent
+}
+
+#imagepress:hover {
+	background-color: transparent
+}
+ #imagepress:active { 
+	background-color: grey
+} 
+ 
+#imagepress:focus {
+	background-color: transparent;
+} 
 /* .container {
 	position: relative;
 	width: 320px;
@@ -117,3 +170,26 @@
 
 
 }
+
+#selection{
+	background-color: lightgreen;
+	color:white;
+	}
+#selection:focus{
+	background-color: green;
+		box-shadow: green;}
+#selection:active{
+	background-color: green;
+		box-shadow: green;	}
+
+	#selection:hover{
+		background-color: green;
+		box-shadow: green;
+		}
+
+		/* #znegative{
+			z-index: -1;
+		}
+		#zpositive{
+			z-index: 3;
+		} */

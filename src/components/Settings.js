@@ -37,10 +37,10 @@ class Settings extends Component {
     this.state = { ...INITIAL_STATE };
   }
   componentDidMount() {
-    if (localStorage.getItem("SideMenu") != null) {
-      var color = localStorage.getItem("SideMenu")
-      this.setState({ theme: color })
-    }
+    // if (localStorage.getItem("SideMenu") != null) {
+    //   var color = localStorage.getItem("SideMenu")
+    //   this.setState({ theme: color })
+    // }
 
   }
   onSubmit = (event) => {
@@ -58,9 +58,9 @@ class Settings extends Component {
       theme,
       error } = this.state;
 
-    const isInvalid =
-      theme === "";
+    const isInvalid=theme === "";
 
+    // const color={"color":"green","highlight":"green"}
 
     return (
       <Grid>
@@ -82,7 +82,9 @@ class Settings extends Component {
                   this.setState(byPropKey("theme", event.target.value))
                 }
               >
-                <option value="">Select Theme</option>
+                <option
+                //  id={"selection"}
+                 value="">Select Theme</option>
                 <option value="Green">Nature</option>
                 <option value="Black">Sharp</option>
               </FormControl>
@@ -103,7 +105,7 @@ class Settings extends Component {
               // onClick={()=>this.onSubmit}
               onSubmit={this.onSubmit}
             >
-              Submit
+              Apply Changes
         </Button></p>
           <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
           <h1>{this.state.error}</h1>

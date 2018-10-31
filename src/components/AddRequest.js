@@ -130,9 +130,9 @@ class AddRequest extends Component {
 
           <h2>ADD REQUEST</h2>
           <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={3}>
+            <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Request Title *</Col>
-            <Col xs={12} sm={6} md={6} lg={6}>
+            <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 value={title}
                 onChange={event =>
@@ -144,10 +144,10 @@ class AddRequest extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col componentClass={ControlLabel} sm={3}>
+          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Resource Type *
           </Col>
-            <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 componentClass="select"
                 placeholder="Resource Type"
@@ -174,10 +174,10 @@ class AddRequest extends Component {
 
           </AuthUserContext.Consumer>
           <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={3}>
+          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Request Type *
           </Col>
-            <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 componentClass="select"
                 placeholder="Request Type"
@@ -193,10 +193,10 @@ class AddRequest extends Component {
             </Col>
           </FormGroup>
           <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={3}>
+          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Serving Quantity *
           </Col>
-            <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 componentClass="select"
                 placeholder="Serving Quantity"
@@ -223,10 +223,10 @@ class AddRequest extends Component {
           </FormGroup>
 
           <FormGroup controlId="formControlsTextarea">
-            <Col componentClass={ControlLabel} sm={3}>
+          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Description *
           </Col>
-            <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 value={description}
                 onChange={event =>
@@ -244,7 +244,7 @@ class AddRequest extends Component {
               <Mappy loc={this.handleLoc} />
             </Col>
           </FormGroup>
-          <Col xs={12} sm={12} md={12} lg={12}>           
+          <Col xs={12} sm={12} md={12} lgOffset={4} lg={12}>           
              <ModalCamera DataUrl={this.handleImage} />
           </Col>
 

@@ -138,13 +138,13 @@ class SignUpForm extends Component {
       username === "" ||
       role === "";
 
-    return (
+    return (<Grid>
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={3}>
+        <Col componentClass={ControlLabel}  sm={3} md={3} lg={3}>
             Full Name *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={7} md={7} lg={7}>
             <FormControl
               value={username}
               onChange={event =>
@@ -157,10 +157,10 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={3}>
+        <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
             Email *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={7} md={7} lg={7}>
             <FormControl
               value={email}
               onChange={event =>
@@ -173,10 +173,10 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={3}>
+        <Col componentClass={ControlLabel}  sm={3} md={3} lg={3}>
             Password *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={7} md={7} lg={7}>
             <FormControl
               value={passwordOne}
               onChange={event =>
@@ -189,10 +189,10 @@ class SignUpForm extends Component {
         </FormGroup>
 
         <FormGroup >
-          <Col componentClass={ControlLabel} sm={3}>
+        <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
             Confirm Password *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={7} md={7} lg={7}>
             <FormControl
               value={passwordTwo}
               onChange={event =>
@@ -204,10 +204,10 @@ class SignUpForm extends Component {
           </Col>
         </FormGroup>
         <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={3}>
+        <Col componentClass={ControlLabel}  sm={3} md={3} lg={3}>
             User Role *
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6}>
+          <Col xs={12} sm={7} md={7} lg={7}>
             <FormControl
               componentClass="select"
               placeholder="User Role"
@@ -241,7 +241,7 @@ class SignUpForm extends Component {
             </p >
           {/* {error && <p  style={err}>{error.message}</p>} */}
         </FormGroup>
-      </Form>
+      </Form></Grid>
 
     );
   }

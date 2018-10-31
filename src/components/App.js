@@ -68,23 +68,22 @@ class App extends React.Component {
   }
 
   render() {
-
     return (
       <Router>
             
 
         <div ref={ref => this.el = ref}>
           {this.state.isVisible ?
-            <Navbar  className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
+            <Navbar className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
             <Col xs={2} xsPull={1}>
-                <Image onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
+                <Image id={"imagepress"} onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
             </Col><Grid><Row>
             <Col xs={8}><p>
             {/* {window.location.pathname} */}
-                <Image width="180"  src={'./humanName.png'} rounded />
+                <Image  width="180"  src={'./humanName.png'} rounded />
                 </p>
             </Col>  <Col xs={2}>
-            <Link to={"/settings"}><Image width="50"  src={'./settingsz.png'} rounded /></Link>
+            <Link to={"/settings"}><Image id={"imagepress"} width="50"  src={'./settingsz.png'} rounded /></Link>
             </Col>
             </Row></Grid>
           

@@ -1,4 +1,4 @@
-import { Button, Modal, Image, Grid } from 'react-bootstrap';
+import { Button, Modal, Image, Grid,Row,Col } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
 
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
@@ -70,7 +70,7 @@ class ModalCamera extends React.Component {
 
         return (
             // style={{ height: 200 }}
-            <Grid>
+            <Grid><Row><Col xs={12} sm={12} md={12} lg={12}>
                 <div > {
                     this.state.showPhoto ? <Image
                         style={wellStyles}
@@ -103,10 +103,11 @@ class ModalCamera extends React.Component {
                         <Modal.Body>
 
                             {this.state.loaded ?
-                                <div className="App" width="300">
+                                <div className="App">
                                     {this.renderButtons()}
                                     <p>
-                                        <Camera width="300"
+                                        {/* <Grid><Row><Col >  */}
+                                        <Camera 
                                             onTakePhoto={(dataUri) => { this.onTakePhoto(dataUri); }}
                                             idealFacingMode={this.state.idealFacingMode}
                                             idealResolution={{ width: 640, height: 480 }}
@@ -115,7 +116,9 @@ class ModalCamera extends React.Component {
                                             isMaxResolution={false}
                                             isImageMirror={true}
                                             isDisplayStartCameraError={false}
-                                        /></p>
+                                        />
+                                        {/* </Col></Row></Grid> */}
+                                        </p>
                                 </div> : null
                             }
 
@@ -127,7 +130,7 @@ class ModalCamera extends React.Component {
                             <Button onClick={this.handleHide}>Close</Button>
                         </Modal.Footer>
                     </Modal>
-                </div></Grid>
+                </div></Col></Row></Grid>
         );
     }
 }
