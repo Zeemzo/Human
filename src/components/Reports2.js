@@ -51,74 +51,94 @@ class App extends React.Component {
 
 
     componentDidMount() {
+        if (navigator.onLine) {
 
+            const token = localStorage.getItem('token')
+            // console.log(this.state);
 
-        const token = localStorage.getItem('token')
-        // console.log(this.state);
-
-        axios.get(routes.HUMANBACKEND + '/api/reports/leaderboard', {
-            headers: {
-                'Authorization': "bearer " + token,
-                'Access-Control-Allow-Origin': '*',
-                "Content-Type": "application/json",
+            axios.get(routes.HUMANBACKEND + '/api/reports/leaderboard', {
+                headers: {
+                    'Authorization': "bearer " + token,
+                    'Access-Control-Allow-Origin': '*',
+                    "Content-Type": "application/json",
+                }
             }
-        }
-        ).then((res) => {
+            ).then((res) => {
+                this.setState({ loading1: false })
+                const sample = {
+                    chart: {
+                        caption: "Requests Made Per User",
+                        subCaption: "per user",
+                        xAxisName: "username",
+                        yAxisName: "request",
+                        // numberSuffix: "request",
+                        theme: "fusion"
+                    },
+                    data: res.data
+                }
+
+                const chartConfigs = {
+                    type: 'column3d',// The chart type
+                    width: '300', // Width of the chart
+                    height: '300', // Height of the chart
+                    dataFormat: 'json', // Data type
+                    dataSource: sample
+                };
+                this.setState({ config: chartConfigs })
+                localStorage.setItem("chart1", JSON.stringify(chartConfigs))
+            })
+
+
+            axios.get(routes.HUMANBACKEND + '/api/reports/lol', {
+                headers: {
+                    'Authorization': "bearer " + token,
+                    'Access-Control-Allow-Origin': '*',
+                    "Content-Type": "application/json",
+                }
+            }
+            ).then((res) => {
+                this.setState({ loading2: false })
+
+                const sample1 = {
+                    chart: {
+                        caption: "Request Tally for the Day",
+                        subCaption: "needs vs provisions",
+                        xAxisName: "username",
+                        yAxisName: "request",
+                        // numberSuffix: "request",
+                        theme: "fusion"
+                    },
+                    data: res.data
+                }
+
+                const chartConfigs3 = {
+                    type: 'pie3d',// The chart type
+                    width: '300', // Width of the chart
+                    height: '300', // Height of the chart
+                    dataFormat: 'json', // Data type
+                    dataSource: sample1
+                };
+                this.setState({ config1: chartConfigs3 })
+                localStorage.setItem("chart2", JSON.stringify(chartConfigs3))
+
+            })
+        } else {
             this.setState({ loading1: false })
-            const sample = {
-                chart: {
-                    caption: "Requests Made Per User",
-                    subCaption: "per user",
-                    xAxisName: "username",
-                    yAxisName: "request",
-                    // numberSuffix: "request",
-                    theme: "fusion"
-                },
-                data: res.data
+
+            if (localStorage.getItem("chart1") != null) {
+                this.setState({ config: JSON.parse(localStorage.getItem("chart1")) })
+
             }
 
-            const chartConfigs = {
-                type: 'column3d',// The chart type
-                width: '300', // Width of the chart
-                height: '300', // Height of the chart
-                dataFormat: 'json', // Data type
-                dataSource: sample
-            };
-            this.setState({ config: chartConfigs })
-        })
 
-
-        axios.get(routes.HUMANBACKEND + '/api/reports/lol', {
-            headers: {
-                'Authorization': "bearer " + token,
-                'Access-Control-Allow-Origin': '*',
-                "Content-Type": "application/json",
-            }
-        }
-        ).then((res) => {
             this.setState({ loading2: false })
+            if (localStorage.getItem("chart2") != null) {
 
-            const sample1 = {
-                chart: {
-                    caption: "Request Tally for the Day",
-                    subCaption: "needs vs provisions",
-                    xAxisName: "username",
-                    yAxisName: "request",
-                    // numberSuffix: "request",
-                    theme: "fusion"
-                },
-                data: res.data
+            this.setState({ config1: JSON.parse(localStorage.getItem("chart2")) })
             }
 
-            const chartConfigs3 = {
-                type: 'pie3d',// The chart type
-                width: '300', // Width of the chart
-                height: '300', // Height of the chart
-                dataFormat: 'json', // Data type
-                dataSource: sample1
-            };
-            this.setState({ config1: chartConfigs3 })
-        })
+        }
+
     }
     render() {
         return (

@@ -8,6 +8,8 @@ import registerServiceWorker from './registerServiceWorker';
 import { HUMANBACKEND } from './constants/routes'
 import { messaging } from './firebase/firebase';
 import { auth as Auth } from './firebase/firebase'
+import * as cron from 'cron';
+import { auth } from "./firebase";
 
 import { ToastContainer, ToastStore } from 'react-toasts';
 
@@ -23,8 +25,25 @@ ReactDOM.render(
     document.getElementById('root')
 
 );
+// var CronJob = require('cron').CronJob;
+
+// new CronJob('*/2 * * * * *',(()=>{
+//     if(localStorage.getItem("remember")==null){
+//         auth.doSignOut
+//     }})
+// , null, true, 'America/Los_Angeles');
+// if(localStorage.getItem("remember")!=null){
+//     if(localStorage.getItem("remember")===false){
+//                 auth.doSignOut
+
+//     }
+// }else{
+//     auth.doSignOut
+
+// }
+
 window.addEventListener("offline",()=>{
-    ToastStore.error("You are offline! Some of the features may not work!")
+    ToastStore.error("You are offline! Some of the features may not work! Cached data may be available!")
 
 })
 window.addEventListener("online", () => {

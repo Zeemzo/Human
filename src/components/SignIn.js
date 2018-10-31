@@ -37,22 +37,75 @@ const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
 
+
 const INITIAL_STATE = {
   email: "",
   password: "",
   loading: false,
-
+  remember:false,
   error: null
 };
+
+if (localStorage.getItem("remember") == null) {
+  localStorage.setItem("remember", false)
+
+}
+
 
 class SignInForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = null;
     this.token = { token: "" };
+    this.remember = this.remember.bind(this)
   }
 
+  remember(check) {
+    if (check) {
+      localStorage.setItem("remember", true)
+    } else {
+      localStorage.setItem("remember", false)
+
+    }
+
+  }
+  componentDidCatch() {
+    if (localStorage.getItem("remember") != null) {
+      if (localStorage.getItem("remember") == "true") {
+        INITIAL_STATE.email = (localStorage.getItem("email")!=null?localStorage.getItem("email"):"")
+        INITIAL_STATE.password = (localStorage.getItem("p")!=null?localStorage.getItem("p"):"")
+        INITIAL_STATE.remember=true;
+      }
+
+    
+    }
+    this.setState({ ...INITIAL_STATE })
+  }
+  componentDidMount() {
+    if (localStorage.getItem("remember") != null) {
+      if (localStorage.getItem("remember") == "true") {
+        INITIAL_STATE.email = (localStorage.getItem("email")!=null?localStorage.getItem("email"):"")
+        INITIAL_STATE.password = (localStorage.getItem("p")!=null?localStorage.getItem("p"):"")
+        INITIAL_STATE.remember=true;
+      }
+
+    
+    }
+    this.setState({ ...INITIAL_STATE })
+  }
+  componentWillMount() {
+    if (localStorage.getItem("remember") != null) {
+      if (localStorage.getItem("remember") == "true") {
+        INITIAL_STATE.email = (localStorage.getItem("email")!=null?localStorage.getItem("email"):"")
+        INITIAL_STATE.password = (localStorage.getItem("p")!=null?localStorage.getItem("p"):"")
+        INITIAL_STATE.remember=true;
+      }
+
+    
+    }
+    this.setState({ ...INITIAL_STATE })
+  }
   onSubmit = event => {
     this.setState({ loading: true })
 
@@ -60,11 +113,18 @@ class SignInForm extends Component {
 
     const { history } = this.props;
 
+    if (localStorage.getItem("remember") !== null) {
+      if (localStorage.getItem("remember") === "true") {
+        localStorage.setItem("email", email)
+        localStorage.setItem("p", password)
+      }
+    }
+
+
     auth
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log(email);
-        localStorage.setItem('email', email);
+
 
         axios.post(routes.HUMANBACKEND + '/api/token', { email: email },
           {
@@ -121,39 +181,48 @@ class SignInForm extends Component {
         <Form horizontal onSubmit={this.onSubmit}>
           <FormGroup
             value={email}
-            onChange={event =>
+            onChange={event => {
               this.setState(byPropKey("email", event.target.value))
+              // if (localStorage.getItem("remember") !== null) {
+              //   if (localStorage.getItem("remember") === "true") {
+              //     localStorage.setItem("email", event.target.value)
+              //   }
+              // }
+
+            }
             }
             type="text"
-            placeholder="Email Address"
+            placeholder={email!=""?email:"Email Address"}
           >
             <Col componentClass={ControlLabel} sm={3} >
               Email *
           </Col>
             <Col xs={12} sm={6} md={6} lg={6}>
-              <FormControl type="email" placeholder="Email" />
+              <FormControl type="email" placeholder={email!=""?email:"Email Address"} />
             </Col>
           </FormGroup>
 
           <FormGroup
             value={password}
-            onChange={event =>
+            onChange={event => {
               this.setState(byPropKey("password", event.target.value))
             }
+            }
             type="password"
-            placeholder="Password"
+            placeholder={password!=""?password:"Password"}
           >
             <Col componentClass={ControlLabel} sm={3}>
               Password *
           </Col>
             <Col xs={12} sm={6} md={6} lg={6}>
-              <FormControl type="password" placeholder="Password" />
+              <FormControl type="password" placeholder={password!=""?"******":"Password"} />
             </Col>
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup >
             <Col smOffset={2} sm={10}>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox onClick={e => this.remember(e.target.checked)} defaultChecked={this.state.remember}>
+                Remember me</Checkbox>
             </Col>
           </FormGroup>
           <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader

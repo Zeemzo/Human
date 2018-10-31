@@ -1,11 +1,13 @@
 import React from 'react';
-import { Col, Grid, Thumbnail,Panel, Row,  Modal, Button } from "react-bootstrap";
+import { Col, Grid, Thumbnail, Panel, Row, Modal, Button } from "react-bootstrap";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import Trigger2 from "./ContributorGroupChat";
 import MapContainer from './Multimap';
+import { ToastContainer, ToastStore } from 'react-toasts';
+
 class Matches extends React.Component {
   constructor(props) {
     super(props);
@@ -23,89 +25,97 @@ class Matches extends React.Component {
 
 
   componentDidMount() {
-    console.log(localStorage.getItem('token'));
-    const token = localStorage.getItem('token')
+    if (navigator.onLine) {
 
-    axios
-      .get(HUMANBACKEND + "/api/matchedRequest/getmatches", {
-        headers: {
-          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
-        }
-      })
-      .then(data => {
-        this.setState({ loading: false });
-        var obj = data.data;
-        var arr = [];
-        for (var key in obj) {
-          obj[key].id = key;
-          arr.push(obj[key]);
-        }
-        arr = arr.reverse();
 
-        console.log(arr);
-        this.setState({ needs: arr });
-      })
-      .catch((err) => { })
+      console.log(localStorage.getItem('token'));
+      const token = localStorage.getItem('token')
 
+      axios
+        .get(HUMANBACKEND + "/api/matchedRequest/getmatches", {
+          headers: {
+            'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+          }
+        })
+        .then(data => {
+          this.setState({ loading: false });
+          var obj = data.data;
+          var arr = [];
+          for (var key in obj) {
+            obj[key].id = key;
+            arr.push(obj[key]);
+          }
+          arr = arr.reverse();
+
+          console.log(arr);
+          this.setState({ needs: arr });
+        })
+        .catch((err) => { })
+    } else {
+      this.setState({ loading: false });
+      ToastStore.error("Sorry, cannot display requests when offline!")
+
+    }
   }
 
   render() {
     return (
       <Grid>
-        
-            {this.state.needs.length==0 && !this.state.loading? 
-         <h2>No Matched Requests Available</h2> : <div>
-        {this.state.needs.map((item, i) => (
+        <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
+
+        {this.state.needs.length == 0 && !this.state.loading ?
+          <h2>No Matched Requests Available</h2> : <div>
+            {this.state.needs.map((item, i) => (
               <Panel key={i}>
-              <Grid>
-              <Row><Panel.Body>
-                <Col >
-                
-                  <Modal
-                    show={this.state.show}
-                    onHide={this.handleHide}
-                    container={this}
+                <Grid>
+                  <Row><Panel.Body>
+                    <Col >
 
-                  >
-                    <Modal.Header closeButton />
-                    <Modal.Body>
+                      <Modal
+                        show={this.state.show}
+                        onHide={this.handleHide}
+                        container={this}
 
-                      <MapContainer needyLoc={item.needyLoc}
-                        giverLoc={item.giverLoc} />
+                      >
+                        <Modal.Header closeButton />
+                        <Modal.Body>
+
+                          <MapContainer needyLoc={item.needyLoc}
+                            giverLoc={item.giverLoc} />
 
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button onClick={this.handleHide}>Close</Button>
-                    </Modal.Footer>
-                  </Modal>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button onClick={this.handleHide}>Close</Button>
+                        </Modal.Footer>
+                      </Modal>
 
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12}>
-                  <h3>Match ID: {item.matchId}</h3>
-                  <p>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12}>
+                      <h3>Match ID: {item.matchId}</h3>
+                      <p>
 
-                    Resource Type: {item.need.resourceType}
-                      <br />
-                      From: {item.giverEmail}
-                      <br />
-                      To: {item.needyEmail}
-                      <br />
-                  </p>
-                  <Button
-                    bsStyle="success"
-                    bsSize="medium"
-                    onClick={() => this.setState({ show: true })}
-                  >View Route</Button> 
-                  <Trigger2 item={item} />
-                </Col>                  </Panel.Body>
+                        Resource Type: {item.need.resourceType}
+                        <br />
+                        From: {item.giverEmail}
+                        <br />
+                        To: {item.needyEmail}
+                        <br />
+                      </p>
+                      <Button
+                        bsStyle="success"
+                        bsSize="medium"
+                        onClick={() => this.setState({ show: true })}
+                      >View Route</Button>
+                      <Trigger2 item={item} />
+                    </Col>                  </Panel.Body>
 
-              </Row>
-            </Grid>
-            
-            </Panel>
-        ))}
-                  <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+                  </Row>
+                </Grid>
+
+              </Panel>
+            ))}
+            <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
               // style={override}
               sizeUnit={"px"}
               size={100}
@@ -113,8 +123,8 @@ class Matches extends React.Component {
               loading={this.state.loading}
             // style="text-align:center"
             /></p></Col></Row></Grid>
-        </div>
-      }
+          </div>
+        }
       </Grid>
     );
   }

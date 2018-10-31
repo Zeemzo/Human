@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Col, Grid, Panel,Row, Image,Button } from "react-bootstrap";
+import { Col, Grid, Panel, Row, Image, Button } from "react-bootstrap";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
@@ -30,108 +30,129 @@ class Need extends React.Component {
     // this.componentDidMount=this.componentDidMount.bind(this)
 
   }
-componentDidMount(){
-  console.log(localStorage.getItem('token'));
-    const token = localStorage.getItem('token')
-    axios
-      .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
-        headers: { 'Authorization': "bearer " + token,"Content-Type": "application/json",'Access-Control-Allow-Origin':'*',
-      }
-      })
-      .then(data => {
-        this.setState({ loading: false });
-        var obj = data.data;
-        // console.log(obj);
-        var arr = [];
-        for (var key in obj) {
-          obj[key].id = key;
-          arr.push(obj[key]);
-        }
-        arr=arr.reverse();
+  componentDidMount() {
+    if (navigator.onLine) {
 
-        console.log(arr);
-        this.setState({ needs: arr });
-      })
-      .catch((err) => { })
+      console.log(localStorage.getItem('token'));
+      const token = localStorage.getItem('token')
+      axios
+        .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
+          headers: {
+            'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+          }
+        })
+        .then(data => {
+          this.setState({ loading: false });
+          var obj = data.data;
+          // console.log(obj);
+          var arr = [];
+          for (var key in obj) {
+            obj[key].id = key;
+            arr.push(obj[key]);
+          }
+          arr = arr.reverse();
 
-}
- 
-handleChangePrev(e) {
-  this.setState({ needs: [] });
-
-  this.setState({ loading: true });
-
-  count++;
-  const now = new Date;
-  const utc_timestamp = Date.UTC(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() - count
-  );
-  const token = localStorage.getItem('token')
-  axios
-    .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
-      headers: {
-        'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
-      }
-    })
-    .then(data => {
+          console.log(arr);
+          this.setState({ needs: arr });
+        })
+        .catch((err) => { })
+    }else{
       this.setState({ loading: false });
-      var obj = data.data;
-      var arr = [];
-      for (var key in obj) {
-        obj[key].id = key;
-        arr.push(obj[key]);
-      }
-      arr = arr.reverse();
-      console.log(arr);
-      this.setState({ needs: arr });
-    })
-    .catch((err) => {
-    })
-  e.preventDefault();
-}
-handleChangeNext(e) {
-  this.setState({ needs: [] });
+      ToastStore.error("Sorry, cannot display requests when offline!")
 
-  this.setState({ loading: true });
+    }
+  }
 
-  console.log(count)
+  handleChangePrev(e) {
+    if (navigator.onLine) {
 
-  count--;
-  const now = new Date;
-  const utc_timestamp = Date.UTC(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() - count
-  );
-  console.log(count)
+      this.setState({ needs: [] });
 
-  const token = localStorage.getItem('token')
-  axios
-    .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
-      headers: {
-        'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
-      }
-    })
-    .then(data => {
+      this.setState({ loading: true });
 
+      count++;
+      const now = new Date;
+      const utc_timestamp = Date.UTC(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() - count
+      );
+      const token = localStorage.getItem('token')
+      axios
+        .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
+          headers: {
+            'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+          }
+        })
+        .then(data => {
+          this.setState({ loading: false });
+          var obj = data.data;
+          var arr = [];
+          for (var key in obj) {
+            obj[key].id = key;
+            arr.push(obj[key]);
+          }
+          arr = arr.reverse();
+          console.log(arr);
+          this.setState({ needs: arr });
+        })
+        .catch((err) => {
+        })
+      e.preventDefault();
+    }else{
       this.setState({ loading: false });
-      var obj = data.data;
-      // console.log(obj);
-      var arr = [];
-      for (var key in obj) {
-        obj[key].id = key;
-        arr.push(obj[key]);
-      }
-      arr = arr.reverse();
-      console.log(arr);
-      this.setState({ needs: arr });
-    })
-    .catch((err) => {
-    })
-  // this.setState({count:this.state.count-1});
-}
+      ToastStore.error("Sorry, cannot display requests when offline!")
+
+    }
+  }
+  handleChangeNext(e) {
+    if (navigator.onLine) {
+
+      this.setState({ needs: [] });
+
+      this.setState({ loading: true });
+
+      console.log(count)
+
+      count--;
+      const now = new Date;
+      const utc_timestamp = Date.UTC(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() - count
+      );
+      console.log(count)
+
+      const token = localStorage.getItem('token')
+      axios
+        .get(HUMANBACKEND + "/api/request/getall/" + utc_timestamp + "/need/", {
+          headers: {
+            'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+          }
+        })
+        .then(data => {
+
+          this.setState({ loading: false });
+          var obj = data.data;
+          // console.log(obj);
+          var arr = [];
+          for (var key in obj) {
+            obj[key].id = key;
+            arr.push(obj[key]);
+          }
+          arr = arr.reverse();
+          console.log(arr);
+          this.setState({ needs: arr });
+        })
+        .catch((err) => {
+        })
+    }else{
+      this.setState({ loading: false });
+      ToastStore.error("Sorry, cannot display requests when offline!")
+
+    }
+    // this.setState({count:this.state.count-1});
+  }
 
   render() {
 
@@ -151,23 +172,23 @@ handleChangeNext(e) {
       <Grid>
         <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
         {/* <Sort/> */}
-        <h3>{(now.getDate()-count )}-{(now.getMonth())}-{now.getFullYear()}</h3>
+        <h3>{(now.getDate() - count)}-{(now.getMonth())}-{now.getFullYear()}</h3>
 
 
 
 
         {this.state.needs.length == 0 && !this.state.loading ? <div><p>
           <Button onClick={this.handleChangePrev}>Previous Day</Button>
-          {utc_timestamp == this.state.startDate ? 
-            null :(utc_timestamp==yesterday? 
-            <Button onClick={this.handleChangeNext}>Today</Button>:
-            <Button onClick={this.handleChangeNext}>Next Day</Button>)}
+          {utc_timestamp == this.state.startDate ?
+            null : (utc_timestamp == yesterday ?
+              <Button onClick={this.handleChangeNext}>Today</Button> :
+              <Button onClick={this.handleChangeNext}>Next Day</Button>)}
           <h2>No Requests Available</h2></p></div> : <div><p>
             <Button onClick={this.handleChangePrev}>Previous Day</Button>
-            {utc_timestamp == this.state.startDate ? null : (utc_timestamp==yesterday? 
-            <Button onClick={this.handleChangeNext}>Today</Button>:
-            <Button onClick={this.handleChangeNext}>Next Day</Button>)}</p>
-           
+            {utc_timestamp == this.state.startDate ? null : (utc_timestamp == yesterday ?
+              <Button onClick={this.handleChangeNext}>Today</Button> :
+              <Button onClick={this.handleChangeNext}>Next Day</Button>)}</p>
+
             {this.state.needs.map((item, i) => (
               <Panel key={i}>
                 <Grid>

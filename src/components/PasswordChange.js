@@ -35,23 +35,32 @@ class PasswordChangeForm extends Component {
   onSubmit = event => {
     this.setState({ loading: true })
 
-    const { passwordOne } = this.state;
+    if(navigator.onLine){
+      // this.setState({ loading: true })
 
-    auth
-      .doPasswordUpdate(passwordOne)
-      .then(() => {
+      const { passwordOne } = this.state;
+  
+      auth
+        .doPasswordUpdate(passwordOne)
+        .then(() => {
+  
+          this.setState({ ...INITIAL_STATE });
+          ToastStore.success("Password has successfully been changed!")
+  
+          this.setState(byPropKey("error", "Password has successfully been changed!"));
+  
+        })
+        .catch(error => {
+          this.setState(byPropKey("error", error));
+        });
+  
+      event.preventDefault();
+    } else {
+      this.setState({ loading: false });
+      ToastStore.error("Sorry, cannot change password when offline!")
+      event.preventDefault();
 
-        this.setState({ ...INITIAL_STATE });
-        ToastStore.success("Password has successfully been changed!")
-
-        this.setState(byPropKey("error", "Password has successfully been changed!"));
-
-      })
-      .catch(error => {
-        this.setState(byPropKey("error", error));
-      });
-
-    event.preventDefault();
+    }
   };
 
   render() {

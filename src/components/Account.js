@@ -15,6 +15,7 @@ import {
   Col,
   Image,
 } from "react-bootstrap";
+import { ClipLoader } from "react-spinners";
 
 class AccountPage extends React.Component {
   constructor(props) {
@@ -22,35 +23,48 @@ class AccountPage extends React.Component {
     this.state = {
       src: null,
       lol: true,
+      loading: true,
+
     }
     this.handleImage = this.handleImage.bind(this)
   }
   componentDidMount() {
+    if (navigator.onLine) {
+      // this.setState({ loading: true });
 
-    const token = localStorage.getItem('token')
 
-    axios.get(routes.HUMANBACKEND + '/api/user/view/' + auth.currentUser.uid, {
-      headers: {
-        'Authorization': "bearer " + token,
-        'Access-Control-Allow-Origin': '*',
-        "Content-Type": "application/json",
-      }
-    }
-    ).then(
-      (res) => {
-        console.log(res)
-        if (res.data.image != null) {
-          this.setState({ src: res.data.image })
+      const token = localStorage.getItem('token')
 
-        } else {
-          this.setState({ src: './human2.png' })
-
+      axios.get(routes.HUMANBACKEND + '/api/user/view/' + auth.currentUser.uid, {
+        headers: {
+          'Authorization': "bearer " + token,
+          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
         }
-        console.log(this.state)
       }
-    ).catch(
-      // this.setState({ src: './human2.png' })
-    )
+      ).then(
+        (res) => {
+          this.setState({ loading: false });
+
+          console.log(res)
+          if (res.data.image != null) {
+            this.setState({ src: res.data.image })
+            localStorage.setItem("image",res.data.image);
+
+          } else {
+            this.setState({ src: './human2.png' })
+
+          }
+          console.log(this.state)
+        }
+      ).catch(
+        // this.setState({ src: './human2.png' })
+      )
+    }else{
+      this.setState({ loading: false });
+      this.setState({ src: localStorage.getItem("image")})
+
+    }
 
   }
 
@@ -61,8 +75,12 @@ class AccountPage extends React.Component {
 
     if (!navigator.onLine) {
       ToastStore.error("Cannot Change Profile Picture if u are Offline!!")
+      this.setState({ lol: false })
+
 
     } else {
+      // this.setState({ loading: true });
+
       this.setState({ lol: false })
 
       const token = localStorage.getItem('token')
@@ -77,11 +95,14 @@ class AccountPage extends React.Component {
         })
         .then((res) => {
           console.log(res.data);
+          // this.setState({ loading: false });
 
           this.setState({ src: url })
           ToastStore.success("Profile Picture Changed!!")
 
         }).catch((error) => {
+          // this.setState({ loading: false });
+
           console.log(error);
           ToastStore.error("Profile Picture Not Changed!!")
 
@@ -107,6 +128,14 @@ class AccountPage extends React.Component {
                 <h4>Account: {authUser.email}</h4>
               </Col>
               <Col xs={12} sm={6} md={4} lg={4}>
+              <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+                    // style={override}
+                    sizeUnit={"px"}
+                    size={100}
+                    color={"green"}
+                    loading={this.state.loading}
+                  // style="text-align:center"
+                  /></p></Col></Row></Grid>
                 <Grid>
                   {
                     this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive /> : null

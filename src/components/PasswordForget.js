@@ -51,6 +51,7 @@ class PasswordForgetForm extends Component {
 
       })
       .catch(error => {
+        this.setState({loading:false})
         this.setState(byPropKey('error', error));
       });
 

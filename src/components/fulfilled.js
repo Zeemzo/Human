@@ -18,31 +18,44 @@ class Fulfilled extends React.Component {
 
   }
   componentDidMount() {
-    console.log(localStorage.getItem('token'));
-    const token = localStorage.getItem('token')
-    const now = new Date;
 
-    const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-    axios
-      .get(HUMANBACKEND + "/api/user/contributions/" + auth.currentUser.uid + '/' + this.props.type, {
-        headers: {
-          'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
-        }
-      })
-      .then(data => {
-        this.setState({ loading: false });
-        var obj = data.data;
-        var arr = [];
-        for (var key in obj) {
-          obj[key].id = key;
-          arr.push(obj[key]);
-        }
-        arr = arr.reverse();
+    if (navigator.onLine) {
+      console.log(localStorage.getItem('token'));
+      const token = localStorage.getItem('token')
+      const now = new Date;
 
-        console.log(arr);
+      const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+      axios
+        .get(HUMANBACKEND + "/api/user/contributions/" + auth.currentUser.uid + '/' + this.props.type, {
+          headers: {
+            'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
+          }
+        })
+        .then(data => {
+          this.setState({ loading: false });
+          var obj = data.data;
+          var arr = [];
+          for (var key in obj) {
+            obj[key].id = key;
+            arr.push(obj[key]);
+          }
+          arr = arr.reverse();
+
+          console.log(arr);
+          localStorage.setItem(this.props.type, JSON.stringify(arr))
+          this.setState({ needs: arr });
+        })
+        .catch((err) => { })
+    }else{
+
+      this.setState({ loading: false });
+      var arr=JSON.parse(localStorage.getItem(this.props.type))
+      if(arr!=null){
         this.setState({ needs: arr });
-      })
-      .catch((err) => { })
+
+      }
+    }
+
 
   }
 

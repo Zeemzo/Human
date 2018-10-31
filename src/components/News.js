@@ -20,17 +20,31 @@ class News extends React.Component {
   }
 
   componentDidMount() {
+    if (navigator.onLine) {
+      axios
+        .get("https://newsapi.org/v2/everything?q=africa+hunger+disease&pageSize=5&sortBy=publishedAt&apiKey=aa6c44bcbe44451b94d83e41c3c3db97")
+        .then(data => {
+          this.setState({ loading: false });
+          var obj = data.data.articles;
 
-    axios
-      .get("https://newsapi.org/v2/everything?q=africa+hunger+disease&pageSize=5&sortBy=publishedAt&apiKey=aa6c44bcbe44451b94d83e41c3c3db97")
-      .then(data => {
-        this.setState({ loading: false });
-        var obj = data.data.articles;
+          console.log(obj);
+          localStorage.setItem("news", JSON.stringify(obj))
+          this.setState({ news: obj });
 
-        console.log(obj);
-        this.setState({ news: obj });
-      })
-      .catch((err) => { })
+        })
+        .catch((err) => { })
+    } else {
+
+      var obj = localStorage.getItem("news")
+      this.setState({ loading: false });
+
+      if (obj != null) {
+        this.setState({ news: JSON.parse(obj) });
+      }
+
+
+    }
+
   }
 
   render() {
