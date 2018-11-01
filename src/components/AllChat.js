@@ -30,7 +30,7 @@ class AllChat extends React.Component {
       this.setState({ rooms: temp.chats })
 
     } else {
-      var chats=[{roomId:null,sender:"no chats"}]
+      var chats=[{roomId:null,sender:"no chats",senderId:null}]
       this.setState({ rooms: chats })
 
     }
@@ -58,6 +58,7 @@ class AllChat extends React.Component {
             </Grid>
           </Thumbnail>
         ))}
+        
 
       </Grid>
     );

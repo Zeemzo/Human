@@ -191,7 +191,9 @@ class Provision extends React.Component {
       <Grid>
         <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
         {/* <Sort/> */}
-        <h3>{(now.getDate() - count) > 0 ? <span>{now.getDate() - count}</span> : <span>{now.getDate() - count + 31}</span>}-{(now.getMonth())}-{now.getFullYear()}</h3>
+        <h3>{(now.getDate() - count) > 0 ?
+         <span>{now.getDate() - count}</span> :
+          <span>{now.getDate() - count + 31}</span>}-{(now.getMonth())}-{now.getFullYear()}</h3>
 
 
 

@@ -22,11 +22,11 @@ class FloatingMenuItem extends React.Component {
             label = <label>{this.props.label}</label>;
         }
 
-        return <div
+        return <div 
             onClick={this.handleClick.bind(this)}
             className="floating-menu-item">
             {label}
-            <div className="floating-menu-icon"><i className="material-icons">{this.props.icon}</i></div>
+            <div id={"imagepress"} className="floating-menu-icon"><i className="material-icons" >{this.props.icon}</i></div>
         </div>;
     }
 }
@@ -52,10 +52,10 @@ class FloatingMenu extends React.Component {
         let className = "floating-menu";
         let icon = "+";
 
-        buttons.push(<FloatingMenuItem label="" icon={icon} action={this.toggleMenu.bind(this)} key="m" />);
+        buttons.push(<FloatingMenuItem  label="" icon={icon} action={this.toggleMenu.bind(this)} key="m" />);
 
         return <div className="container">
-            <div className={className}>
+            <div  className={className}>
                 {buttons}
             </div>
         </div>;

@@ -8,7 +8,6 @@ import registerServiceWorker from './registerServiceWorker';
 import { HUMANBACKEND } from './constants/routes'
 import { messaging } from './firebase/firebase';
 import { auth as Auth } from './firebase/firebase'
-import * as cron from 'cron';
 import { auth } from "./firebase";
 
 import { ToastContainer, ToastStore } from 'react-toasts';
@@ -221,7 +220,8 @@ messaging.onMessage(function (payload) {
                 chats.push(
                     {
                         roomId: JSON.parse(payload.notification.body).roomId,
-                        sender: JSON.parse(payload.notification.body).sender
+                        sender: JSON.parse(payload.notification.body).sender,
+                        senderId:JSON.parse(payload.notification.body).senderId,
                     }
                 )
                 console.log(chats)

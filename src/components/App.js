@@ -109,7 +109,7 @@ class App extends React.Component {
      
 
           <hr />
-          <Link to={routes.ADDREQUEST}><FloatingMenu/>
+          <Link  to={routes.ADDREQUEST}>< FloatingMenu/>
                     </Link>
           
           <Route exact path={routes.LANDING} component={LandingPage} />

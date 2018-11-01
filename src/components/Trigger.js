@@ -79,7 +79,8 @@ class Trigger extends React.Component {
                         var temp = JSON.parse(localStorage.getItem('chat'));
                         temp.chats.push({
                             roomId: room.id,
-                            sender: this.state.item.email
+                            sender: [this.state.item.email],
+                            senderId:[this.state.item.userId]
                         })
                         localStorage.setItem('chat', JSON.stringify(temp))
                         console.log(temp)
@@ -88,7 +89,9 @@ class Trigger extends React.Component {
                         chat.chats.push(
                             {
                                 roomId: room.id,
-                                sender: this.state.item.email
+                                sender: [this.state.item.email],
+                                senderId:[this.state.item.userId]
+
                             }
                         )
                         localStorage.setItem('chat', JSON.stringify(chat))
@@ -100,7 +103,7 @@ class Trigger extends React.Component {
                     const lol = this.state.item;
                     lol.roomId = room.id
                     lol.sender = auth.currentUser.email
-                    // lol.reqType=0
+                    lol.senderId = auth.currentUser.userId
                     console.log(lol);
 
                     this.state.currentUser.sendMessage({
@@ -199,26 +202,12 @@ class Trigger extends React.Component {
                                         </span>
 
 
-
-                                        {/* <Col xs={15} md={0}>
-                                            <Thumbnail href="#" alt="171x180" src={this.state.item.image} />
-                                            <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
-                                            <span className="input-label">
-                                                email: {this.state.item.email} | Type: {this.state.item.type} | Latitude: {this.state.item.latitude} | Longitude: {this.state.item.longitude}
-                                            </span>
-                                            <p>Description : {this.state.item.description}</p> */}
-                                                         
                                         <form onSubmit={this.onSubmit}>
                                             <input
                                                 value={this.state.item}
                                                 type="hidden"
                                             />
-
-                                            <input onChange={e => { this.sendMessage = e.target.value }} type="text" placeholder="Enter Message" />
-                             
-                                            <button type="submit">
-                                                Accept {this.state.item.requestType}</button>
-                                        </form>   <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+                                            <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
                                                 // style={override}
                                                 sizeUnit={"px"}
                                                 size={30}
@@ -226,11 +215,16 @@ class Trigger extends React.Component {
                                                 loading={this.state.loading}
                                             // style="text-align:center"
                                             /></p></Col></Row></Grid>
+                                            <input onChange={e => { this.sendMessage = e.target.value }} type="text" placeholder="Enter Message" />
+
+                                            <button type="submit">
+                                                Accept {this.state.item.requestType}</button>
+                                        </form>
                                     </p>
                                 </Col>
                             </Panel.Body>
                         </Panel>
-                     
+
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleHide}>Close</Button>

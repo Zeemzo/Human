@@ -5,11 +5,11 @@ import MessageList from './MessageList'
 import { auth } from '../firebase/firebase'
 import withAuthorization from './withAuthorization';
 import SendMessageForm from './ChatSendMessageForm'
-// import axios from 'axios';
-import { Button, Modal, Image, Grid,Row,Col } from 'react-bootstrap';
+import axios from 'axios';
+import { Button, Modal, Image, Grid, Row, Col } from 'react-bootstrap';
+import * as routes from '../constants/routes'
 
-
-const roomId = 19164860
+// const roomId = 19164860
 
 
 class ChatScreen extends Component {
@@ -19,7 +19,9 @@ class ChatScreen extends Component {
             currentUser: {},
             currentRoom: {},
             messages: [""],
-            room: null
+            room: null,
+            image: null,
+            chatty: null,
         }
         this.sendMessage = this.sendMessage.bind(this)
         this.handleHide = this.handleHide.bind(this);
@@ -31,6 +33,40 @@ class ChatScreen extends Component {
 
         this.setState({ room: this.props.room })
         if (this.props.room.sender != 'no chats') {
+            var arr = this.props.room.senderId
+            console.log(arr)
+            for (var i = 0; i < arr.length; i++) {
+                const token = localStorage.getItem('token')
+                axios.get(routes.HUMANBACKEND + '/api/user/view/' + arr[i], {
+                    headers: {
+                        'Authorization': "bearer " + token,
+                        'Access-Control-Allow-Origin': '*',
+                        "Content-Type": "application/json",
+                    }
+                }
+                ).then((res) => {
+                    if (this.state.chatty != null) {
+                        var arr = this.state.chatty;
+                        console.log(arr)
+                        arr.push({ image: res.data.image, email: this.props.room.sender })
+                        this.setState({ chatty: arr });
+                        console.log(arr)
+                    } else {
+
+                        this.setState({
+                            chatty:
+                                [{ image: res.data.image, email: this.props.room.sender }]
+                        });
+                        console.log(this.state.chatty)
+
+
+                    }
+
+                    // this.setState({ pushToken: res.data.pushToken });
+                    console.log(this.state)
+                })
+            }
+
             const chatManager = new Chatkit.ChatManager({
                 instanceLocator: "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43",
                 userId: auth.currentUser.email,
@@ -42,14 +78,12 @@ class ChatScreen extends Component {
                 this.setState({ currentUser })
                 currentUser.subscribeToRoom({
                     roomId: parseInt(this.state.room.roomId),
-                    // roomId:17275761,
-                    // messageLimit: 100,
+
                     hooks: {
                         onNewMessage: message => {
                             this.setState({
                                 messages: [...this.state.messages, message],
                             })
-                            // window.scrollTo({left:0,top:10})
                         },
                     },
                 })
@@ -61,6 +95,8 @@ class ChatScreen extends Component {
                     console.error('error', error)
 
                 })
+
+
 
 
         }
@@ -82,24 +118,6 @@ class ChatScreen extends Component {
             text,
             roomId: parseInt(this.state.room.roomId),
         })
-
-        // const token = localStorage.getItem('token')
-        // const request = {
-        //     notification: {
-        //         title: "You have a message from a fellow Human",
-        //         body: "" + localStorage.getItem('roomId'),
-        //         click_action: "https://human-24b1b.firebaseapp.com/chat"
-        //     },
-        //     priority : "high",
-
-        //     to: pushToken
-
-        // };
-
-
-        // axios.post('https://fcm.googleapis.com/fcm/send', request, {
-        //     headers: { 'Authorization': "key=AIzaSyCflWmYSu16ICHrJrZTXoQkVpl9Yc3174k" }
-        // })
 
 
     }
@@ -133,6 +151,7 @@ class ChatScreen extends Component {
             },
         }
 
+        const { image } = this.state;
         return (
             <div ><Grid>
                 <Row><Col xs={10} sm={10} md={10} lg={10}>
@@ -140,13 +159,21 @@ class ChatScreen extends Component {
                         <Button
                             // bsSize="large"
                             onClick={() => this.setState({ show: true })}
-                        >{this.props.room.sender}</Button>
+                        >
+                            {this.state.chatty != null ? (this.state.chatty.map((item, i) => (
+                                <Image key={i} height={30} src={item.image} rounded />
+                            ))) : null}
+                            {this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
+                                <span key={i}>{"  "}{item}</span>
+                            )) : null}</Button>
                         :
-                        <Button 
+                        <Button
                             disabled={true}
                             // bsSize="large"
                             onClick={() => this.setState({ show: true })}
-                        >{this.props.room.sender}</Button>}
+                        >{this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
+                            <span key={i}>{"  "}{item}</span>
+                        )) : null}</Button>}
                 </Col></Row>
                 <Modal
                     show={this.state.show}
@@ -160,15 +187,19 @@ class ChatScreen extends Component {
 
 
                         <div style={styles.container} width="280">
-                            <h4 style={{ float: 'center', }}>{this.props.room.sender}</h4>
+                            <h4 style={{ float: 'center', }}>{this.state.chatty != null ? (this.state.chatty.map((item, i) => (
+                                <Image key={i} height={30} src={item.image} rounded />
+                            ))) : null}{this.props.room.sender.map((item, i) => (
+                                <span key={i}>{" "}{item}</span>
+                            ))}</h4>
                             <div style={styles.chatContainer}>
                                 {/* <below style={styles.whosOnlineListContainer}>
                         <h2>Whos online PLACEHOLDER</h2>
                     </below> */}
                                 <section style={styles.chatContainer}>
-                                    <MessageList
+                                    <MessageList chatty={this.state.chatty}
                                         messages={this.state.messages}
-                                        />   </section>
+                                    />   </section>
                             </div>
 
                             <SendMessageForm sendMessage={this.sendMessage} />

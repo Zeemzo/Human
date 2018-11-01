@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { auth as Auth } from "../firebase/firebase";
 import autoscroll from 'autoscroll-react'
-
+import { Image } from "react-bootstrap"
 // import {Image} from 'react-bootstrap'
 class MessagesList extends Component {
-constructor(props){
-  super(props)
-  this.state={image:[]}
-}
+  constructor(props) {
+    super(props)
+    // this.state={image:[]}
+  }
 
 
   render() {
@@ -22,7 +22,7 @@ constructor(props){
       li: {
         marginTop: 13,
         marginBottom: 13,
-        marginRight:13,
+        marginRight: 13,
         // marginLeft:13,
       },
       receiverUsername: {
@@ -36,8 +36,8 @@ constructor(props){
 
         // fontSize: 20,
       },
-      messageA: { fontSize: 15,float: 'right', },
-      messageB: { fontSize: 15,float: 'left', },
+      messageA: { fontSize: 15, float: 'right', },
+      messageB: { fontSize: 15, float: 'left', },
 
     }
     return (
@@ -53,22 +53,28 @@ constructor(props){
 
               {Auth.currentUser.email == message.senderId ?
                 <div>
+                  <span style={styles.receiverUsername}><Image height={30} circle src={localStorage.getItem("image")} /></span>
                   <span style={styles.receiverUsername}>{message.senderId}</span>
-                  {/* <br /> */}
                   <br />
-
                   <p style={styles.messageA}>{message.text}</p>
                 </div>
-                : <div>
+                :this.props.chatty.map((item,i)=>{
+                  (<div key={i}>{
+                    item.email==message.senderId?<span>
+                    <span style={styles.senderUsername}><Image height={30} circle src={item.image} /></span>
+                    <span style={styles.senderUsername}>{message.senderId}</span>
+                    <br />
+                    <p style={styles.messageB}>{message.text}</p></span>:null
+                  }</div>)
+                }) }
+              <br />
+              <br />
+              {/* (<div>
+                  <span style={styles.senderUsername}><Image height={30} circle src={} /></span>
                   <span style={styles.senderUsername}>{message.senderId}</span>
-                  {/* <br /> */}
                   <br />
-
                   <p style={styles.messageB}>{message.text}</p>
-                </div>}
-                <br />
-                  <br />
-             
+                </div>) */}
 
 
             </li>

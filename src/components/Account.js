@@ -128,14 +128,15 @@ class AccountPage extends React.Component {
                 <h4>Account: {authUser.email}</h4>
               </Col>
               <Col xs={12} sm={6} md={4} lg={4}>
-              <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+              <Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
                     // style={override}
                     sizeUnit={"px"}
                     size={100}
                     color={"green"}
                     loading={this.state.loading}
                   // style="text-align:center"
-                  /></p></Col></Row></Grid>
+                  /></p></Col></Row>
+                  {/* </Grid> */}
                 <Grid>
                   {
                     this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive /> : null

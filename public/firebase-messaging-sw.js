@@ -61,7 +61,8 @@ messaging.setBackgroundMessageHandler(function (payload) {
                 chats.push(
                     {
                         roomId: JSON.parse(payload.notification.body).roomId,
-                        sender: JSON.parse(payload.notification.body).sender
+                        sender: JSON.parse(payload.notification.body).sender,
+                        senderId:JSON.parse(payload.notification.body).senderId,
                     }
                 )
                 console.log(chats)

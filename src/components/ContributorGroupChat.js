@@ -28,7 +28,7 @@ class Trigger2 extends React.Component {
       currentUsername: '',
       roomId: null,
       messages: '',
-      loading:false,
+      loading: false,
     };
     this.sendMessage = this.sendMessage.bind(this)
 
@@ -73,7 +73,9 @@ class Trigger2 extends React.Component {
               var temp = JSON.parse(localStorage.getItem('chat'));
               temp.chats.push({
                 roomId: room.id,
-                sender: "" + this.state.item.needyEmail + "," + this.state.item.giverEmail,
+                sender: [this.state.item.needyEmail, this.state.item.giverEmail],
+                senderId:[this.state.item.needy,this.state.item.giver]
+
               })
               localStorage.setItem('chat', JSON.stringify(temp))
               console.log(temp)
@@ -82,7 +84,8 @@ class Trigger2 extends React.Component {
               chat.chats.push(
                 {
                   roomId: room.id,
-                  sender: "" + this.state.item.needyEmail + "," + this.state.item.giverEmail,
+                  sender: [this.state.item.needyEmail, this.state.item.giverEmail],
+                  senderId:[this.state.item.needy,this.state.item.giver]
                 }
               )
               localStorage.setItem('chat', JSON.stringify(chat))
@@ -94,7 +97,7 @@ class Trigger2 extends React.Component {
             const lol = this.state.item.need;
             lol.roomId = room.id
             lol.sender = auth.currentUser.email
-
+            lol.senderId = auth.currentUser.userId
             console.log(lol);
 
             this.state.currentUser.sendMessage({
@@ -110,6 +113,8 @@ class Trigger2 extends React.Component {
                 const lol1 = this.state.item.provision
                 lol1.roomId = room.id
                 lol1.sender = auth.currentUser.email
+                lol1.senderId = auth.currentUser.userId
+
                 console.log(lol1);
                 axios
                   .post(HUMANBACKEND + '/api/request/accept', lol1, {
@@ -153,20 +158,20 @@ class Trigger2 extends React.Component {
       <div >
         <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
 
-        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
-          // style={override}
-          sizeUnit={"px"}
-          size={30}
-          color={"green"}
-          loading={this.state.loading}
-        // style="text-align:center"
-        /></p></Col></Row></Grid>
+
         <form onSubmit={this.onSubmit}>
           <input
             value={this.state.item}
             type="hidden"
           />
-
+          <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+            // style={override}
+            sizeUnit={"px"}
+            size={30}
+            color={"green"}
+            loading={this.state.loading}
+          // style="text-align:center"
+          /></p></Col></Row></Grid>
           <input onChange={e => { this.sendMessage = e.target.value }} type="text" placeholder="Enter Message" />
           <button type="submit">
             Send Message to Accept</button>

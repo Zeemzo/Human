@@ -89,20 +89,20 @@
 
 }
 
-#imagepress {
-	background-color: transparent
-}
+/* #imagepress { */
+	/* background-color: transparent */
+/* } */
 
-#imagepress:hover {
+/* #imagepress:hover {
 	background-color: transparent
-}
+} */
  #imagepress:active { 
 	background-color: grey
 } 
- 
+/*  
 #imagepress:focus {
 	background-color: transparent;
-} 
+}  */
 /* .container {
 	position: relative;
 	width: 320px;

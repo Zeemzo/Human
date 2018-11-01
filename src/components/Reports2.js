@@ -142,7 +142,7 @@ class App extends React.Component {
     }
     render() {
         return (
-            <Grid><Row>{this.state.loading1 ?
+            <Grid><Row> <Col xs={12} sm={6} md={6} lg={6} >{this.state.loading1 ?
                 <Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
                     // style={override}
                     sizeUnit={"px"}
@@ -155,8 +155,8 @@ class App extends React.Component {
                     <ReactFC
                         {...this.state.config} />
                 </Col>
-            }
-                {
+            }   </Col>
+                 <Col xs={12} sm={6} md={6} lg={6} >{
                     this.state.loading2 ?
                         <Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
                             // style={override}
@@ -171,7 +171,7 @@ class App extends React.Component {
                                 {...this.state.config1} />
 
                         </Col>
-                }
+                }</Col>
 
             </Row>
             </Grid>
