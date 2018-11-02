@@ -103,7 +103,7 @@ class Trigger extends React.Component {
                     const lol = this.state.item;
                     lol.roomId = room.id
                     lol.sender = auth.currentUser.email
-                    lol.senderId = auth.currentUser.userId
+                    lol.senderId = auth.currentUser.uid
                     console.log(lol);
 
                     this.state.currentUser.sendMessage({

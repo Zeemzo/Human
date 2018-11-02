@@ -22,6 +22,7 @@ class ChatScreen extends Component {
             room: null,
             image: null,
             chatty: null,
+            lastMessage:""
         }
         this.sendMessage = this.sendMessage.bind(this)
         this.handleHide = this.handleHide.bind(this);
@@ -84,6 +85,9 @@ class ChatScreen extends Component {
                             this.setState({
                                 messages: [...this.state.messages, message],
                             })
+
+                            this.setState({lastMessage:message})
+                            console.log(message)
                         },
                     },
                 })
@@ -158,22 +162,26 @@ class ChatScreen extends Component {
                     {this.props.room.sender != 'no chats' ?
                         <Button
                             // bsSize="large"
+                            block
                             onClick={() => this.setState({ show: true })}
                         >
                             {this.state.chatty != null ? (this.state.chatty.map((item, i) => (
                                 <Image key={i} height={30} src={item.image} rounded />
                             ))) : null}
                             {this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
-                                <span key={i}>{"  "}{item}</span>
-                            )) : null}</Button>
+                                <span key={i}>{"           "}{item}</span>
+                            )) : null}
+                            {this.state.lastMessage!=""?<div>"{this.state.lastMessage.text}"</div>:null
+
+                            }</Button>
                         :
                         <Button
                             disabled={true}
                             // bsSize="large"
                             onClick={() => this.setState({ show: true })}
-                        >{this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
-                            <span key={i}>{"  "}{item}</span>
-                        )) : null}</Button>}
+                        >{this.props.room.sender != null ? 
+                            <span >{"  "}{this.props.room.sender}</span>
+                        : null}</Button>}
                 </Col></Row>
                 <Modal
                     show={this.state.show}
@@ -188,10 +196,8 @@ class ChatScreen extends Component {
 
                         <div style={styles.container} width="280">
                             <h4 style={{ float: 'center', }}>{this.state.chatty != null ? (this.state.chatty.map((item, i) => (
-                                <Image key={i} height={30} src={item.image} rounded />
-                            ))) : null}{this.props.room.sender.map((item, i) => (
-                                <span key={i}>{" "}{item}</span>
-                            ))}</h4>
+                                <span key={i}><Image  height={30} src={item.image} rounded />{" "}{item.email}</span>
+                            ))) : null}</h4>
                             <div style={styles.chatContainer}>
                                 {/* <below style={styles.whosOnlineListContainer}>
                         <h2>Whos online PLACEHOLDER</h2>

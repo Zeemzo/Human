@@ -97,7 +97,7 @@ class Trigger2 extends React.Component {
             const lol = this.state.item.need;
             lol.roomId = room.id
             lol.sender = auth.currentUser.email
-            lol.senderId = auth.currentUser.userId
+            lol.senderId = auth.currentUser.uid
             console.log(lol);
 
             this.state.currentUser.sendMessage({
@@ -113,7 +113,7 @@ class Trigger2 extends React.Component {
                 const lol1 = this.state.item.provision
                 lol1.roomId = room.id
                 lol1.sender = auth.currentUser.email
-                lol1.senderId = auth.currentUser.userId
+                lol1.senderId = auth.currentUser.uid
 
                 console.log(lol1);
                 axios
