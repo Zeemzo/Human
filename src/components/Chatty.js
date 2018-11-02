@@ -19,92 +19,131 @@ class ChatScreen extends Component {
             currentUser: {},
             currentRoom: {},
             messages: [""],
-            room: null,
+            room: this.props.room,
             image: null,
-            chatty: null,
-            lastMessage:""
+            chatty: [],
+            lastMessage: ""
         }
         this.sendMessage = this.sendMessage.bind(this)
         this.handleHide = this.handleHide.bind(this);
 
     }
 
-
     componentDidMount() {
+        if (navigator.onLine) {
+            if (this.state.room.sender != 'no chats') {
+                var arr = this.state.room.senderId
+                var arr2 = this.state.room.sender
+                console.log(arr)
+                console.log(this.state.room.sender)
 
-        this.setState({ room: this.props.room })
-        if (this.props.room.sender != 'no chats') {
-            var arr = this.props.room.senderId
-            console.log(arr)
-            for (var i = 0; i < arr.length; i++) {
-                const token = localStorage.getItem('token')
-                axios.get(routes.HUMANBACKEND + '/api/user/view/' + arr[i], {
-                    headers: {
-                        'Authorization': "bearer " + token,
-                        'Access-Control-Allow-Origin': '*',
-                        "Content-Type": "application/json",
+                console.log(arr.length)
+                arr.forEach((value, index) => {
+                    const token = localStorage.getItem('token')
+                    axios.get(routes.HUMANBACKEND + '/api/user/viewImage/' + value, {
+                        headers: {
+                            'Authorization': "bearer " + token,
+                            'Access-Control-Allow-Origin': '*',
+                            "Content-Type": "application/json",
+                        }
                     }
-                }
-                ).then((res) => {
-                    if (this.state.chatty != null) {
-                        var arr = this.state.chatty;
-                        console.log(arr)
-                        arr.push({ image: res.data.image, email: this.props.room.sender })
-                        this.setState({ chatty: arr });
-                        console.log(arr)
-                    } else {
+                    ).then((res) => {
+                        var email = this.state.room.sender
+                        console.log(email[index])
+                        var arr3 = this.state.chatty
+                        if (arr3.length > 0) {
+                            arr3.push({ image: res.data, email: email[index] })
+                            console.log(arr3)
+                            this.setState({ chatty: arr3 })
+                            localStorage.setItem("chatty",JSON.stringify(arr3))
+                        } else {
+                            var email = this.state.room.sender
+                            console.log(email[index])
+                            var arr3 = []
+                            arr3.push({ image: res.data, email: email[index] })
+                            console.log(arr3)
+                            this.setState({ chatty: arr3 })
+                            localStorage.setItem("chatty",JSON.stringify(arr3))
 
-                        this.setState({
-                            chatty:
-                                [{ image: res.data.image, email: this.props.room.sender }]
-                        });
-                        console.log(this.state.chatty)
+                        }
 
-
-                    }
-
-                    // this.setState({ pushToken: res.data.pushToken });
-                    console.log(this.state)
+                        console.log(arr3)
+                    })
                 })
+
+                const chatManager = new Chatkit.ChatManager({
+                    instanceLocator: "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43",
+                    userId: auth.currentUser.email,
+                    tokenProvider: new Chatkit.TokenProvider({
+                        url: HUMANBACKEND + '/api/authenticate',
+                    }),
+                })
+                chatManager.connect().then(currentUser => {
+                    this.setState({ currentUser })
+                    currentUser.subscribeToRoom({
+                        roomId: parseInt(this.state.room.roomId),
+
+                        hooks: {
+                            onNewMessage: message => {
+                                this.setState({
+                                    messages: [...this.state.messages, message],
+                                })
+                                if (localStorage.getItem('chat') != null) {
+
+                                    var temp = JSON.parse(localStorage.getItem('chat')).chats;
+
+                                    // console.log(temp)
+                                    temp.forEach((value,i)=>{
+                                        if(value.roomId==this.state.room.roomId){
+                                            temp[i].mess=[...this.state.messages, message]
+                                        }
+                                    })
+                                    // console.log(temp)
+                                    var chat={chats:temp}
+                                    localStorage.setItem("chat",JSON.stringify(chat))
+                        
+                                }
+
+                                this.setState({ lastMessage: message })
+                                // console.log(message)
+                            },
+                        },
+                    })
+                })
+                    .then(currentRoom => {
+                        this.setState({ currentRoom })
+                    })
+                    .catch(error => {
+                        console.error('error', error)
+
+                    })
+            }
+        } else {
+            if (localStorage.getItem('chat') != null) {
+
+                // var temp = JSON.parse(localStorage.getItem('chat'));
+
+                // console.log(temp)
+                // temp.chats.forEach((value,i)=>{
+                    var lastIndex= this.state.room.mess.length-1
+                    this.setState({ messages: this.state.room.mess })
+                    this.setState({ lastMessage: this.state.room.mess[lastIndex] })
+
+                    this.setState({chatty:JSON.parse(localStorage.getItem("chatty"))})
+                // })
+                // console.log(this.state.rooms[0])
+
+                // this.setState({ messages: arr3 })
+
+
+            } else {
+                // var chats = [{ roomId: null, sender: "no chats", senderId: null }]
+                // this.setState({ room: chats })
+                // console.log(this.state.rooms)
+
             }
 
-            const chatManager = new Chatkit.ChatManager({
-                instanceLocator: "v1:us1:530428ef-4a08-417e-99d7-054b81d20f43",
-                userId: auth.currentUser.email,
-                tokenProvider: new Chatkit.TokenProvider({
-                    url: HUMANBACKEND + '/api/authenticate',
-                }),
-            })
-            chatManager.connect().then(currentUser => {
-                this.setState({ currentUser })
-                currentUser.subscribeToRoom({
-                    roomId: parseInt(this.state.room.roomId),
-
-                    hooks: {
-                        onNewMessage: message => {
-                            this.setState({
-                                messages: [...this.state.messages, message],
-                            })
-
-                            this.setState({lastMessage:message})
-                            console.log(message)
-                        },
-                    },
-                })
-            })
-                .then(currentRoom => {
-                    this.setState({ currentRoom })
-                })
-                .catch(error => {
-                    console.error('error', error)
-
-                })
-
-
-
-
         }
-
 
 
 
@@ -171,7 +210,7 @@ class ChatScreen extends Component {
                             {this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
                                 <span key={i}>{"           "}{item}</span>
                             )) : null}
-                            {this.state.lastMessage!=""?<div>"{this.state.lastMessage.text}"</div>:null
+                            {this.state.lastMessage != "" ? <div>"{this.state.lastMessage.text}"</div> : null
 
                             }</Button>
                         :
@@ -179,9 +218,9 @@ class ChatScreen extends Component {
                             disabled={true}
                             // bsSize="large"
                             onClick={() => this.setState({ show: true })}
-                        >{this.props.room.sender != null ? 
+                        >{this.props.room.sender != null ?
                             <span >{"  "}{this.props.room.sender}</span>
-                        : null}</Button>}
+                            : null}</Button>}
                 </Col></Row>
                 <Modal
                     show={this.state.show}
@@ -196,7 +235,7 @@ class ChatScreen extends Component {
 
                         <div style={styles.container} width="280">
                             <h4 style={{ float: 'center', }}>{this.state.chatty != null ? (this.state.chatty.map((item, i) => (
-                                <span key={i}><Image  height={30} src={item.image} rounded />{" "}{item.email}</span>
+                                <span key={i}><Image height={30} src={item.image} rounded />{" "}{item.email}</span>
                             ))) : null}</h4>
                             <div style={styles.chatContainer}>
                                 {/* <below style={styles.whosOnlineListContainer}>

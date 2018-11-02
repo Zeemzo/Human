@@ -52,21 +52,28 @@ class MessagesList extends Component {
             <li key={index} style={styles.li}>
 
               {Auth.currentUser.email == message.senderId ?
-                <div>
+                (<div>
                   <span style={styles.receiverUsername}><Image height={30} circle src={localStorage.getItem("image")} /></span>
                   <span style={styles.receiverUsername}>{message.senderId}</span>
                   <br />
                   <p style={styles.messageA}>{message.text}</p>
-                </div>
-                :this.props.chatty.map((item,i)=>{
-                  (<div key={i}>{
-                    item.email==message.senderId?<span>
-                    <span style={styles.senderUsername}><Image height={30} circle src={item.image} /></span>
-                    <span style={styles.senderUsername}>{message.senderId}</span>
-                    <br />
-                    <p style={styles.messageB}>{message.text}</p></span>:null
-                  }</div>)
-                }) }
+                </div>)
+                : <div>{
+                  this.props.chatty.map((value, i) => {
+                    if (value.email == message.senderId) {
+                        return(
+                        <span key={i}>
+                          <span style={styles.senderUsername}><Image height={30} circle
+                            src={value.image} /></span>
+                          <span style={styles.senderUsername}>{message.senderId}</span>
+                          <br />
+                          <p style={styles.messageB}>{message.text}</p></span>
+                      )
+                    }
+                  })
+                }</div>
+
+              }
               <br />
               <br />
               {/* (<div>

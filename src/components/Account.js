@@ -35,7 +35,7 @@ class AccountPage extends React.Component {
 
       const token = localStorage.getItem('token')
 
-      axios.get(routes.HUMANBACKEND + '/api/user/view/' + auth.currentUser.uid, {
+      axios.get(routes.HUMANBACKEND + '/api/user/viewImage/' + auth.currentUser.uid, {
         headers: {
           'Authorization': "bearer " + token,
           'Access-Control-Allow-Origin': '*',
@@ -47,9 +47,9 @@ class AccountPage extends React.Component {
           this.setState({ loading: false });
 
           console.log(res)
-          if (res.data.image != null) {
-            this.setState({ src: res.data.image })
-            localStorage.setItem("image",res.data.image);
+          if (res.data != null) {
+            this.setState({ src: res.data })
+            localStorage.setItem("image",res.data);
 
           } else {
             this.setState({ src: './human2.png' })

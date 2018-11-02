@@ -64,6 +64,7 @@ class SendMessageForm extends React.Component {
           </Col>
               <Col xs={12} md={8}>
                 <FormControl
+                disabled={!navigator.onLine}
                   value={this.state.message}
                   onChange={this.handleChange}
                   type="text"

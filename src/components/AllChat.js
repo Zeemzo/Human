@@ -6,6 +6,9 @@ import {
   Row,
   Image,
 } from "react-bootstrap";
+import { auth } from '../firebase/firebase';
+import * as routes from '../constants/routes'
+
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
@@ -23,18 +26,60 @@ class AllChat extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem('chat') != null) {
+    if(navigator.onLine){
+      if (localStorage.getItem('chat') != null) {
 
-      var temp = JSON.parse(localStorage.getItem('chat'));
+        var temp = JSON.parse(localStorage.getItem('chat'));
   
-      this.setState({ rooms: temp.chats })
+        console.log(temp)
+        this.setState({ rooms: temp.chats })
+        // console.log(this.state.rooms[0])
+  
+  
+      } else {
+        var chats = [{ roomId: null, sender: "no chats", senderId: null }]
+        this.setState({ rooms: chats })
+        // console.log(this.state.rooms)
+  
+      }
+  
+      if (localStorage.getItem('image') == null) {
+        const token = localStorage.getItem('token')
+  
+        axios.get(routes.HUMANBACKEND + '/api/user/viewImage/' + auth.currentUser.uid, {
+          headers: {
+            'Authorization': "bearer " + token,
+            'Access-Control-Allow-Origin': '*',
+            "Content-Type": "application/json",
+          }
+        }
+        ).then(
+          (res) => {
+            localStorage.setItem('image',res.data)
+          }
+        ).catch(
+          localStorage.setItem('image','./human2.png')
+        )
+      }
+    }else{
+      if (localStorage.getItem('chat') != null) {
 
-    } else {
-      var chats=[{roomId:null,sender:"no chats",senderId:null}]
-      this.setState({ rooms: chats })
-
+        var temp = JSON.parse(localStorage.getItem('chat'));
+  
+        console.log(temp)
+        this.setState({ rooms: temp.chats })
+        // console.log(this.state.rooms[0])
+  
+  
+      } else {
+        var chats = [{ roomId: null, sender: "no chats", senderId: null }]
+        this.setState({ rooms: chats })
+        // console.log(this.state.rooms)
+  
+      }
     }
-    console.log(this.state.rooms)
+   
+    // console.log(this.state.rooms)
 
   }
 
@@ -58,7 +103,7 @@ class AllChat extends React.Component {
             </Grid>
           </Thumbnail>
         ))}
-        
+
 
       </Grid>
     );
