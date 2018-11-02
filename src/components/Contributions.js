@@ -3,6 +3,7 @@ import AuthUserContext from './AuthUserContext';
 import { Tab, Row, Col, NavItem, Nav ,Grid} from "react-bootstrap";
 import withAuthorization from "./withAuthorization";
 import Fulfilled from "./fulfilled";
+import Accepted from "./Accepted";
 
 class Contributions extends React.Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class Contributions extends React.Component {
                   <Nav bsStyle="tabs">
                     <NavItem eventKey={1}>Fulfilled</NavItem>
                     <NavItem eventKey={2}>Unfulfilled</NavItem>
+                    <NavItem eventKey={3}>Accepted</NavItem>
+
                   </Nav></div>
               }
             </AuthUserContext.Consumer>
@@ -38,6 +41,9 @@ class Contributions extends React.Component {
               </Tab.Pane>
               <Tab.Pane eventKey={2}>
                 <Fulfilled type={'unfulfilled'} />
+              </Tab.Pane>
+              <Tab.Pane eventKey={3}>
+                <Accepted type={'accepted'} />
               </Tab.Pane>
             </Tab.Content>
           </Col>
