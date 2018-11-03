@@ -14,6 +14,7 @@ export const doSignOut = () => {
   localStorage.removeItem("fulfilled")
   localStorage.removeItem("unfulfilled")
   localStorage.removeItem("image")
+  
   var lol=localStorage.getItem("remember")
   if (lol !== null) {
     if (lol === "false") {

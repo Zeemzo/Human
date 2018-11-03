@@ -80,7 +80,7 @@ class Trigger extends React.Component {
                         temp.chats.push({
                             roomId: room.id,
                             sender: [this.state.item.email],
-                            senderId:[this.state.item.userId]
+                            senderId: [this.state.item.userId]
                         })
                         localStorage.setItem('chat', JSON.stringify(temp))
                         console.log(temp)
@@ -90,7 +90,7 @@ class Trigger extends React.Component {
                             {
                                 roomId: room.id,
                                 sender: [this.state.item.email],
-                                senderId:[this.state.item.userId]
+                                senderId: [this.state.item.userId]
 
                             }
                         )
@@ -177,8 +177,11 @@ class Trigger extends React.Component {
                                     {/* <Image width="280" src={this.state.item.image} rounded /> */}
                                     {/* <br/>
                                     <br/>  */}
+                                    {this.state.item.latitude != null ||
+                                     this.state.item.longitude != null ?
+                                        <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
+                                         : <p>{"No Location Given!!"}</p>}
 
-                                    <DisplayLoc latitude={this.state.item.latitude} longitude={this.state.item.longitude} />
 
                                 </Col>
                                 <Col >

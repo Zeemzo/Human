@@ -52,7 +52,7 @@ class AccountPage extends React.Component {
             localStorage.setItem("image",res.data);
 
           } else {
-            this.setState({ src: './human2.png' })
+            this.setState({ src: './MainLogo.png' })
 
           }
           console.log(this.state)
@@ -139,7 +139,7 @@ class AccountPage extends React.Component {
                   {/* </Grid> */}
                 <Grid>
                   {
-                    this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive /> : null
+                    this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive alt={"Photo"}/> : null
                   }
 
                 </Grid>

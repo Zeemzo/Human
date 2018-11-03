@@ -70,7 +70,7 @@ class News extends React.Component {
                     <span className="input-label">
                       <Col xs={12} sm={5} md={5} lg={5}>
                         <p>
-                          <Image width="250" src={item.urlToImage} />
+                          <Image width="250" src={item.urlToImage} alt={"article Image"} />
                         </p> </Col>
                       <Col xs={12} sm={5} md={5} lg={5}>
                         <p>{item.description}</p>

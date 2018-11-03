@@ -97,7 +97,7 @@ class Fulfilled extends React.Component {
                         </p>
                       </Col>
                       <Col xs={12} sm={6} md={6} lg={6}>
-                        <Image width="250" src={item.image} rounded />
+                        <Image width="250" src={item.image} alt={"requestImage"} rounded />
                       </Col></div> :
                       <Col xs={12} sm={12} md={12} lg={12}>
                         <p>

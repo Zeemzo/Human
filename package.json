@@ -41,7 +41,8 @@
     "react-spinners": "^0.4.5",
     "react-toasts": "^2.0.14",
     "recompose": "^0.30.0",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "regex": "^0.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

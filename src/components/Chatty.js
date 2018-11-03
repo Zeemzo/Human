@@ -235,7 +235,7 @@ class ChatScreen extends Component {
 
                         <div style={styles.container} width="280">
                             <h4 style={{ float: 'center', }}>{this.state.chatty != null ? (this.state.chatty.map((item, i) => (
-                                <span key={i}><Image height={30} src={item.image} rounded />{" "}{item.email}</span>
+                                <span key={i}><Image height={30} src={item.image} rounded alt={"human"}/>{" "}{item.email}</span>
                             ))) : null}</h4>
                             <div style={styles.chatContainer}>
                                 {/* <below style={styles.whosOnlineListContainer}>

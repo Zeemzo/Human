@@ -7,6 +7,7 @@ import { HUMANBACKEND, HUMANAPP } from "../constants/routes";
 import { ToastContainer, ToastStore } from 'react-toasts';
 import { ClipLoader } from "react-spinners";
 
+
 import {
   Row,
   Grid,
@@ -19,6 +20,8 @@ import {
 } from "react-bootstrap";
 import Mappy from "./map";
 import ModalCamera from "./ModalCamera";
+var Regex = require("regex");
+
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
@@ -41,6 +44,7 @@ const INITIAL_STATE = {
   image: "",
   error: null,
   loading: false,
+  success:null
 };
 
 class AddRequest extends Component {
@@ -72,7 +76,7 @@ class AddRequest extends Component {
         })
         .then((res) => {
           console.log(res.data);
-          this.setState(byPropKey('error', "Request Added!!"))
+          // this.setState(byPropKey('success', "Request Added!!"))
           // this.setState({...INITIAL_STATE})
           this.setState({ loading: false })
 
@@ -96,6 +100,7 @@ class AddRequest extends Component {
     }
 
   }
+ 
 
   handleLoc = (lat, lon) => {
     this.setState({ latitude: lat, longitude: lon });
@@ -112,13 +117,18 @@ class AddRequest extends Component {
       requestType,
       description,
       quantity,
-      error } = this.state;
+      error,success } = this.state;
 
     const isInvalid = title == "" ||
       resourceType === "" ||
       requestType === "" ||
       description === "" ||
       quantity === null;
+
+    const err = { color: "red" }
+    const suc = { color: "green" }
+
+    // const regex = new Regex("[A-Ba-b]");
 
 
     return (
@@ -129,25 +139,41 @@ class AddRequest extends Component {
         >
 
           <h2>ADD REQUEST</h2>
+
           <FormGroup controlId="formControlsSelect">
             <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Request Title *</Col>
             <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 value={title}
-                onChange={event =>
+                onChange={event => {
                   this.setState(byPropKey("title", event.target.value))
+                  const regex = RegExp('^[A-Za-z ]+$')
+                  console.log(event.target.value)
+                  console.log(regex.test(event.target.value))
+
+                  if (!regex.test(event.target.value)) {
+                    this.setState(byPropKey("error", "The title cannot have symbols or numbers" ));
+                    // ToastStore.error("The title cannot have symbols or numbers")
+                    // ToastStore.success("Match")
+
+                  } else {
+                    this.setState(byPropKey("error", null));
+                  }
+                }
                 }
                 type="text"
                 placeholder="Title"
               />
             </Col>
           </FormGroup>
+          {error && <p style={err}>{error}</p>}
+
           <FormGroup>
-          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
+            <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Resource Type *
           </Col>
-          <Col xs={12} sm={8} md={8} lg={8}>
+            <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 componentClass="select"
                 placeholder="Resource Type"
@@ -174,10 +200,10 @@ class AddRequest extends Component {
 
           </AuthUserContext.Consumer>
           <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
+            <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Request Type *
           </Col>
-          <Col xs={12} sm={8} md={8} lg={8}>
+            <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 componentClass="select"
                 placeholder="Request Type"
@@ -193,10 +219,10 @@ class AddRequest extends Component {
             </Col>
           </FormGroup>
           <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
+            <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Serving Quantity *
           </Col>
-          <Col xs={12} sm={8} md={8} lg={8}>
+            <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 componentClass="select"
                 placeholder="Serving Quantity"
@@ -223,10 +249,10 @@ class AddRequest extends Component {
           </FormGroup>
 
           <FormGroup controlId="formControlsTextarea">
-          <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
+            <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
               Description *
           </Col>
-          <Col xs={12} sm={8} md={8} lg={8}>
+            <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
                 value={description}
                 onChange={event =>
@@ -244,8 +270,8 @@ class AddRequest extends Component {
               <Mappy loc={this.handleLoc} />
             </Col>
           </FormGroup>
-          <Col xs={12} sm={12} md={12} lgOffset={4} lg={12}>           
-             <ModalCamera DataUrl={this.handleImage} />
+          <Col xs={12} sm={12} md={12} lgOffset={4} lg={12}>
+            <ModalCamera DataUrl={this.handleImage} />
           </Col>
 
           <br /><Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
@@ -256,17 +282,18 @@ class AddRequest extends Component {
             loading={this.state.loading}
           // style="text-align:center"
           /></p></Col></Row></Grid>
+          {/* {success && <p style={suc}>{success}</p>} */}
+
           <p>
 
             <Button bsStyle="success"
-              bsSize="large" disabled={isInvalid} type="submit" 
+              bsSize="large" disabled={isInvalid} type="submit"
               // onClick={()=>this.onSubmit}
               onSubmit={this.onSubmit}
             >
               Submit
         </Button></p>
           <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
-          <h1>{this.state.error}</h1>
         </Form></Grid>
     );
   }

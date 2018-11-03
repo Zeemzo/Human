@@ -76,14 +76,14 @@ class App extends React.Component {
           {this.state.isVisible ?
             <Navbar className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
             <Col xs={2} xsPull={1}>
-                <Image id={"imagepress"} onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
+                <Image id={"imagepress"} alt={"menu"} onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
             </Col><Grid><Row>
             <Col xs={8}><p>
             {/* {window.location.pathname} */}
-                <Image  width="180"  src={'./humanName.png'} rounded />
+                <Image  width="180"  src={'./sidebar.png'} rounded alt={"human"}/>
                 </p>
             </Col>  <Col xs={2}>
-            <Link to={"/settings"}><Image id={"imagepress"} width="50"  src={'./settingsz.png'} rounded /></Link>
+            <Link to={"/settings"}><Image id={"imagepress"} width="50"  src={'./settings.png'} alt={"settings"} rounded /></Link>
             </Col>
             </Row></Grid>
           
@@ -97,7 +97,7 @@ class App extends React.Component {
           <SlidingPane className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"}
          zIndex={1}
             isOpen={this.state.isPaneOpenLeft}
-            title={<Image height={40} src={'./humanName.png'} />}
+            title={<Image height={40} src={'./sidebar.png'} alt={"human"}/>}
             from='left'
             width='300px'
             onRequestClose={() => this.setState({ isPaneOpenLeft: false })}>

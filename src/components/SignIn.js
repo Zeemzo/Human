@@ -25,7 +25,7 @@ import * as routes from "../constants/routes";
 
 const SignInPage = ({ history }) => (
   <div>
-    <h1><Image width={300} src={'./human2.png'} /></h1>
+    <h1><Image width={300} src={'./MainLogo.png'} alt={"human"}/></h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
 
@@ -183,12 +183,7 @@ class SignInForm extends Component {
             value={email}
             onChange={event => {
               this.setState(byPropKey("email", event.target.value))
-              // if (localStorage.getItem("remember") !== null) {
-              //   if (localStorage.getItem("remember") === "true") {
-              //     localStorage.setItem("email", event.target.value)
-              //   }
-              // }
-
+          
             }
             }
             type="text"
