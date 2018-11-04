@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Col, Grid, Thumbnail, Panel, Row, Image } from "react-bootstrap";
+import { Col, Grid, Thumbnail, Button, Row, Image } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
-import DisplayLoc from "./DisplayLocation";
+import SingleFulfillment from "./singleFulfillment";
 import Trigger from "./Trigger";
 import { auth } from '../firebase/firebase'
 class Fulfilled extends React.Component {
@@ -25,6 +25,8 @@ class Fulfilled extends React.Component {
       const now = new Date;
 
       const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+      console.log( auth.currentUser.uid);
+
       axios
         .get(HUMANBACKEND + "/api/user/contributions/" + auth.currentUser.uid + '/' + this.props.type, {
           headers: {
@@ -116,6 +118,7 @@ class Fulfilled extends React.Component {
                         </p>
                       </Col>
                     }
+                    {this.props.type=="unfulfilled"?<SingleFulfillment item={item}></SingleFulfillment>:null}
                   </Row>
                 </Grid>
               </Thumbnail>

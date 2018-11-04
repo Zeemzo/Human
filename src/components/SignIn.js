@@ -25,7 +25,7 @@ import * as routes from "../constants/routes";
 
 const SignInPage = ({ history }) => (
   <div>
-    <h1><Image width={300} src={'./MainLogo.png'} alt={"human"}/></h1>
+    <h1><Image width={200} src={'./MainLogo.png'} alt={"human"}/></h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
 

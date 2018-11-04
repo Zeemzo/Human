@@ -124,6 +124,7 @@ class Trigger2 extends React.Component {
                     console.log(res.data);
                     const update = this.state.item
                     update.active = true
+                    update.contributor=auth.currentUser.uid
 
                     axios
                       .post(HUMANBACKEND + '/api/matchedRequest/updatematchrequest', update, {

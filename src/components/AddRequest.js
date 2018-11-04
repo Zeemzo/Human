@@ -27,7 +27,6 @@ const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
 
-
 const INITIAL_STATE = {
   title: "",
   resourceType: "",
@@ -44,21 +43,39 @@ const INITIAL_STATE = {
   image: "",
   error: null,
   loading: false,
-  success:null
+  success: null
 };
+
+
+
+
 
 class AddRequest extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+    this.onSubmit = this.onSubmit.bind(this)
   }
   componentDidMount() {
 
     var user = firebase.auth.currentUser;
-    if (user) {
-      this.setState(byPropKey('email', user.email))
-      this.setState(byPropKey('userId', user.uid))
 
+    if (localStorage.getItem("archived") != null) {
+      this.setState(JSON.parse(localStorage.getItem("archived")))
+      ToastStore.success("Archived Request Loaded!!")
+      if (user) {
+        this.setState(byPropKey('email', user.email))
+        this.setState(byPropKey('userId', user.uid))
+
+      }
+
+    } else {
+      this.setState({ ...INITIAL_STATE })
+      if (user) {
+        this.setState(byPropKey('email', user.email))
+        this.setState(byPropKey('userId', user.uid))
+
+      }
     }
   }
   onSubmit = (event) => {
@@ -81,6 +98,7 @@ class AddRequest extends Component {
           this.setState({ loading: false })
 
           ToastStore.success("Request Added!!")
+          localStorage.removeItem("archived")
           // window.alert( "Request Added!!");        
           // event.preventDefault();
 
@@ -95,12 +113,13 @@ class AddRequest extends Component {
         });
       event.preventDefault();
     } else {
-      ToastStore.error("You are Offline!!!")
+      ToastStore.error("You are Offline, request archived.")
+      localStorage.setItem("archived", JSON.stringify(this.state))
       event.preventDefault();
     }
 
   }
- 
+
 
   handleLoc = (lat, lon) => {
     this.setState({ latitude: lat, longitude: lon });
@@ -117,7 +136,7 @@ class AddRequest extends Component {
       requestType,
       description,
       quantity,
-      error,success } = this.state;
+      error, success } = this.state;
 
     const isInvalid = title == "" ||
       resourceType === "" ||
@@ -148,12 +167,12 @@ class AddRequest extends Component {
                 value={title}
                 onChange={event => {
                   this.setState(byPropKey("title", event.target.value))
-                  const regex = RegExp('^[A-Za-z ]+$')
+                  const regex = RegExp('^[A-Za-z0-9 ]+$')
                   console.log(event.target.value)
                   console.log(regex.test(event.target.value))
 
                   if (!regex.test(event.target.value)) {
-                    this.setState(byPropKey("error", "The title cannot have symbols or numbers" ));
+                    this.setState(byPropKey("error", "The title cannot have symbols"));
                     // ToastStore.error("The title cannot have symbols or numbers")
                     // ToastStore.success("Match")
 

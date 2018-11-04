@@ -30,6 +30,7 @@ import MapContainer from './Multimap';
 import ActiveFulfillments from './ActiveFulfillments'
 import Confirm from './Confirm'
 import FloatingMenu from "./FloatingMenu"
+import Leaders from './Leaders';
 
 
 class App extends React.Component {
@@ -127,6 +128,7 @@ class App extends React.Component {
           <Route exact path={'/confirm'} component={Confirm} />
           <Route exact path={'/chat'} component={AllChat} />
           <Route exact path={'/settings'} component={Settings} />
+          <Route exact path={'/leaderboard'} component={Leaders} />
 
           {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 
