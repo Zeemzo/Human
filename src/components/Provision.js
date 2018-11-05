@@ -192,7 +192,7 @@ class Provision extends React.Component {
         {/* <Sort/> */}
         <h3>{(now.getDate() - count) > 0 ?
          <span>{now.getDate() - count}</span> :
-          <span>{now.getDate() - count + 31}</span>}-{(now.getMonth())}-{now.getFullYear()}</h3>
+          <span>{now.getDate() - count + 31}</span>}-{(now.getMonth())+1}-{now.getFullYear()}</h3>
 
 
 

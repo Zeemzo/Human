@@ -22,7 +22,7 @@ class News extends React.Component {
   componentDidMount() {
     if (navigator.onLine) {
       axios
-        .get("https://newsapi.org/v2/everything?q=africa+hunger+disease&pageSize=5&sortBy=publishedAt&apiKey=aa6c44bcbe44451b94d83e41c3c3db97")
+        .get("https://newsapi.org/v2/everything?q='food wastage'&pageSize=5&sortBy=publishedAt&apiKey=aa6c44bcbe44451b94d83e41c3c3db97")
         .then(data => {
           this.setState({ loading: false });
           var obj = data.data.articles;
