@@ -4,7 +4,7 @@ import {
     Col,
 } from 'react-bootstrap';
 import withAuthorization from './withAuthorization';
-import { Panel, Image } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import DisplayLoc from './DisplayLocation';
 import axios from 'axios';
 import Chatkit from '@pusher/chatkit'

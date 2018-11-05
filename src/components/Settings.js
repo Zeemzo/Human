@@ -1,9 +1,4 @@
 import React, { Component } from "react";
-import withAuthorization from "./withAuthorization";
-import { firebase } from "../firebase/index";
-import axios from "axios";
-import AuthUserContext from './AuthUserContext';
-import { HUMANBACKEND, HUMANAPP } from "../constants/routes";
 import { ToastContainer, ToastStore } from 'react-toasts';
 import { ClipLoader } from "react-spinners";
 import * as routes from "../constants/routes"
@@ -17,8 +12,7 @@ import {
   ControlLabel,
   Button
 } from "react-bootstrap";
-import Mappy from "./map";
-import ModalCamera from "./ModalCamera";
+
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value

@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Col, Grid, Thumbnail, Button, Row, Image } from "react-bootstrap";
+import { Col, Grid, Thumbnail, Row, Image } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import SingleFulfillment from "./singleFulfillment";
-import Trigger from "./Trigger";
 import { auth } from '../firebase/firebase'
 class Fulfilled extends React.Component {
   constructor(props) {

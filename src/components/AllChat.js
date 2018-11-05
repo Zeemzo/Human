@@ -4,13 +4,11 @@ import {
   Grid,
   Thumbnail,
   Row,
-  Image,
 } from "react-bootstrap";
 import { auth } from '../firebase/firebase';
 import * as routes from '../constants/routes'
 
 import axios from "axios";
-import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import ChatScreen from './Chatty';
 

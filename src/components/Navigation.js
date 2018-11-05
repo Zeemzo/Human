@@ -3,7 +3,7 @@ import AuthUserContext from "./AuthUserContext";
 import { Nav, Navbar, NavItem, Image } from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";
-import { LinkContainer, Link } from "react-router-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 
 class Navigation extends React.Component {

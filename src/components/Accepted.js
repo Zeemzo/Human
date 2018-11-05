@@ -6,7 +6,6 @@ import { ClipLoader } from "react-spinners";
 import withAuthorization from "./withAuthorization";
 import { HUMANBACKEND } from "../constants/routes";
 import DisplayLoc from "./DisplayLocation";
-import Trigger from "./Trigger";
 import { auth } from '../firebase/firebase'
 class Accepted extends React.Component {
   constructor(props) {

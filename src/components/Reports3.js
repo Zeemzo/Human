@@ -1,6 +1,5 @@
 // / /Step 1 - Including react
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { ClipLoader } from "react-spinners";
 
 import axios from 'axios'

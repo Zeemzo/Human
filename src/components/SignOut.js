@@ -1,6 +1,6 @@
 import React from "react";
 import { auth } from "../firebase";
-import { Button, NavItem } from "react-bootstrap";
+import { NavItem } from "react-bootstrap";
 
 const SignOutButton = () => (
   <NavItem id={"n1"} onClick={

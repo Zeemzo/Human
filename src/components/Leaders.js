@@ -1,7 +1,7 @@
 import React from 'react';
 // import Reports from './Reports'
 import {
-Grid,Col} from "react-bootstrap";
+Grid} from "react-bootstrap";
 import AuthUserContext from './AuthUserContext';
 import withAuthorization from "./withAuthorization";
 import './App.css';

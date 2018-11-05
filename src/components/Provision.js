@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Col,
   Grid,
-  Thumbnail,
   Button,
   Row,
   Image,
