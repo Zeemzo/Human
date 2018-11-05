@@ -68,7 +68,7 @@ class Fulfillment extends React.Component {
                 }
             }).then(() => {
                 axios
-                    .post(HUMANBACKEND + "/api/request/fulfillmatch", { matchId: this.state.match.matchId }, {
+                    .post(HUMANBACKEND + "/api/request/fulfillmatch", { matchId: this.state.match.matchId,datestamp:this.state.match.datestamp }, {
                         headers: {
                             'Authorization': "bearer " + token, "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',
                         }
