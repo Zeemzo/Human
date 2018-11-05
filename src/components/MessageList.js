@@ -53,7 +53,7 @@ class MessagesList extends Component {
 
               {Auth.currentUser.email == message.senderId ?
                 (<div>
-                  <span style={styles.receiverUsername}><Image alt={"human"} height={30} circle src={localStorage.getItem("image")} /></span>
+                  <span style={styles.receiverUsername}><Image  height={30} circle src={localStorage.getItem("image")} /></span>
                   <span style={styles.receiverUsername}>{message.senderId}</span>
                   <br />
                   <p style={styles.messageA}>{message.text}</p>

@@ -29,9 +29,7 @@ class AccountPage extends React.Component {
   }
   componentDidMount() {
     if (navigator.onLine) {
-      // this.setState({ loading: true });
-
-
+      // this.setState({ loading: true })
       const token = localStorage.getItem('token')
 
       axios.get(routes.HUMANBACKEND + '/api/user/viewImage/' + auth.currentUser.uid, {
@@ -46,22 +44,32 @@ class AccountPage extends React.Component {
           this.setState({ loading: false });
 
           console.log(res)
-          if (res.data != null) {
+          if (res.data != "") {
             this.setState({ src: res.data })
-            localStorage.setItem("image",res.data);
+            localStorage.setItem("image", res.data);
 
           } else {
-            this.setState({ src: './MainLogo.png' })
+
+            this.setState({ src: './sidebar.png' })
 
           }
-          console.log(this.state)
         }
-      ).catch(
-        // this.setState({ src: './human2.png' })
+      ).catch(() => {
+        this.setState({ loading: false });
+
+        this.setState({ src:'./sidebar.png' })
+      }
+
       )
-    }else{
-      this.setState({ loading: false });
-      this.setState({ src: localStorage.getItem("image")})
+    } else {
+      if (localStorage.getItem("image") != null &&localStorage.getItem("image") != "") {
+        this.setState({ loading: false });
+        this.setState({ src: localStorage.getItem("image") })
+
+      } else {
+        this.setState({ loading: false });
+        this.setState({ src: './sidebar.png' })
+      }
 
     }
 
@@ -127,18 +135,18 @@ class AccountPage extends React.Component {
                 <h4>Account: {authUser.email}</h4>
               </Col>
               <Col xs={12} sm={6} md={4} lg={4}>
-              <Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
-                    // style={override}
-                    sizeUnit={"px"}
-                    size={100}
-                    color={"green"}
-                    loading={this.state.loading}
-                  // style="text-align:center"
-                  /></p></Col></Row>
-                  {/* </Grid> */}
+                <Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+                  // style={override}
+                  sizeUnit={"px"}
+                  size={100}
+                  color={"green"}
+                  loading={this.state.loading}
+                // style="text-align:center"
+                /></p></Col></Row>
+                {/* </Grid> */}
                 <Grid>
                   {
-                    this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive alt={"Photo"}/> : null
+                    this.state.lol ? <Image style={wellStyles} src={this.state.src} responsive  /> : null
                   }
 
                 </Grid>

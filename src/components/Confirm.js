@@ -3,7 +3,7 @@ import withAuthorization from './withAuthorization';
 import {  Panel, Image } from 'react-bootstrap';
 import axios from 'axios';
 import * as routes from '../constants/routes'
-import { HUMANBACKEND } from '../constants/routes';
+import { HUMANBACKEND,HUMANAPP } from '../constants/routes';
 import * as React from 'react';
 import { ToastContainer, ToastStore } from 'react-toasts';
 
@@ -66,6 +66,8 @@ class Confirm extends React.Component {
                 }
             }).then(()=>{
                 ToastStore.success("Confirmed")
+                window.location.href =  routes.HUMANAPP+'/contributions';
+
 
             })
     }
@@ -81,6 +83,7 @@ class Confirm extends React.Component {
                 }
             }).then(()=>{
                 ToastStore.success("Declined")
+                window.location.href =  routes.HUMANAPP+'/contributions';
 
             })
     }
