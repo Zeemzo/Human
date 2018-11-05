@@ -41,14 +41,14 @@ ReactDOM.render(
 
 // }
 
-window.addEventListener("offline",()=>{
+window.addEventListener("offline", () => {
     ToastStore.error("You are offline! Some of the features may not work! Cached data may be available!")
 
 })
 window.addEventListener("online", () => {
     ToastStore.success("You are online!")
 
-  });// navigator.vibrate
+});// navigator.vibrate
 registerServiceWorker();
 messaging.requestPermission().then(function () {
     console.log('Notification permission granted.');
@@ -189,6 +189,11 @@ messaging.onMessage(function (payload) {
             window.alert(payload.notification.title)
             window.location.href = routes.HUMANAPP + '/confirm';
             ; break;
+        case 'New Matched Request Available':
+            console.log('Message received. ', payload);
+            window.alert(payload.notification.title)
+            window.location.href = routes.HUMANAPP + '/feed';
+            ; break;
         case 'You have a message from a fellow Human':
             console.log('Message received. ', payload);
             var repeat = false;
@@ -201,7 +206,7 @@ messaging.onMessage(function (payload) {
 
                 for (var i = 0; i < arr.length; i++) {
                     // if (arr[i].roomId == payload.notification.body.roomId) {
-                   
+
                     if (arr[i].roomId == JSON.parse(payload.notification.body).roomId) {
                         repeat = true;
                         break;
@@ -215,17 +220,17 @@ messaging.onMessage(function (payload) {
 
                 console.log(payload.notification.body)
             } else {
-                var chats= []
-                
+                var chats = []
+
                 chats.push(
                     {
                         roomId: JSON.parse(payload.notification.body).roomId,
                         sender: JSON.parse(payload.notification.body).sender,
-                        senderId:JSON.parse(payload.notification.body).senderId,
+                        senderId: JSON.parse(payload.notification.body).senderId,
                     }
                 )
                 console.log(chats)
-                var chat={chats:chats};
+                var chat = { chats: chats };
                 // chat.chats=;
                 console.log(chat)
 

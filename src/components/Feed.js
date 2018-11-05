@@ -1,8 +1,9 @@
 import * as React from "react";
 import AuthUserContext from './AuthUserContext';
 import { Link } from "react-router-dom";
+import { auth } from '../firebase/firebase'
 
-import { Tab, Row, Col, NavItem, Nav, Grid,Button } from "react-bootstrap";
+import { Tab, Row, Col, NavItem, Nav, Grid, Button } from "react-bootstrap";
 import withAuthorization from "./withAuthorization";
 import Provision from "../components/Provision";
 import Need from "../components/Need";
@@ -12,11 +13,15 @@ import * as routes from "../constants/routes"
 class Feed extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { activeKey: auth.currentUser.displayName == "CONTRIBUTOR"?3:1 }
   }
+ 
 
   render() {
+    const{activeKey}=this.state;
     return (
-      <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={1}>
+
+      <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={activeKey}>
         <Grid>
           <Row className="clearfix">
             <Col>
@@ -26,7 +31,7 @@ class Feed extends React.Component {
                 {authUser =>
                   authUser.displayName == 'ADMIN' || authUser.displayName == 'CONTRIBUTOR' ?
                     <Nav bsStyle="tabs" >
-                    
+
                       <NavItem eventKey={1}>Provision</NavItem>
                       <NavItem eventKey={2}>Need</NavItem>
                       <NavItem eventKey={3}>Match Request</NavItem>
@@ -46,7 +51,7 @@ class Feed extends React.Component {
             {/* <Link to={routes.ADDREQUEST}><FloatingMenu/>
             </Link>            <br /> */}
             <Col sm={8}>
-            
+
               <Tab.Content animation>
                 <Tab.Pane eventKey={1}>
                   <Provision type={"provision"} />

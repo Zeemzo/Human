@@ -111,6 +111,9 @@ class SignUpForm extends Component {
 
               });
 
+          }).catch((error)=>{
+            this.setState(byPropKey('error', error));
+
           })
 
         this.setState({ ...INITIAL_STATE });

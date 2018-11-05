@@ -30,6 +30,11 @@ messaging.setBackgroundMessageHandler(function (payload) {
             window.alert(payload.notification.title)
             window.location.href = HUMANAPP + '/confirm';
             ; break;
+            case 'New Matched Request Available':
+            console.log('Message received. ', payload);
+            window.alert(payload.notification.title)
+            window.location.href = routes.HUMANAPP + '/feed';
+            ; break;
             case 'You have a message from a fellow Human':
             console.log('Message received. ', payload);
             var repeat = false;
