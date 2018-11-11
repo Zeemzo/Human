@@ -58,8 +58,8 @@ class App extends React.Component {
   }
 
   resize() {
-    this.setState({ open: window.innerWidth >= 760 });
-    this.setState({ isVisible: window.innerWidth <= 760 });
+    this.setState({ open: window.innerWidth >= 768 });
+    this.setState({ isVisible: window.innerWidth <= 768 });
   }
 
   mousedown() {

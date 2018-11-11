@@ -132,7 +132,9 @@ class AccountPage extends React.Component {
           <Grid>
             <Row>
               <Col xs={12} md={12} lg={12}>
-                <h4>Account: {authUser.email}</h4>
+                <h3>Account: {((authUser.email).toUpperCase().split("@"))[0]}</h3>
+                {/* <h4>Role: {}</h4> */}
+
               </Col>
               <Col xs={12} sm={6} md={4} lg={4}>
                 <Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
@@ -151,12 +153,17 @@ class AccountPage extends React.Component {
 
                 </Grid>
                 <ModalCamera id={"modalwidth"} DataUrl={this.handleImage} />
-                <hr />
+                
 
               </Col>
 
 
-              <Col xs={12} sm={6} md={8} lg={8} >
+             
+              
+
+
+              <Col xs={12} sm={6} md={8} lg={8} > <hr />
+              <h3>Change Your Password</h3>
                 <PasswordChangeForm />
                 <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
 

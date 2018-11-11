@@ -114,7 +114,7 @@ class ModalCamera extends React.Component {
                                             imageType={IMAGE_TYPES.JPG}
                                             imageCompression={0.95}
                                             isMaxResolution={false}
-                                            isImageMirror={true}
+                                            isImageMirror={false}
                                             isDisplayStartCameraError={false}
                                         />
                                         {/* </Col></Row></Grid> */}

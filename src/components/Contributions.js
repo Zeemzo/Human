@@ -21,12 +21,11 @@ class Contributions extends React.Component {
             <AuthUserContext.Consumer>
               {authUser =>
                 <div><h2>
-                  Hello {authUser.email}</h2>
+                  HELLO {((authUser.email).toUpperCase().split("@"))[0]} !</h2>
                   <Nav bsStyle="tabs">
                     <NavItem eventKey={1}>Fulfilled</NavItem>
                     <NavItem eventKey={2}>Unfulfilled</NavItem>
                     <NavItem eventKey={3}>Accepted</NavItem>
-
                   </Nav></div>
               }
             </AuthUserContext.Consumer>
