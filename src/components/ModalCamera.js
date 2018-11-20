@@ -105,7 +105,6 @@ class ModalCamera extends React.Component {
                             {this.state.loaded ?
                                 <div className="App">
                                     {this.renderButtons()}
-                                    <p>
                                         {/* <Grid><Row><Col >  */}
                                         <Camera 
                                             onTakePhoto={(dataUri) => { this.onTakePhoto(dataUri); }}
@@ -118,7 +117,6 @@ class ModalCamera extends React.Component {
                                             isDisplayStartCameraError={false}
                                         />
                                         {/* </Col></Row></Grid> */}
-                                        </p>
                                 </div> : null
                             }
 

@@ -50,14 +50,14 @@ class News extends React.Component {
   render() {
     return (
       <Grid>
-        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+        <Grid><Row><Col xs={12} sm={12} md={12} lg={12}><div id={"centerBoys"}><ClipLoader 
           // style={override}
           sizeUnit={"px"}
           size={100}
           color={"green"}
           loading={this.state.loading}
         // style="text-align:center"
-        /></p></Col></Row></Grid>
+        /></div></Col></Row></Grid>
         {this.state.news.length == 0 && !this.state.loading ?
           <h2>No News </h2> : <div>
             {this.state.news.map((item, i) => (

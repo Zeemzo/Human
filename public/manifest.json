@@ -1,9 +1,9 @@
 {
-  "short_name": "Human",
-  "name": "Being You",
+  "short_name": "human",
+  "name": "human",
   "icons": [
     {
-      "src": "./MainLogo.png",
+      "src": "./FLogo.png",
       "sizes": "512x512 196x196 144x144 96x96 64x64 32x32 24x24 16x16",
       "type": "image/png"
     }

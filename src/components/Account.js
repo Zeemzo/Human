@@ -137,14 +137,15 @@ class AccountPage extends React.Component {
 
               </Col>
               <Col xs={12} sm={6} md={4} lg={4}>
-                <Row><Col xs={12} sm={12} md={12} lg={12}> <p><ClipLoader
+                <Row><Col xs={12} sm={12} md={12} lg={12}> <div id={"centerBoys"}><ClipLoader
                   // style={override}
                   sizeUnit={"px"}
                   size={100}
                   color={"green"}
                   loading={this.state.loading}
                 // style="text-align:center"
-                /></p></Col></Row>
+                /></div></Col></Row>
+
                 {/* </Grid> */}
                 <Grid>
                   {

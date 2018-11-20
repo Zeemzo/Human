@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 // import store from '../store/index';
 // import {connect} from 'react-redux'
@@ -25,7 +25,7 @@ import * as routes from "../constants/routes";
 
 const SignInPage = ({ history }) => (
   <div>
-    <h1><Image width={200} src={'./MainLogo.png'} alt={"human"}/></h1>
+    <h1><Image width={200} src={'./MainLogo.png'} alt={"human"} /></h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
 
@@ -42,7 +42,7 @@ const INITIAL_STATE = {
   email: "",
   password: "",
   loading: false,
-  remember:false,
+  remember: false,
   error: null
 };
 
@@ -73,36 +73,36 @@ class SignInForm extends Component {
   componentDidCatch() {
     if (localStorage.getItem("remember") != null) {
       if (localStorage.getItem("remember") == "true") {
-        INITIAL_STATE.email = (localStorage.getItem("email")!=null?localStorage.getItem("email"):"")
-        INITIAL_STATE.password = (localStorage.getItem("p")!=null?localStorage.getItem("p"):"")
-        INITIAL_STATE.remember=true;
+        INITIAL_STATE.email = (localStorage.getItem("email") != null ? localStorage.getItem("email") : "")
+        INITIAL_STATE.password = (localStorage.getItem("p") != null ? localStorage.getItem("p") : "")
+        INITIAL_STATE.remember = true;
       }
 
-    
+
     }
     this.setState({ ...INITIAL_STATE })
   }
   componentDidMount() {
     if (localStorage.getItem("remember") != null) {
       if (localStorage.getItem("remember") == "true") {
-        INITIAL_STATE.email = (localStorage.getItem("email")!=null?localStorage.getItem("email"):"")
-        INITIAL_STATE.password = (localStorage.getItem("p")!=null?localStorage.getItem("p"):"")
-        INITIAL_STATE.remember=true;
+        INITIAL_STATE.email = (localStorage.getItem("email") != null ? localStorage.getItem("email") : "")
+        INITIAL_STATE.password = (localStorage.getItem("p") != null ? localStorage.getItem("p") : "")
+        INITIAL_STATE.remember = true;
       }
 
-    
+
     }
     this.setState({ ...INITIAL_STATE })
   }
   componentWillMount() {
     if (localStorage.getItem("remember") != null) {
       if (localStorage.getItem("remember") == "true") {
-        INITIAL_STATE.email = (localStorage.getItem("email")!=null?localStorage.getItem("email"):"")
-        INITIAL_STATE.password = (localStorage.getItem("p")!=null?localStorage.getItem("p"):"")
-        INITIAL_STATE.remember=true;
+        INITIAL_STATE.email = (localStorage.getItem("email") != null ? localStorage.getItem("email") : "")
+        INITIAL_STATE.password = (localStorage.getItem("p") != null ? localStorage.getItem("p") : "")
+        INITIAL_STATE.remember = true;
       }
 
-    
+
     }
     this.setState({ ...INITIAL_STATE })
   }
@@ -134,6 +134,24 @@ class SignInForm extends Component {
           .then((res) => {
             console.log(res.data.token);
             localStorage.setItem("token", res.data.token);
+            axios
+              .get(routes.HUMANBACKEND + '/api/user/getChat/' + Auth.currentUser.uid,
+                {
+                  headers: {
+                    'Authorization': "bearer " + token,
+                    'Access-Control-Allow-Origin': '*',
+                    "Content-Type": "application/json",
+                  }
+                }).then(res => {
+                  console.log(res.data)
+                  if (res.data != "") {
+                    if (res.data.chat !="") {
+                      localStorage.setItem("chat", atob(res.data.chat));
+                    }
+                  }
+
+
+                })
           })
           .catch(err => {
             console.log(err);
@@ -183,17 +201,17 @@ class SignInForm extends Component {
             value={email}
             onChange={event => {
               this.setState(byPropKey("email", event.target.value))
-          
+
             }
             }
             type="text"
-            placeholder={email!=""?email:"Email Address"}
+            placeholder={email != "" ? email : "Email Address"}
           >
             <Col componentClass={ControlLabel} sm={3} >
               Email *
           </Col>
             <Col xs={12} sm={6} md={6} lg={6}>
-              <FormControl type="email" placeholder={email!=""?email:"Email Address"} />
+              <FormControl type="email" placeholder={email != "" ? email : "Email Address"} />
             </Col>
           </FormGroup>
 
@@ -204,13 +222,13 @@ class SignInForm extends Component {
             }
             }
             type="password"
-            placeholder={password!=""?password:"Password"}
+            placeholder={password != "" ? password : "Password"}
           >
             <Col componentClass={ControlLabel} sm={3}>
               Password *
           </Col>
             <Col xs={12} sm={6} md={6} lg={6}>
-              <FormControl type="password" placeholder={password!=""?"******":"Password"} />
+              <FormControl type="password" placeholder={password != "" ? "******" : "Password"} />
             </Col>
           </FormGroup>
 

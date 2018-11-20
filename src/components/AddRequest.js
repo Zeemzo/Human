@@ -62,7 +62,8 @@ class AddRequest extends Component {
 
     if (localStorage.getItem("archived") != null) {
       this.setState(JSON.parse(localStorage.getItem("archived")))
-      ToastStore.success("Archived Request Loaded!!")
+      this.handleImage(this.state.image)
+      ToastStore.warning("Drafted Request Loaded!!")
       if (user) {
         this.setState(byPropKey('email', user.email))
         this.setState(byPropKey('userId', user.uid))
@@ -77,6 +78,17 @@ class AddRequest extends Component {
 
       }
     }
+  }
+
+  componentWillUnmount(){
+    if(this.state.title!=""){
+      localStorage.setItem("archived", JSON.stringify(this.state))
+    // ToastStore.info("Request archived.")
+      ToastStore.warning("Request Drafted.")
+
+    }
+    
+
   }
   onSubmit = (event) => {
 
@@ -113,7 +125,7 @@ class AddRequest extends Component {
         });
       event.preventDefault();
     } else {
-      ToastStore.error("You are Offline, request archived.")
+      ToastStore.error("You are Offline, request drafted.")
       localStorage.setItem("archived", JSON.stringify(this.state))
       event.preventDefault();
     }

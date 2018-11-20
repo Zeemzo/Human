@@ -38,6 +38,10 @@
 
 }
 
+#centerBoys{
+	text-align: center;
+}
+
 #modalwidth{
 	/* width:1000px; */
 	max-width: 80%;

@@ -95,7 +95,22 @@ class ChatScreen extends Component {
                                     // console.log(temp)
                                     temp.forEach((value,i)=>{
                                         if(value.roomId==this.state.room.roomId){
-                                            temp[i].mess=[...this.state.messages, message]
+                                            // var test= [...this.state.messages, message]
+                                            // var next=null
+                                            // if(test.length>5){
+                                            //     next=test.slice(test.length-4,test.length-1)
+                                            // }else{
+                                            //     next=test
+                                            // }
+                                            var test={}
+                                            test.senderId=message.senderId
+                                            test.roomId=message.roomId
+                                            test.text=message.text
+
+                                            var next=[test]
+                                            // test.push(message)
+                                            
+                                            temp[i].mess=next
                                         }
                                     })
                                     // console.log(temp)
@@ -208,7 +223,7 @@ class ChatScreen extends Component {
                                 <Image key={i} height={30} src={item.image} rounded />
                             ))) : null}
                             {this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
-                                <span key={i}>{"           "}{item}</span>
+                                <span key={i}>{"           "}{item}<br></br></span>
                             )) : null}
                             {this.state.lastMessage != "" ? <div>"{this.state.lastMessage.text}"</div> : null
 
@@ -235,7 +250,7 @@ class ChatScreen extends Component {
 
                         <div style={styles.container} width="280">
                             <h4 style={{ float: 'center', }}>{this.state.chatty != null ? (this.state.chatty.map((item, i) => (
-                                <span key={i}><Image height={30} src={item.image} rounded />{" "}{item.email}</span>
+                                <span key={i}><Image height={30} src={item.image} rounded />{" "}{item.email}<br></br></span>
                             ))) : null}</h4>
                             <div style={styles.chatContainer}>
                                 {/* <below style={styles.whosOnlineListContainer}>

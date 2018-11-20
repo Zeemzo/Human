@@ -31,6 +31,7 @@ import ActiveFulfillments from './ActiveFulfillments'
 import Confirm from './Confirm'
 import FloatingMenu from "./FloatingMenu"
 import Leaders from './Leaders';
+import CAMERRRA from './NewCamera';
 
 
 class App extends React.Component {
@@ -129,6 +130,8 @@ class App extends React.Component {
           <Route exact path={'/chat'} component={AllChat} />
           <Route exact path={'/settings'} component={Settings} />
           <Route exact path={'/leaderboard'} component={Leaders} />
+          <Route exact path={'/camerra'} component={CAMERRRA} />
+
 
           {/* <Route exact path={'/chatty'} component={ChatScreen} /> */}
 
