@@ -211,7 +211,7 @@ class SignInForm extends Component {
               Email *
           </Col>
             <Col xs={12} sm={6} md={6} lg={6}>
-              <FormControl type="email" placeholder={email != "" ? email : "Email Address"} />
+              <FormControl type="email" placeholder={"Email Address"} value={email != "" ? email : ""}/>
             </Col>
           </FormGroup>
 

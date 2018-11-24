@@ -18,11 +18,13 @@ class MessagesList extends Component {
       },
       ul: {
         listStyle: 'none',
+
       },
       li: {
         marginTop: 13,
         marginBottom: 13,
         marginRight: 13,
+
         // marginLeft:13,
       },
       receiverUsername: {
@@ -36,8 +38,11 @@ class MessagesList extends Component {
 
         // fontSize: 20,
       },
-      messageA: { fontSize: 15, float: 'right', },
-      messageB: { fontSize: 15, float: 'left', },
+      messageA: { fontSize: 15, float: 'right',        maxWidth:300,        overflowX: 'visible',
+
+    },
+      messageB: { fontSize: 15, float: 'left',         maxWidth:300,
+    },
 
     }
     return (
@@ -67,7 +72,7 @@ class MessagesList extends Component {
                             src={value.image} /></span>
                           <span style={styles.senderUsername}>{message.senderId}</span>
                           <br />
-                          <p style={styles.messageB}>{message.text}</p></span>
+                          <p  style={styles.messageB}>{message.text}</p></span>
                       )
                     }
                   })

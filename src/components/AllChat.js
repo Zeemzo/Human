@@ -30,7 +30,7 @@ class AllChat extends React.Component {
         var temp = JSON.parse(localStorage.getItem('chat'));
   
         console.log(temp)
-        this.setState({ rooms: temp.chats })
+        this.setState({ rooms: temp.chats.reverse() })
         // console.log(this.state.rooms[0])
   
   
@@ -65,7 +65,7 @@ class AllChat extends React.Component {
         var temp = JSON.parse(localStorage.getItem('chat'));
   
         console.log(temp)
-        this.setState({ rooms: temp.chats })
+        this.setState({ rooms: temp.chats.reverse() })
         // console.log(this.state.rooms[0])
   
   
@@ -90,7 +90,7 @@ class AllChat extends React.Component {
     return (
       <Grid>
 
-        {this.state.rooms.reverse().map((item, i) => (
+        {this.state.rooms.map((item, i) => (
           <Thumbnail key={i}>
             <Grid>
               <Row>

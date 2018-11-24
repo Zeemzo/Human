@@ -85,8 +85,8 @@ class NavigationAuth extends React.Component {
                 <NavItem id={"n1"}>Active Matches</NavItem>
               </LinkContainer> : null)}
           </AuthUserContext.Consumer>
-          <LinkContainer to='/chat'>
-            <NavItem id={"n1"}>Chat</NavItem>
+          <LinkContainer to='/messages'>
+            <NavItem id={"n1"}>Message</NavItem>
           </LinkContainer>
 
         </Nav>{!this.state.isVisible ? <Nav pullRight>

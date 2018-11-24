@@ -2,6 +2,8 @@ import { auth } from './firebase';
 import * as routes from '../constants/routes'
 import axios from "axios";
 import { HUMANBACKEND } from "../constants/routes"
+import { ToastContainer, ToastStore } from 'react-toasts';
+
 // Sign Up
 export const doCreateUserWithEmailAndPassword = (email, password) =>
   auth.createUserWithEmailAndPassword(email, password);
@@ -29,24 +31,27 @@ export const doSignOut = () => {
         })
       .then((res) => {
         console.log(res)
+        localStorage.removeItem("chat")
+        localStorage.removeItem("chatty")
+        localStorage.removeItem("fulfilled")
+        localStorage.removeItem("unfulfilled")
+        localStorage.removeItem("image")
+    
+    
+        var lol = localStorage.getItem("remember")
+        if (lol !== null) {
+          if (lol === "false") {
+            localStorage.removeItem("email")
+            localStorage.removeItem("p")
+          }
+        }
+
+        auth.signOut();
+
+        window.location.href = routes.HUMANAPP + '/signin'
 
       }).catch(res => { console.log(res.data) })
-    localStorage.removeItem("chat")
-    localStorage.removeItem("chatty")
-    localStorage.removeItem("fulfilled")
-    localStorage.removeItem("unfulfilled")
-    localStorage.removeItem("image")
-    auth.signOut();
-
-
-    var lol = localStorage.getItem("remember")
-    if (lol !== null) {
-      if (lol === "false") {
-        localStorage.removeItem("email")
-        localStorage.removeItem("p")
-      }
-    }
-    window.location.href = routes.HUMANAPP + '/signin'
+   
   }else{
     localStorage.removeItem("chat")
     localStorage.removeItem("chatty")

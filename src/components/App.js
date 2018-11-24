@@ -127,7 +127,7 @@ class App extends React.Component {
           <Route exact path={'/map'} component={MapContainer} />
           <Route exact path={'/activefulfillments'} component={ActiveFulfillments} />
           <Route exact path={'/confirm'} component={Confirm} />
-          <Route exact path={'/chat'} component={AllChat} />
+          <Route exact path={'/messages'} component={AllChat} />
           <Route exact path={'/settings'} component={Settings} />
           <Route exact path={'/leaderboard'} component={Leaders} />
           <Route exact path={'/camerra'} component={CAMERRRA} />

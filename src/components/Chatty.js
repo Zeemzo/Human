@@ -6,7 +6,7 @@ import { auth } from '../firebase/firebase'
 import withAuthorization from './withAuthorization';
 import SendMessageForm from './ChatSendMessageForm'
 import axios from 'axios';
-import { Button, Modal, Image, Grid, Row, Col } from 'react-bootstrap';
+import { Button,Panel, Modal, Image, Grid, Row, Col } from 'react-bootstrap';
 import * as routes from '../constants/routes'
 
 // const roomId = 19164860
@@ -214,28 +214,28 @@ class ChatScreen extends Component {
             <div ><Grid>
                 <Row><Col xs={10} sm={10} md={10} lg={10}>
                     {this.props.room.sender != 'no chats' ?
-                        <Button
+                        <a href={"#"}><div
                             // bsSize="large"
                             block
                             onClick={() => this.setState({ show: true })}
                         >
-                            {this.state.chatty != null ? (this.state.chatty.map((item, i) => (
-                                <Image key={i} height={30} src={item.image} rounded />
-                            ))) : null}
-                            {this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
-                                <span key={i}>{"           "}{item}<br></br></span>
+                            <Col  xs={3} sm={3} md={3} lg={3}>{this.state.chatty != null ? (this.state.chatty.map((item, i) => (
+                                <Image key={i} height={50} src={item.image} rounded />
+                            ))) : null}</Col>
+                            <Col xsPush={3}  smPush={1}  xs={9} sm={9} md={9} lg={9}>{this.props.room.sender != null ? this.props.room.sender.map((item, i) => (
+                                <span key={i}>{"           "}<p>{item}</p></span>
                             )) : null}
-                            {this.state.lastMessage != "" ? <div>"{this.state.lastMessage.text}"</div> : null
+                            {this.state.lastMessage != "" ? <div><p>"{this.state.lastMessage.text}"</p></div> : null
 
-                            }</Button>
+                            }</Col></div></a>
                         :
-                        <Button
-                            disabled={true}
+                        <div
+                            // disabled={true}
                             // bsSize="large"
-                            onClick={() => this.setState({ show: true })}
+                            // onClick={() => this.setState({ show: true })}
                         >{this.props.room.sender != null ?
-                            <span >{"  "}{this.props.room.sender}</span>
-                            : null}</Button>}
+                            <span ><p>{"  "}{this.props.room.sender}</p></span>
+                            : null}</div>}
                 </Col></Row>
                 <Modal
                     show={this.state.show}
