@@ -1,5 +1,5 @@
 import { Button, Modal } from 'react-bootstrap';
-import withAuthorization from './withAuthorization';
+import withAuthorization from './authentication/withAuthorization';
 import {  Panel, Image } from 'react-bootstrap';
 import axios from 'axios';
 import * as routes from '../constants/routes'

@@ -1,5 +1,5 @@
 import React from "react";
-import AuthUserContext from "./AuthUserContext";
+import AuthUserContext from "./authentication/AuthUserContext";
 import { Nav, Navbar, NavItem, Image } from "react-bootstrap";
 import SignOutButton from "./SignOut";
 import * as routes from "../constants/routes";

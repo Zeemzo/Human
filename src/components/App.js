@@ -12,26 +12,26 @@ import {ToastContainer, ToastStore} from 'react-toasts';
 
 import Navigation from './Navigation';
 import LandingPage from './Landing';
-import SignUpPage from './SignUp';
-import SignInPage from './SignIn';
-import PasswordForgetPage from './PasswordForget';
-import HomePage from './Home';
-import AccountPage from './Account';
-import withAuthentication from './withAuthentication';
-import Feed from './Feed';
-import Admin from './Admin';
+import SignUpPage from './signUp/SignUp';
+import SignInPage from './signIn/SignIn';
+import PasswordForgetPage from './signIn/PasswordForget';
+import HomePage from './home/Home';
+import AccountPage from './account/Account';
+import withAuthentication from './authentication/withAuthentication';
+import Feed from './feed/Feed';
+import Admin from './reports/Admin';
 import Settings from './Settings';
 
-import AllChat from './AllChat';
+import AllChat from './message/AllChat';
 import * as routes from '../constants/routes';
-import AddRequest from './AddRequest';
-import Contributions from './Contributions';
-import MapContainer from './Multimap';
-import ActiveFulfillments from './ActiveFulfillments'
+import AddRequest from './addRequest/AddRequest';
+import Contributions from './contributions/Contributions';
+import MapContainer from './maps/Multimap';
+import ActiveFulfillments from './activeMatches/ActiveFulfillments'
 import Confirm from './Confirm'
 import FloatingMenu from "./FloatingMenu"
-import Leaders from './Leaders';
-import CAMERRRA from './NewCamera';
+import Leaders from './stats/Leaders';
+import CAMERRRA from './camera/NewCamera';
 
 
 class App extends React.Component {

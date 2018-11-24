@@ -2,8 +2,8 @@ import React from 'react';
 // import Reports from './Reports'
 import {
 Grid} from "react-bootstrap";
-import AuthUserContext from './AuthUserContext';
-import withAuthorization from "./withAuthorization";
+import AuthUserContext from '../authentication/AuthUserContext';
+import withAuthorization from "../authentication/withAuthorization";
 import '../App.css';
 import App from './Reports2'
 class AdminPage extends React.Component {

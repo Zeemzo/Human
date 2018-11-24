@@ -2,11 +2,11 @@ import React from 'react';
 // import Reports from './Reports'
 import {
 Grid} from "react-bootstrap";
-import AuthUserContext from './AuthUserContext';
-import withAuthorization from "./withAuthorization";
+import AuthUserContext from '../authentication/AuthUserContext';
+import withAuthorization from "../authentication/withAuthorization";
 import '../App.css';
-import App from './Reports2'
-class AdminPage extends React.Component {
+import App1 from './Reports3'
+class Leaders extends React.Component {
   render() {
     return (
       // <div className="App">
@@ -14,13 +14,13 @@ class AdminPage extends React.Component {
         <AuthUserContext.Consumer>
           {authUser =>
             <div>
-              <h1>Reports</h1>
+              <h1>Leaderboard</h1>
               {/* <p>Restricted area! Only users with the admin rule are authorized.</p> */}
             </div>
           }
 
         </AuthUserContext.Consumer>
-        <App/>
+        <App1/>
         
         {/* <Reports /> */}
         </Grid>
@@ -29,6 +29,6 @@ class AdminPage extends React.Component {
   }
 }
 
-const authCondition = (authUser) => !!authUser && authUser.displayName === 'ADMIN';
+const authCondition = (authUser) => !!authUser ;
 
-export default withAuthorization(authCondition)(AdminPage);
+export default withAuthorization(authCondition)(Leaders);

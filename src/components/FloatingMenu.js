@@ -1,9 +1,6 @@
 import * as React from "react";
-import withAuthorization from "./withAuthorization";
-import {Link} from 'react-router-dom'
-import * as routes from "../constants/routes";
-import SignOutButton from "./SignOut";
-import { auth } from "../firebase";
+import withAuthorization from "./authentication/withAuthorization";
+
 
 class FloatingMenuItem extends React.Component {
 

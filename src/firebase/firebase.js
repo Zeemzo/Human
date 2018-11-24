@@ -1,8 +1,8 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 // import fire from 'firebase';
 
-import 'firebase/auth';
-import 'firebase/messaging';
+import 'firebase/auth/dist/index.cjs';
+import 'firebase/messaging/dist/index.cjs';
 
 // const functions = require('firebase-functions');
 
