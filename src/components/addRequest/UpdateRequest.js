@@ -26,7 +26,6 @@ var Regex = require("regex");
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
-
 const INITIAL_STATE = {
   title: "",
   resourceType: "",
@@ -46,57 +45,32 @@ const INITIAL_STATE = {
   success: null
 };
 
-
-
-
-
-class AddRequest extends Component {
+class UpdateRequest extends Component {
   constructor(props) {
     super(props);
+    // this.state = this.props.item;
     this.state = { ...INITIAL_STATE };
     this.onSubmit = this.onSubmit.bind(this)
   }
+
+
   componentDidMount() {
-
-    var user = firebase.auth.currentUser;
-
-    if (localStorage.getItem("archived") != null) {
-      this.setState(JSON.parse(localStorage.getItem("archived")))
-      this.handleImage(this.state.image)
-      ToastStore.warning("Drafted Request Loaded!!")
-      if (user) {
-        this.setState(byPropKey('email', user.email))
-        this.setState(byPropKey('userId', user.uid))
-
-      }
-
-    } else {
-      this.setState({ ...INITIAL_STATE })
-      if (user) {
-        this.setState(byPropKey('email', user.email))
-        this.setState(byPropKey('userId', user.uid))
-
-      }
+    if (localStorage.getItem("update") != null) {
+      var item = JSON.parse(localStorage.getItem("update"))
+      this.setState(item)
     }
-  }
-
-  componentWillUnmount(){
-    if(this.state.title!=""){
-      localStorage.setItem("archived", JSON.stringify(this.state))
-    // ToastStore.info("Request archived.")
-      ToastStore.warning("Request Drafted.")
-
-    }
-    
 
   }
+  // componentWillMount() {
+  //   this.setState(this.props.item)
+  // }
   onSubmit = (event) => {
 
     if (navigator.onLine) {
       this.setState({ loading: true })
       const token = localStorage.getItem('token')
       axios
-        .post(HUMANBACKEND + '/api/request/add', this.state, {
+        .post(HUMANBACKEND + '/api/request/update', this.state, {
           headers: {
             'Authorization': "bearer " + token,
             'Access-Control-Allow-Origin': '*',
@@ -109,24 +83,27 @@ class AddRequest extends Component {
           // this.setState({...INITIAL_STATE})
           this.setState({ loading: false })
 
-          ToastStore.success("Request Added!!")
-          localStorage.removeItem("archived")
-          // window.alert( "Request Added!!");        
-          // event.preventDefault();
+          // ToastStore.success("Request Updated!!")
+          if (res.data.message == "done") {
+            ToastStore.success("Request Updated!!")
 
-          window.location.href = HUMANAPP + '/feed';
+          } else {
+            ToastStore.warning(res.data.message)
+
+          }
+
+          // window.location.href = HUMANAPP + '/feed';
         }).catch((error) => {
           console.log(error);
-          this.setState(byPropKey('error', "Request Not Added!!"))
-          ToastStore.error("Request Not Added!!")
-          // window.alert( "Request Not Added!!");
+          this.setState(byPropKey('error', error.data))
+          // ToastStore.error(error.data)
+          window.alert("Request Not Added!!");
           // event.preventDefault();
 
         });
       event.preventDefault();
     } else {
-      ToastStore.error("You are Offline, request drafted.")
-      localStorage.setItem("archived", JSON.stringify(this.state))
+      ToastStore.error("You are Offline, cannot update.")
       event.preventDefault();
     }
 
@@ -136,7 +113,6 @@ class AddRequest extends Component {
   handleLoc = (lat, lon) => {
     this.setState({ latitude: lat, longitude: lon });
   };
-
   handleImage = DataUrl => {
     this.setState({ image: DataUrl });
   };
@@ -170,7 +146,7 @@ class AddRequest extends Component {
           onSubmit={this.onSubmit}
         >
 
-          <h2>ADD REQUEST</h2>
+          <h2>UPDATE REQUEST</h2>
 
           <FormGroup controlId="formControlsSelect">
             <Col componentClass={ControlLabel} sm={3} md={3} lg={3}>
@@ -196,6 +172,8 @@ class AddRequest extends Component {
                 }
                 type="text"
                 placeholder="Title"
+                value={this.state.title}
+
               />
             </Col>
           </FormGroup>
@@ -209,6 +187,8 @@ class AddRequest extends Component {
               <FormControl
                 componentClass="select"
                 placeholder="Resource Type"
+                value={this.state.resourceType}
+
                 onChange={event =>
                   this.setState(byPropKey("resourceType", event.target.value))
                 }
@@ -226,6 +206,8 @@ class AddRequest extends Component {
                 value={authUser.uid}
                 onChange={event => this.setState(byPropKey('userId', event.target.value))}
                 type="hidden"
+                // value={this.state.title}
+
                 placeholder="Request Type"
               />
           }
@@ -239,6 +221,8 @@ class AddRequest extends Component {
               <FormControl
                 componentClass="select"
                 placeholder="Request Type"
+                value={this.state.requestType}
+                disabled={true}
                 value={requestType}
                 onChange={event =>
                   this.setState(byPropKey("requestType", event.target.value))
@@ -256,9 +240,10 @@ class AddRequest extends Component {
           </Col>
             <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
+
                 componentClass="select"
                 placeholder="Serving Quantity"
-                value={quantity}
+                value={this.state.quantity}
                 onChange={event =>
                   this.setState(byPropKey("quantity", event.target.value))
                 }
@@ -286,7 +271,7 @@ class AddRequest extends Component {
           </Col>
             <Col xs={12} sm={8} md={8} lg={8}>
               <FormControl
-                value={description}
+                value={this.state.description}
                 onChange={event =>
                   this.setState(byPropKey("description", event.target.value))
                 }
@@ -323,7 +308,7 @@ class AddRequest extends Component {
               // onClick={()=>this.onSubmit}
               onSubmit={this.onSubmit}
             >
-              Submit
+              Update
         </Button></p>
           <ToastContainer position={ToastContainer.POSITION.TOP_CENTER} store={ToastStore} />
         </Form></Grid>
@@ -332,4 +317,4 @@ class AddRequest extends Component {
 }
 
 const authCondition = authUser => !!authUser;
-export default withAuthorization(authCondition)(AddRequest);
+export default withAuthorization(authCondition)(UpdateRequest);

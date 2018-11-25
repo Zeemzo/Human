@@ -1,12 +1,14 @@
 import * as React from "react";
-import { Col, Grid, Thumbnail, Row, Image } from "react-bootstrap";
+import { Col, Grid, Thumbnail, Row, Image, Button } from "react-bootstrap";
 // import tumb from './thumbnail.png';
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import withAuthorization from "../authentication/withAuthorization";
 import { HUMANBACKEND } from "../../constants/routes";
 import SingleFulfillment from "./singleFulfillment";
+import { Link } from "react-router-dom";
 import { auth } from '../../firebase/firebase'
+import Update from './update'
 class Fulfilled extends React.Component {
   constructor(props) {
     super(props);
@@ -14,8 +16,9 @@ class Fulfilled extends React.Component {
       needs: [],
       loading: true
     };
-
+   
   }
+
   componentDidMount() {
 
     if (navigator.onLine) {
@@ -24,7 +27,7 @@ class Fulfilled extends React.Component {
       const now = new Date;
 
       const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-      console.log( auth.currentUser.uid);
+      console.log(auth.currentUser.uid);
 
       axios
         .get(HUMANBACKEND + "/api/user/contributions/" + auth.currentUser.uid + '/' + this.props.type, {
@@ -47,11 +50,11 @@ class Fulfilled extends React.Component {
           this.setState({ needs: arr });
         })
         .catch((err) => { })
-    }else{
+    } else {
 
       this.setState({ loading: false });
-      var arr=JSON.parse(localStorage.getItem(this.props.type))
-      if(arr!=null){
+      var arr = JSON.parse(localStorage.getItem(this.props.type))
+      if (arr != null) {
         this.setState({ needs: arr });
 
       }
@@ -74,7 +77,12 @@ class Fulfilled extends React.Component {
         {this.state.needs.length == 0 && !this.state.loading ?
           <h2>No {this.props.type} Requests</h2> : <div>
             {this.state.needs.map((item, i) => (
-              <Thumbnail key={i}>
+              <Thumbnail key={i}>{!item.status && this.props.type == "unfulfilled" ? <div >
+              {/* <SingleFulfillment item={item} /> */
+            // console.log(item)
+            }
+              <Update item={item}/>
+            </div> : null}
                 <Grid>
                   <Row>
                     <Col xs={12} sm={12} md={12} lg={12}>
@@ -117,7 +125,10 @@ class Fulfilled extends React.Component {
                         </p>
                       </Col>
                     }
-                    {this.props.type=="unfulfilled"?<SingleFulfillment item={item}></SingleFulfillment>:null}
+                    {this.props.type == "unfulfilled" ? <div>
+                      <SingleFulfillment item={item} />
+                      {/* <Update item={item}/> */}
+                    </div> : null}
                   </Row>
                 </Grid>
               </Thumbnail>

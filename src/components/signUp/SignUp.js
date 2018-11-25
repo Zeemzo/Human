@@ -17,6 +17,8 @@ import {
 
 const SignUpPage = ({ history }) => (
   <div>
+    <br/>
+{/* <br/> */}
     <h1>SignUp</h1>
     <SignUpForm history={history} />
   </div>

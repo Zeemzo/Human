@@ -239,7 +239,7 @@ messaging.onMessage(function (payload) {
 
             window.alert(payload.notification.title)
             // setTimeout(( window.location.href = routes.HUMANAPP + '/chat'),60)
-            window.location.href = routes.HUMANAPP + '/chat';
+            window.location.href = routes.HUMANAPP + '/message';
             ; break;
         case 'Accepted':
             console.log('Message received. ', payload);

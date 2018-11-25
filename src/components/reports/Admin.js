@@ -11,6 +11,7 @@ class AdminPage extends React.Component {
     return (
       // <div className="App">
       <Grid>
+        <br/>
         <AuthUserContext.Consumer>
           {authUser =>
             <div>

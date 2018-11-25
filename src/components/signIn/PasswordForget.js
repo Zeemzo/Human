@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, ToastStore } from 'react-toasts';
-
 import {
   Row,
   Grid,
@@ -18,6 +17,8 @@ import * as routes from '../../constants/routes';
 
 const PasswordForgetPage = () =>
   <div>
+    <br/>
+{/* <br/> */}
     <h1>PasswordForget</h1>
     <PasswordForgetForm />
   </div>
@@ -70,6 +71,8 @@ class PasswordForgetForm extends Component {
     return (
 
 <Grid>
+
+
       <Form horizontal onSubmit={this.onSubmit}>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={3}>

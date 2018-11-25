@@ -4,6 +4,7 @@ import axios from "axios";
 // import store from '../store/index';
 // import {connect} from 'react-redux'
 import { ClipLoader } from "react-spinners";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 import {
   Grid,
@@ -19,17 +20,35 @@ import { SignUpLink } from "../signUp/SignUp";
 import { PasswordForgetLink } from "./PasswordForget";
 
 import { auth } from "../../firebase";
-import { auth as Auth } from "../../firebase/firebase";
+import { auth as Auth ,firebase} from "../../firebase/firebase";
 
 import * as routes from "../../constants/routes";
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: 'popup',
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  signInSuccessUrl: '/',
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GithubAuthProvider.PROVIDER_ID
+
+
+  ]
+};
+
 
 const SignInPage = ({ history }) => (
   <div>
+    <br/>
     <h1><Image width={200} src={'./MainLogo.png'} alt={"human"} /></h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
-
     <SignUpLink />
+    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={Auth}/>
+
   </div>
 );
 
@@ -196,6 +215,8 @@ class SignInForm extends Component {
     const err = { color: "red" }
     return (
       <Grid>
+        
+
         <Form horizontal onSubmit={this.onSubmit}>
           <FormGroup
             value={email}
@@ -256,6 +277,8 @@ class SignInForm extends Component {
             </p>
           </FormGroup>
         </Form>
+
+
 
       </Grid>
     );

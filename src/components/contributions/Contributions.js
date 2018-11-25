@@ -14,10 +14,10 @@ class Contributions extends React.Component {
     return (
       <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={1}>
       <Grid>
+      <br/>
+
         <Row className="clearfix">
           <Col>
-
-
             <AuthUserContext.Consumer>
               {authUser =>
                 <div><h2>

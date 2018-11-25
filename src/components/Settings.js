@@ -58,6 +58,7 @@ class Settings extends Component {
 
     return (
       <Grid>
+    <br/>
 
         <Form horizontal
           onSubmit={this.onSubmit}

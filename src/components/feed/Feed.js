@@ -21,6 +21,8 @@ class Feed extends React.Component {
 
       <Tab.Container id="uncontrolled-tab-example" defaultActiveKey={activeKey}>
         <Grid>
+        <br/>
+
           <Row className="clearfix">
             <Col>
 

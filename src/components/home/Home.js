@@ -6,6 +6,9 @@ import News from './News';
 
 const HomePage = () => (
   <div>
+    <br/>
+    <br/>
+
     <Grid>
       <Jumbotron>
         {/* <h1>Home</h1> */}

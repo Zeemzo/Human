@@ -21,6 +21,24 @@
   /* filter: alpha(opacity=50); */
 }
 
+#editButton{
+	position: fixed;
+	top: 0%;
+	width: 100%;
+	z-index: 1;
+	opacity: 1;
+
+/* left: 50%; */
+}
+#edit{
+	/* text-align: right; */
+	float: right;
+}
+
+#navy{
+	z-index: 5;
+/* left: 50%; */
+}
 /* #nonscroll{
 	margin: 0 0 0 0;
 	/* height: 50px; */

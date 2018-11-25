@@ -25,6 +25,8 @@ import Settings from './Settings';
 import AllChat from './message/AllChat';
 import * as routes from '../constants/routes';
 import AddRequest from './addRequest/AddRequest';
+import UpdateRequest from './addRequest/UpdateRequest';
+
 import Contributions from './contributions/Contributions';
 import MapContainer from './maps/Multimap';
 import ActiveFulfillments from './activeMatches/ActiveFulfillments'
@@ -70,19 +72,20 @@ class App extends React.Component {
   }
 
   render() {
+    const{isPaneOpenLeft}=this.state;
     return (
       <Router>
             
 
         <div ref={ref => this.el = ref}>
           {this.state.isVisible ?
-            <Navbar className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
+            <Navbar id={"editButton"} className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"} >
             <Col xs={2} xsPull={1}>
-                <Image id={"imagepress"} alt={"menu"} onClick={() => this.setState({ isPaneOpenLeft: true })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
+                <Image id={"imagepress"} alt={"menu"} onClick={() => this.setState({ isPaneOpenLeft: !isPaneOpenLeft })} width="50"  src={'./white-menu-icon-4.jpg'} rounded />
             </Col><Grid><Row>
             <Col xs={8}><p>
             {/* {window.location.pathname} */}
-                <Image  width="180"  src={'./sidebar.png'} rounded alt={"human"}/>
+                <Image  width="183"  src={'./sidebar.png'} rounded alt={"human"}/>
                 </p>
             </Col>  <Col xs={2}>
             <Link to={"/settings"}><Image id={"imagepress"} width="50"  src={'./settings.png'} alt={"settings"} rounded /></Link>
@@ -96,8 +99,8 @@ class App extends React.Component {
           <Collapse in={this.state.hideNav ? false : this.state.open}>
             <div>
               <Navigation   className={localStorage.getItem("SideMenu")==null?"SideMenuBlack":"SideMenuGreen"} /></div></Collapse>
-          <SlidingPane className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"}
-         zIndex={1}
+          <SlidingPane  className={localStorage.getItem("SideMenu")!=null&&localStorage.getItem("SideMenu")=="Green"?"SideMenuGreen":"SideMenuBlack"}
+         zIndex={200}
             isOpen={this.state.isPaneOpenLeft}
             title={<Image height={40} src={'./sidebar.png'} alt={"human"}/>}
             from='left'
@@ -122,6 +125,8 @@ class App extends React.Component {
           <Route exact path={routes.ACCOUNT} component={AccountPage} />
           <Route exact path={routes.FEED} component={Feed} />
           <Route exact path={routes.ADDREQUEST} component={AddRequest} />
+          <Route exact path={'/updateRequest'} component={UpdateRequest} />
+
           <Route exact path={'/reports'} component={Admin} />
           <Route exact path={'/contributions'} component={Contributions} />
           <Route exact path={'/map'} component={MapContainer} />

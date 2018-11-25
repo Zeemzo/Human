@@ -129,7 +129,8 @@ class AccountPage extends React.Component {
       <AuthUserContext.Consumer>
         {authUser => (
 
-          <Grid>
+          <Grid>    <br/>
+
             <Row>
               <Col xs={12} md={12} lg={12}>
                 <h3>Account: {((authUser.email).toUpperCase().split("@"))[0]}</h3>

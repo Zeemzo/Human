@@ -24,26 +24,26 @@ class AllChat extends React.Component {
   }
 
   componentDidMount() {
-    if(navigator.onLine){
+    if (navigator.onLine) {
       if (localStorage.getItem('chat') != null) {
 
         var temp = JSON.parse(localStorage.getItem('chat'));
-  
+
         console.log(temp)
         this.setState({ rooms: temp.chats.reverse() })
         // console.log(this.state.rooms[0])
-  
-  
+
+
       } else {
         var chats = [{ roomId: null, sender: "no chats", senderId: null }]
         this.setState({ rooms: chats })
         // console.log(this.state.rooms)
-  
+
       }
-  
+
       if (localStorage.getItem('image') == null) {
         const token = localStorage.getItem('token')
-  
+
         axios.get(routes.HUMANBACKEND + '/api/user/viewImage/' + auth.currentUser.uid, {
           headers: {
             'Authorization': "bearer " + token,
@@ -53,31 +53,55 @@ class AllChat extends React.Component {
         }
         ).then(
           (res) => {
-            localStorage.setItem('image',res.data)
+            localStorage.setItem('image', res.data)
           }
         ).catch(
-          localStorage.setItem('image','./human2.png')
+          localStorage.setItem('image', './human2.png')
         )
       }
-    }else{
+    } else {
       if (localStorage.getItem('chat') != null) {
 
         var temp = JSON.parse(localStorage.getItem('chat'));
-  
+
         console.log(temp)
         this.setState({ rooms: temp.chats.reverse() })
         // console.log(this.state.rooms[0])
-  
-  
+
+
       } else {
         var chats = [{ roomId: null, sender: "no chats", senderId: null }]
         this.setState({ rooms: chats })
         // console.log(this.state.rooms)
-  
+
       }
     }
-   
+
     // console.log(this.state.rooms)
+  }
+
+  componentWillUnmount() {
+    if (localStorage.getItem("chat") != null) {
+      const pop = localStorage.getItem("chat");
+
+      console.log(pop)
+      const token = localStorage.getItem('token')
+      axios
+        .post(routes.HUMANBACKEND + '/api/user/updateChat',
+          { chat: btoa(pop), userId: auth.currentUser.uid },
+          {
+            headers: {
+              'Authorization': "bearer " + token,
+              'Access-Control-Allow-Origin': '*',
+              "Content-Type": "application/json",
+            }
+          })
+        .then((res) => {
+          console.log(res)
+
+        }).catch(res => { console.log(res.data) })
+
+    }
 
   }
 
@@ -89,6 +113,8 @@ class AllChat extends React.Component {
   render() {
     return (
       <Grid>
+    <br/>
+    <br/>
 
         {this.state.rooms.map((item, i) => (
           <Thumbnail key={i}>
